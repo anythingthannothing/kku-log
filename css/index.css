@@ -1,0 +1,24 @@
+body {
+    font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+}
+
+#mainNavbar .navbar-brand {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: rgba(0,0,0,0.7);
+}
+
+#mainNavbar .navbar-brand:hover {
+    color: rgba(0,0,0,1);
+}
+
+#mainNavbar li a {
+    font-size: 1.5rem;
+    color: rgba(0,0,0,0.7);
+    padding-bottom: 0;
+}
+
+#mainNavbar li a:hover {
+    color: rgba(0,0,0,1);
+}
