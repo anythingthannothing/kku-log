@@ -22,3 +22,13 @@ body {
 #mainNavbar li a:hover {
     color: rgba(0,0,0,1);
 }
+
+.github {
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#github {
+    height: 120px;
+}
