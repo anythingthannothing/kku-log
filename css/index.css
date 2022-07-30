@@ -3,24 +3,27 @@ body {
     font-size: 18px;
 }
 
+body a {
+    text-decoration: none;
+    color: #212529;
+}
+
 #mainNavbar .navbar-brand {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
-    color: rgba(0,0,0,0.7);
 }
 
 #mainNavbar .navbar-brand:hover {
-    color: rgba(0,0,0,1);
+    color: rgba(0,0,0,0.6);
 }
 
 #mainNavbar li a {
-    font-size: 1.5rem;
-    color: rgba(0,0,0,0.7);
+    font-size: 1.2rem;
     padding-bottom: 0;
 }
 
 #mainNavbar li a:hover {
-    color: rgba(0,0,0,1);
+    color: rgba(0,0,0,0.6);
 }
 
 .github {
@@ -31,4 +34,12 @@ body {
 
 #github {
     height: 120px;
+}
+
+footer svg {
+    width: 1.8rem;
+}
+
+aside {
+    border-right: 1.5px rgba(0,0,0,0.15) solid;
 }
