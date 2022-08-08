@@ -1,0 +1,22 @@
+{
+  "name": "kkulog",
+  "version": "1.0.0",
+  "description": "My Own Blog Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anythingthannothing/kku-log.git"
+  },
+  "author": "KimKeonU",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anythingthannothing/kku-log/issues"
+  },
+  "homepage": "https://github.com/anythingthannothing/kku-log#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
