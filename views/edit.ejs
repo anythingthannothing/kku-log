@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <%- include('partials/head') %>
+
+  <body>
+    <div class="container mt-3">
+      <div class="row">
+        <h1>Edit</h1>
+      </div>
+      <div class="row">
+        <form action="/posts/<%= post.id %>?_method=PATCH" method="POST">
+          <div class="d-flex flex-column">
+            <div>
+              <label class="form-label" for="heading">제목</label>
+              <input
+                class="w-75 form-control"
+                type="text"
+                id="heading"
+                name="title"
+                value="<%= post.title %>"
+              />
+            </div>
+            <div>
+              <label class="form-label" for="textarea">본문</label>
+              <textarea
+                class="form-control"
+                id="textarea"
+                name="content"
+                rows="25"
+              >
+<%= post.content %></textarea
+              >
+            </div>
+            <div>
+              <label class="form-label" for="tags">태그</label>
+              <input
+                class="form-control"
+                type="text"
+                name="tags"
+                id="tags"
+                value="<%= post.tags %>"
+              />
+            </div>
+            <div class="text-center mt-3">
+              <button class="btn btn-success w-25" type="submit">
+                임시저장
+              </button>
+              <button class="btn btn-primary w-25" type="submit">
+                수정하기
+              </button>
+              <a href="/">
+                <button class="btn btn-danger w-25" type="button">
+                  홈으로
+                </button>
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row"></div>
+    </div>
+  </body>
+</html>
