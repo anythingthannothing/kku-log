@@ -2,8 +2,14 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const methodOverride = require("method-override");
+const mongoose = require("mongoose");
 const { v4: uuid } = require("uuid");
 const PORT = 3000;
+
+// IP 주소 확인할 것
+mongoose
+  .connect("mongodb://122.32.193.199:27017/myOwnBlog")
+  .then(() => console.log("DB Connected!"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
