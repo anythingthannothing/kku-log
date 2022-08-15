@@ -9,7 +9,12 @@ const PORT = 3000;
 // IP 주소 확인할 것
 mongoose
   .connect("mongodb://122.32.193.199:27017/myOwnBlog")
-  .then(() => console.log("DB Connected!"));
+  .then(() => {
+    console.log("DB Connected!");
+  })
+  .catch((err) => {
+    console.log("Error Detected");
+  });
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -20,23 +25,32 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-let posts = [
-  {
-    id: uuid(),
-    title: "Post 1",
-    content: "bla bla bal",
+const postSchema = new mongoose.Schema({
+  category: {
+    type: String,
+    required: true,
   },
-  {
-    id: uuid(),
-    title: "Post 2",
-    content: "da da da da",
+  title: {
+    type: String,
+    required: true,
   },
-  {
-    id: uuid(),
-    title: "Post 3",
-    content: "ba ba ba ba",
+  content: {
+    type: String,
+    required: true,
   },
-];
+  tags: {
+    type: [String],
+    required: true,
+  },
+  datePosted: {
+    type: Date,
+    default: Date.now,
+  },
+  dateEditedLast: {
+    tpye: Date,
+    default: null,
+  },
+});
 
 // Index
 app.get("/", (req, res) => {
