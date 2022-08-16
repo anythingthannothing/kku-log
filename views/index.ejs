@@ -9,7 +9,7 @@
         <%- include('partials/aside') %>
         <main class="col-9 p-3">
           <% for (let post of posts) { %>
-          <a href="/posts/<%= post.id %>" class="">
+          <a href="/posts/<%= post._id %>" class="">
             <section
               class="row d-flex align-items-center shadow ms-1 mb-2 px-0"
             >
@@ -23,8 +23,8 @@
                 <h2 class=""><%= post.title %></h2>
                 <p><%= post.content %></p>
                 <div class="d-flex justify-content-between">
-                  <span class="">최초 작성일</span>
-                  <span class="">최종 수정일</span>
+                  <span class="">최초 작성일: <%= post.datePosted %></span>
+                  <span class="">최종 수정일: <%= post.EditedLast %></span>
                   <span class="">조회수</span>
                 </div>
               </div>

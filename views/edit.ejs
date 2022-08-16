@@ -11,6 +11,16 @@
         <form action="/posts/<%= post.id %>?_method=PATCH" method="POST">
           <div class="d-flex flex-column">
             <div>
+              <label class="form-label" for="category">카테고리</label>
+              <input
+                class="w-75 form-control"
+                type="text"
+                id="heading"
+                name="category"
+                value="<%= post.category %>"
+              />
+            </div>
+            <div>
               <label class="form-label" for="heading">제목</label>
               <input
                 class="w-75 form-control"

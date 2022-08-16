@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
+const Post = require("./models/post");
 const { v4: uuid } = require("uuid");
 const PORT = 3000;
 
@@ -25,77 +26,50 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-const postSchema = new mongoose.Schema({
-  category: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
-  tags: {
-    type: [String],
-    required: true,
-  },
-  datePosted: {
-    type: Date,
-    default: Date.now,
-  },
-  dateEditedLast: {
-    tpye: Date,
-    default: null,
-  },
-});
-
 // Index
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  const posts = await Post.find({});
   res.render("index", { posts });
 });
 
 // Create a new post
-app.get("/post", (req, res) => {
-  res.render("post");
+app.get("/posts/new", (req, res) => {
+  res.render("new");
 });
 
-app.post("/post", (req, res) => {
-  const { title, content, tags } = req.body;
-  posts.push({ id: uuid(), title, content, tags });
-  res.redirect("/");
+app.post("/posts", async (req, res) => {
+  const post = new Post(req.body);
+  await post.save();
+  res.redirect(`/posts/${post._id}`);
 });
 
 // Read a post
-app.get("/posts/:id", (req, res) => {
+app.get("/posts/:id", async (req, res) => {
   const { id } = req.params;
-  const post = posts.find((post) => post.id === id);
+  const post = await Post.findById(id);
   res.render("show", { post });
 });
 
 // Update post
-app.get("/posts/:id/edit", (req, res) => {
+app.get("/posts/:id/edit", async (req, res) => {
   const { id } = req.params;
-  const post = posts.find((post) => post.id === id);
+  const post = await Post.findById(id);
   res.render("edit", { post });
 });
 
-app.patch("/posts/:id", (req, res) => {
-  const { title, content, tags } = req.body;
+app.patch("/posts/:id", async (req, res) => {
   const { id } = req.params;
-  let post = posts.find((post) => post.id === id);
-  post.title = title;
-  post.content = content;
-  post.tags = tags;
-  res.redirect("/");
+  let post = await Post.findByIdAndUpdate(id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  res.redirect(`/posts/${post._id}`);
 });
 
 // delete post
-app.delete("/posts/:id", (req, res) => {
+app.delete("/posts/:id", async (req, res) => {
   const { id } = req.params;
-  posts = posts.filter((post) => post.id !== id);
+  await Post.findByIdAndDelete(id);
   res.redirect("/");
 });
 
