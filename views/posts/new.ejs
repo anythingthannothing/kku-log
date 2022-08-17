@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <%- include('partials/head') %>
+  <head>
+    <%- include('partials/head') %>
+    <title>kku.log - Post</title>
+  </head>
 
   <body>
     <div class="container mt-3">
@@ -16,14 +19,14 @@
                 class="w-75 form-control"
                 type="text"
                 id="category"
-                name="category"
+                name="post[category]"
               />
               <label class="form-label" for="heading">제목 </label>
               <input
                 class="w-75 form-control"
                 type="text"
                 id="heading"
-                name="title"
+                name="post[title]"
               />
             </div>
             <div>
@@ -31,13 +34,18 @@
               <textarea
                 class="form-control"
                 id="textarea"
-                name="content"
+                name="post[content]"
                 rows="25"
               ></textarea>
             </div>
             <div>
               <label class="form-label" for="tags">태그</label>
-              <input class="form-control" type="text" name="tags" id="tags" />
+              <input
+                class="form-control"
+                type="text"
+                name="post[tags]"
+                id="tags"
+              />
             </div>
             <div class="text-center mt-3">
               <button class="btn btn-success w-25" type="submit">
