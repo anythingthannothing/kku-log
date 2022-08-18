@@ -25,6 +25,9 @@ const postSchema = new Schema({
   dateEditedLast: {
     tpye: Date,
   },
+  thumbnail: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Post", postSchema);

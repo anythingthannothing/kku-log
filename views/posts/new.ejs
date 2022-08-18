@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <%- include('partials/head') %>
+    <%- include('../partials/head') %>
     <title>kku.log - Post</title>
   </head>
 
@@ -13,32 +13,34 @@
       <div class="row">
         <form action="/posts" method="POST">
           <div class="d-flex flex-column">
-            <div>
+            <div class="mb-3">
               <label class="form-label" for="category">카테고리 </label>
               <input
-                class="w-75 form-control"
+                class="form-control"
                 type="text"
                 id="category"
                 name="post[category]"
               />
+            </div>
+            <div class="mb-3">
               <label class="form-label" for="heading">제목 </label>
               <input
-                class="w-75 form-control"
+                class="form-control"
                 type="text"
                 id="heading"
                 name="post[title]"
               />
             </div>
-            <div>
+            <div class="mb-3">
               <label class="form-label" for="textarea">본문</label>
               <textarea
                 class="form-control"
                 id="textarea"
                 name="post[content]"
-                rows="25"
+                rows="20"
               ></textarea>
             </div>
-            <div>
+            <div class="mb-3">
               <label class="form-label" for="tags">태그</label>
               <input
                 class="form-control"
@@ -47,7 +49,7 @@
                 id="tags"
               />
             </div>
-            <div class="text-center mt-3">
+            <div class="text-center">
               <button class="btn btn-success w-25" type="submit">
                 임시저장
               </button>
