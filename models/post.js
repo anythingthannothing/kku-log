@@ -16,7 +16,6 @@ const postSchema = new Schema({
   },
   tags: {
     type: [String],
-    required: true,
   },
   datePosted: {
     type: Date,
