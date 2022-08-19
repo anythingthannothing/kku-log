@@ -11,43 +11,51 @@
         <h1>Post</h1>
       </div>
       <div class="row">
-        <form action="/posts" method="POST">
+        <form action="/posts" method="POST" novalidate class="needs-validation">
           <div class="d-flex flex-column">
             <div class="mb-3">
               <label class="form-label" for="category">카테고리 </label>
               <input
-                class="form-control"
+                class="form-control needs-validation"
                 type="text"
                 id="category"
                 name="post[category]"
+                required
               />
+              <div class="invalid-feedback">유효한 카테고리 선택 필요</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="heading">제목 </label>
               <input
-                class="form-control"
+                class="form-control needs-validation"
                 type="text"
                 id="heading"
                 name="post[title]"
+                required
               />
+              <div class="invalid-feedback">유효한 제목 선택 필요</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="textarea">본문</label>
               <textarea
-                class="form-control"
+                class="form-control needs-validation"
                 id="textarea"
                 name="post[content]"
                 rows="20"
+                required
               ></textarea>
+              <div class="invalid-feedback">유효한 본문 작성 필요</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="tags">태그</label>
               <input
-                class="form-control"
+                class="form-control needs-validation"
                 type="text"
                 name="post[tags]"
                 id="tags"
+                required
               />
+              <div class="invalid-feedback">유효한 태그 작성 필요</div>
             </div>
             <div class="text-center">
               <button class="btn btn-success w-25" type="submit">
@@ -65,5 +73,26 @@
       </div>
       <div class="row"></div>
     </div>
+    <script>
+      (() => {
+        "use strict";
+        const forms = document.querySelectorAll(".needs-validation");
+
+        Array.from(forms).forEach((form) => {
+          form.addEventListener(
+            "submit",
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
   </body>
 </html>

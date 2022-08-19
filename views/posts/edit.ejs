@@ -11,48 +11,61 @@
         <h1>Edit</h1>
       </div>
       <div class="row">
-        <form action="/posts/<%= post.id %>?_method=PATCH" method="POST">
+        <form
+          action="/posts/<%= post.id %>?_method=PUT"
+          method="POST"
+          novalidate
+          class="needs-validation"
+        >
           <div class="d-flex flex-column">
             <div class="mb-3">
               <label class="form-label" for="category">카테고리</label>
               <input
-                class="form-control"
+                class="form-control needs-validation"
                 type="text"
-                id="heading"
-                name="category"
+                id="category"
+                name="post[category]"
                 value="<%= post.category %>"
+                required
               />
+              <div class="invalid-feedback">유효한 카테고리 입력 필요</div>
             </div>
             <div class="mb-3">
-              <label class="form-label" for="heading">제목</label>
+              <label class="form-label" for="title">제목</label>
               <input
-                class="form-control"
+                class="form-control needs-validation"
                 type="text"
-                id="heading"
-                name="title"
+                id="title"
+                name="post[title]"
                 value="<%= post.title %>"
+                required
               />
+              <div class="invalid-feedback">유효한 제목 입력 필요</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="textarea">본문</label>
               <textarea
-                class="form-control"
+                class="form-control needs-validation"
                 id="textarea"
-                name="content"
+                name="post[content]"
                 rows="20"
+                required
               >
 <%= post.content %></textarea
               >
+              <div class="invalid-feedback">유효한 본문 입력 필요</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="tags">태그</label>
               <input
-                class="form-control"
+                class="form-control needs-validation"
                 type="text"
-                name="tags"
+                name="post[tags]"
                 id="tags"
                 value="<%= post.tags %>"
+                required
               />
+              <div class="invalid-feedback">유효한 태그 입력 필요</div>
             </div>
             <div class="text-center mt-3">
               <button class="btn btn-success w-25" type="submit">
@@ -72,5 +85,27 @@
       </div>
       <div class="row"></div>
     </div>
+    <script>
+      (() => {
+        "use strict";
+
+        const forms = document.querySelectorAll(".needs-validation");
+
+        Array.from(forms).forEach((form) => {
+          form.addEventListener(
+            "submit",
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
   </body>
 </html>
