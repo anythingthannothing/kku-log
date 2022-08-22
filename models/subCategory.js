@@ -13,9 +13,12 @@ const subCategorySchema = new Schema({
     type: Number,
     default: 0,
   },
-  posts: {
-    type: [Schema.Types.ObjectId],
-  },
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
 });
 
 module.exports = mongoose.model("SubCategory", subCategorySchema);

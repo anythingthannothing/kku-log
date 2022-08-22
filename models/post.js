@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
+const Comment = require("./comment");
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
   category: {
-    type: Schema.Types.ObjectId,
-    required: true,
+    type: String,
   },
   title: {
     type: String,
@@ -17,16 +17,32 @@ const postSchema = new Schema({
   tags: {
     type: [String],
   },
-  datePosted: {
+  postedAt: {
     type: Date,
     default: Date.now,
   },
-  dateEditedLast: {
+  editedAt: {
     tpye: Date,
   },
   thumbnail: {
     type: String,
   },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
+});
+
+postSchema.post("findOneAndDelete", async function (doc) {
+  if (doc) {
+    await Comment.deleteMany({
+      _id: {
+        $in: doc.comments,
+      },
+    });
+  }
 });
 
 module.exports = mongoose.model("Post", postSchema);
