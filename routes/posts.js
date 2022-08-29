@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/post");
-const Comment = require("../models/comment");
-const { postSchema, commentSchema } = require("../schemas");
+const { postSchema } = require("../schemas");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/expressError");
 
@@ -15,14 +14,15 @@ const validatePost = (req, res, next) => {
   next();
 };
 
-const validateComment = (req, res, next) => {
-  const { error } = commentSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  }
-  next();
-};
+// [Post]
+// Get Index
+router.get(
+  "/",
+  catchAsync(async (req, res, next) => {
+    const posts = await Post.find({});
+    res.render(`index`, { posts });
+  })
+);
 
 // Create a new post
 router.get("/new", (req, res) => {
@@ -35,6 +35,7 @@ router.post(
   catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
     await post.save();
+    req.flash("success", "포스트 등록 완료!");
     res.redirect(`/posts/${post._id}`);
   })
 );
@@ -45,6 +46,10 @@ router.get(
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id).populate("comments");
+    if (!post) {
+      req.flash("error", "포스트를 찾을 수 없습니다 :(");
+      return res.redirect("/posts");
+    }
     res.render("posts/show", { post });
   })
 );
@@ -55,6 +60,10 @@ router.get(
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id);
+    if (!post) {
+      req.flash("error", "포스트를 찾을 수 없습니다 :(");
+      return res.redirect("/posts");
+    }
     res.render("posts/edit", { post });
   })
 );
@@ -68,6 +77,7 @@ router.put(
       new: true,
       runValidators: true,
     });
+    req.flash("success", "포스트 수정 완료!");
     res.redirect(`/posts/${id}`);
   })
 );
@@ -78,33 +88,8 @@ router.delete(
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     await Post.findByIdAndDelete(id);
-    res.redirect("/");
-  })
-);
-
-// [COMMENT]
-// Leave a Comment
-router.post(
-  "/:id/comments",
-  validateComment,
-  catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const comment = new Comment(req.body.comment);
-    const post = await Post.findById(id);
-    post.comments.push(comment);
-    await comment.save();
-    await post.save();
-    res.redirect(`/posts/${id}`);
-  })
-);
-
-router.delete(
-  "/:id/comments/:commentId",
-  catchAsync(async (req, res, next) => {
-    const { id, commentId } = req.params;
-    await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } });
-    await Comment.findByIdAndDelete(commentId);
-    res.redirect(`/posts/${id}`);
+    req.flash("success", "포스트가 정상적으로 삭제되었습니다 :)");
+    res.redirect("/posts");
   })
 );
 
