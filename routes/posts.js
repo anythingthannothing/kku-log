@@ -4,6 +4,7 @@ const Post = require("../models/post");
 const { postSchema } = require("../schemas");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/expressError");
+const isLoggedIn = require("../utils/isLoggedIn");
 
 const validatePost = (req, res, next) => {
   const { error } = postSchema.validate(req.body);
@@ -25,7 +26,7 @@ router.get(
 );
 
 // Create a new post
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
   res.render("posts/new");
 });
 
@@ -57,6 +58,7 @@ router.get(
 // Update post
 router.get(
   "/:id/edit",
+  isLoggedIn,
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id);
@@ -85,6 +87,7 @@ router.put(
 // delete post
 router.delete(
   "/:id",
+  isLoggedIn,
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     await Post.findByIdAndDelete(id);

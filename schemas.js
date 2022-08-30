@@ -14,3 +14,12 @@ module.exports.commentSchema = Joi.object({
     body: Joi.string().required(),
   }).required(),
 });
+
+module.exports.userSchema = Joi.object({
+  user: Joi.object({
+    username: Joi.string().required(),
+    id: Joi.string().required(),
+    password: Joi.string().required(),
+    passwordCheck: Joi.string().required(),
+  }).required(),
+});

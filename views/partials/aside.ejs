@@ -1,15 +1,29 @@
 <aside class="col-3 ps-0 pe-2">
   <div class="mb-2">
-    <a href="/posts/new" class="">
-      <button class="btn btn-primary">글쓰기</button>
-    </a>
+    <div class="d-flex justify-content-evenly">
+      <% if (!user_id) { %>
+      <a href="/users/login" class="">
+        <button class="btn btn-success">로그인</button>
+      </a>
+      <a href="/users/register" class="">
+        <button class="btn btn-primary">회원가입</button>
+      </a>
+      <% } %> <% if (user_id) { %>
+      <form action="/users/logout" method="POST">
+        <button class="btn btn-warning">로그아웃</button>
+      </form>
+      <% } %>
+      <a href="/posts/new" class="">
+        <button class="btn btn-primary">글쓰기</button>
+      </a>
+    </div>
   </div>
   <div class="border mb-3 px-0 github">
     <img
       src="https://ghchart.rshah.org/0F5BFF/anythingthannothing"
       alt="anythingthannothing's Github chart"
       class="px-0"
-      id="github"
+      id="githubStreak"
     />
   </div>
   <div class="container-fluid border mb-3">LeetCode streak</div>
