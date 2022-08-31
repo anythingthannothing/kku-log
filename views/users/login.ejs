@@ -1,25 +1,50 @@
 <% layout('layouts/boilerplate') -%>
 <h1>로그인</h1>
-<form action="/users/login" method="POST">
-  <div>
-    <label for="id">ID: </label>
+
+<form action="/users/login" method="POST" novalidate class="needs-validation">
+  <div class="mb-3">
+    <label for="username" class="form-label">ID: </label>
     <input
       type="text"
-      name="user[id]"
-      id="id"
+      name="username"
+      id="username"
       placeholder="ID를 입력하세요!"
+      class="form-control needs-validation"
       required
     />
   </div>
-  <div>
-    <label for="password">Password: </label>
+  <div class="mb-3">
+    <label for="password" class="form-label">비밀번호: </label>
     <input
       type="password"
-      name="user[password]"
+      name="password"
       id="password"
       placeholder="비밀번호를 입력하세요!"
+      class="form-control needs-validation"
       required
     />
   </div>
   <button class="btn btn-success">로그인</button>
 </form>
+<script>
+  (() => {
+    "use strict";
+
+    const forms = document.querySelectorAll(".needs-validation");
+
+    Array.from(forms).forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>

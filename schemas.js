@@ -17,8 +17,9 @@ module.exports.commentSchema = Joi.object({
 
 module.exports.userSchema = Joi.object({
   user: Joi.object({
+    name: Joi.string().required(),
+    email: Joi.string().required(),
     username: Joi.string().required(),
-    id: Joi.string().required(),
     password: Joi.string().required(),
     passwordCheck: Joi.string().required(),
   }).required(),

@@ -1,18 +1,8 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const User = require("../models/user");
-const { userSchema } = require("../schemas");
 const catchAsync = require("../utils/catchAsync");
-const ExpressError = require("../utils/expressError");
-
-const validateUser = (req, res, next) => {
-  const { error } = userSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  }
-  next();
-};
+const passport = require("passport");
 
 // [User]
 // Get Sign Up
@@ -20,42 +10,45 @@ router.get("/register", (req, res, next) => {
   res.render("users/register");
 });
 
-router.get("/login", (req, res) => {
-  res.render("users/login");
-});
-
 // Register User
 router.post(
   "/register",
-  validateUser,
-  catchAsync(async (req, res, next) => {
-    const { username, id, password } = req.body.user;
-    const user = new User({
-      username,
-      id,
-      password,
-    });
-    await user.save();
-    req.session.user_id = user._id;
-    res.redirect("/posts");
-  })
-);
-
-// User Login
-router.post(
-  "/login",
-  catchAsync(async (req, res, next) => {
-    const { id, password } = req.body.user;
-    const user = await User.findAndValidate(id, password);
-    if (user) {
-      req.session.user_id = user._id;
+  catchAsync(async (req, res) => {
+    try {
+      const { name, email, username, password } = req.body.user;
+      const user = new User({
+        name,
+        email,
+        username,
+      });
+      await User.register(user, password);
+      req.flash("success", "회원가입이 성공적으로 완료되었습니다 :)");
       res.redirect("/posts");
-    } else {
-      res.redirect("login");
+    } catch (e) {
+      req.flash("error", e.message);
+      res.redirect("/users/register");
     }
   })
 );
 
+router.get("/login", (req, res) => {
+  res.render("users/login");
+});
+
+// User Login
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/users/login",
+  }),
+  (req, res) => {
+    req.flash("success", "로그인이 정상적으로 완료되었습니다 :)");
+    res.redirect("/posts");
+  }
+);
+
+// User Logout
 router.post("/logout", (req, res) => {
   req.session.user_id = null;
   res.redirect("/posts");

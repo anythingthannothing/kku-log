@@ -1,45 +1,88 @@
 <% layout('layouts/boilerplate') -%>
 <h1>회원가입</h1>
-<form action="/users/register" method="POST">
-  <div>
-    <label for="username">이름: </label>
+
+<form
+  action="/users/register"
+  method="POST"
+  novalidate
+  class="needs-validation"
+>
+  <div class="mb-3">
+    <label for="name" class="form-label">이름: </label>
+    <input
+      type="text"
+      name="user[name]"
+      id="name"
+      placeholder="이름을 입력하세요!"
+      class="form-control needs-validation"
+      required
+    />
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">이메일: </label>
+    <input
+      type="email"
+      name="user[email]"
+      id="email"
+      placeholder="이메일을 입력하세요!"
+      class="form-control needs-validation"
+      required
+    />
+  </div>
+  <div class="mb-3">
+    <label for="username" class="form-label">ID: </label>
     <input
       type="text"
       name="user[username]"
       id="username"
-      placeholder="이름을 입력하세요!"
-      required
-    />
-  </div>
-  <div>
-    <label for="id">ID: </label>
-    <input
-      type="text"
-      name="user[id]"
-      id="id"
       placeholder="ID를 입력하세요!"
+      class="form-control needs-validation"
       required
     />
   </div>
-  <div>
-    <label for="password">Password: </label>
+  <div class="mb-3">
+    <label for="password" class="form-label">비밀번호: </label>
     <input
       type="password"
       name="user[password]"
       id="password"
       placeholder="비밀번호를 입력하세요!"
+      class="form-control needs-validation"
       required
     />
   </div>
-  <div>
-    <label for="passwordCheck">Password Check: </label>
+  <div class="mb-3">
+    <label for="passwordCheck" class="form-label">비밀번호 확인: </label>
     <input
       type="password"
       name="user[passwordCheck]"
       id="passwordCheck"
-      placeholder="비밀번호를 재입력하세요!"
+      placeholder="비밀번호를 다시 입력하세요!"
+      class="form-control needs-validation"
       required
     />
   </div>
   <button class="btn btn-success">회원가입</button>
 </form>
+<script>
+  (() => {
+    "use strict";
+
+    const forms = document.querySelectorAll(".needs-validation");
+
+    Array.from(forms).forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>
