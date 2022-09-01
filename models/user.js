@@ -12,6 +12,12 @@ const userSchema = new Schema({
     required: [true, "이메일은 필수 입력값입니다."],
     unique: true,
   },
+  comments: [
+    {
+      type: [Schema.Types.ObjectId],
+      ref: "Comment",
+    },
+  ],
 });
 
 userSchema.plugin(passportLocalMongoose);

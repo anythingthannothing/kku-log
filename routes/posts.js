@@ -1,19 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/post");
-const { postSchema } = require("../schemas");
 const catchAsync = require("../utils/catchAsync");
-const ExpressError = require("../utils/expressError");
-const isLoggedIn = require("../utils/isLoggedIn");
-
-const validatePost = (req, res, next) => {
-  const { error } = postSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
-  }
-  next();
-};
+const { validatePost, isLoggedIn, isAdmin } = require("../middleware");
 
 // [Post]
 // Get Index
@@ -32,6 +21,7 @@ router.get("/new", isLoggedIn, (req, res) => {
 
 router.post(
   "/",
+  isLoggedIn,
   validatePost,
   catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
@@ -46,7 +36,12 @@ router.get(
   "/:id",
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const post = await Post.findById(id).populate("comments");
+    const post = await Post.findById(id).populate({
+      path: "comments",
+      populate: {
+        path: "author",
+      },
+    });
     if (!post) {
       req.flash("error", "포스트를 찾을 수 없습니다 :(");
       return res.redirect("/posts");
@@ -58,7 +53,7 @@ router.get(
 // Update post
 router.get(
   "/:id/edit",
-  isLoggedIn,
+  isAdmin,
   catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id);
@@ -72,10 +67,11 @@ router.get(
 
 router.put(
   "/:id",
+  isAdmin,
   validatePost,
-  catchAsync(async (req, res, next) => {
+  catchAsync(async (req, res) => {
     const { id } = req.params;
-    let post = await Post.findByIdAndUpdate(id, req.body.post, {
+    await Post.findByIdAndUpdate(id, req.body.post, {
       new: true,
       runValidators: true,
     });

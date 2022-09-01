@@ -1,21 +1,23 @@
 <aside class="col-3 ps-0 pe-2">
   <div class="mb-2">
     <div class="d-flex justify-content-evenly">
-      <% if (!user_id) { %>
+      <% if (!currentUser) { %>
       <a href="/users/login" class="">
         <button class="btn btn-success">로그인</button>
       </a>
       <a href="/users/register" class="">
         <button class="btn btn-primary">회원가입</button>
       </a>
-      <% } %> <% if (user_id) { %>
-      <form action="/users/logout" method="POST">
+      <% } %> <% if (currentUser) { %>
+      <form action="/users/logout" method="GET">
         <button class="btn btn-warning">로그아웃</button>
       </form>
-      <% } %>
+      <% } %> <% if (currentUser && currentUser.username ===
+      'anythingthannothing') { %>
       <a href="/posts/new" class="">
         <button class="btn btn-primary">글쓰기</button>
       </a>
+      <% } %>
     </div>
   </div>
   <div class="border mb-3 px-0 github">
