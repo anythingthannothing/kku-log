@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('../partials/head') %>
+    <title>Admin | kkulog</title>
+  </head>
+
+  <body class="d-flex flex-column vh-100">
+    <%- include('../partials/navbar') %>
+    <div class="container">
+      <%- include('../partials/flash') %>
+      <div class="row">
+        <section class="col-6 p-3">
+            <div>
+                <h2>SubCategory</h2>
+                <div class="mb-3">
+                    <ul>
+                    <% for (let sub of subcategories) { %>
+                        <li><%= sub.name %> </li>    
+                        <% } %>
+                    </ul>
+                </div>
+                    <form
+                        action="/admin"
+                        method="POST"
+                        novalidate
+                        class="needs-validation"
+                    >
+                    <div class="d-flex flex-column">
+                        <div class="mb-3">
+                        <label class="form-label" for="subname">서브카테고리 </label>
+                        <input
+                            class="form-control"
+                            type="text"
+                            id="subname"
+                            name="sub[name]"
+                            required
+                        />
+                        <div class="invalid-feedback">유효한 서브카테고리 선택 필요</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </form>
+            </div>
+        </main>
+        <section class="col-6 p-3"></main>
+      </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+    <script>
+      (() => {
+        "use strict";
+
+        const forms = document.querySelectorAll(".needs-validation");
+
+        Array.from(forms).forEach((form) => {
+          form.addEventListener(
+            "submit",
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+  </body>
+</html>

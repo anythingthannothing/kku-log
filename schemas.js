@@ -24,3 +24,9 @@ module.exports.userSchema = Joi.object({
     passwordCheck: Joi.string().required(),
   }).required(),
 });
+
+module.exports.subCategorySchema = Joi.object({
+  subCategory: Joi.object({
+    name: Joi.string().required(),
+  }).required(),
+});
