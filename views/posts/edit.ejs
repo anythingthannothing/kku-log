@@ -16,12 +16,13 @@
           method="POST"
           novalidate
           class="needs-validation"
+          enctype="multipart/form-data"
         >
           <div class="d-flex flex-column">
             <div class="mb-3">
               <label class="form-label" for="category">카테고리</label>
               <input
-                class="form-control needs-validation"
+                class="form-control"
                 type="text"
                 id="category"
                 name="post[category]"
@@ -33,7 +34,7 @@
             <div class="mb-3">
               <label class="form-label" for="title">제목</label>
               <input
-                class="form-control needs-validation"
+                class="form-control"
                 type="text"
                 id="title"
                 name="post[title]"
@@ -45,7 +46,7 @@
             <div class="mb-3">
               <label class="form-label" for="textarea">본문</label>
               <textarea
-                class="form-control needs-validation"
+                class="form-control"
                 id="textarea"
                 name="post[content]"
                 rows="20"
@@ -56,9 +57,20 @@
               <div class="invalid-feedback">유효한 본문 입력 필요</div>
             </div>
             <div class="mb-3">
+              <label class="form-label" for="thumbnail">썸네일</label>
+              <input
+                type="file"
+                class="form-control"
+                id="thumbnail"
+                name="image"
+                required
+              />
+              <div class="invalid-feedback">유효한 썸네일 선택 필요</div>
+            </div>
+            <div class="mb-3">
               <label class="form-label" for="tags">태그</label>
               <input
-                class="form-control needs-validation"
+                class="form-control"
                 type="text"
                 name="post[tags]"
                 id="tags"

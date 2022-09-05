@@ -11,6 +11,15 @@ module.exports.isLoggedIn = (req, res, next) => {
   next();
 };
 
+module.exports.logout = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    req.flash("error", "잘못된 접근입니다 :(");
+    return res.redirect("/users/login");
+  }
+  req.session.returnTo = req.originalUrl;
+  next();
+};
+
 module.exports.isAdmin = (req, res, next) => {
   const { id } = req.params;
   if (!req.user || req.user.username !== "anythingthannothing") {

@@ -3,17 +3,18 @@ const router = express.Router({ mergeParams: true });
 const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
 const passport = require("passport");
+const { logout, isLoggedIn } = require("../middleware");
 
 // [User]
 // Get Sign Up
-router.get("/register", (req, res, next) => {
+router.get("/register", (req, res) => {
   res.render("users/register");
 });
 
 // Register User
 router.post(
   "/register",
-  catchAsync(async (req, res, next) => {
+  catchAsync(async (req, res) => {
     try {
       const { name, email, username, password } = req.body.user;
       const user = new User({
@@ -55,13 +56,14 @@ router.post(
 );
 
 // User Logout
-router.get("/logout", (req, res, next) => {
+router.get("/logout", logout, (req, res) => {
   req.logout(function (err) {
     if (err) {
       return next(err);
     }
+    const redirectUrl = req.session.returnTo;
     req.flash("success", "로그아웃이 완료되었습니다 :)");
-    return res.redirect("/posts");
+    return res.redirect(redirectUrl);
   });
 });
 

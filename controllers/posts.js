@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const { cloudinary } = require("../cloudianry");
 
 module.exports.index = async (req, res, next) => {
   const posts = await Post.find({});
@@ -45,10 +46,14 @@ module.exports.edit = async (req, res, next) => {
 
 module.exports.update = async (req, res) => {
   const { id } = req.params;
-  await Post.findByIdAndUpdate(id, req.body.post, {
+  const post = await Post.findByIdAndUpdate(id, req.body.post, {
     new: true,
     runValidators: true,
   });
+  console.log(post);
+  await cloudinary.uploader.destroy(post.thumbnail.filename);
+  post.thumbnail = { url: req.file.path, filename: req.file.filename };
+  await post.save();
   req.flash("success", "포스트 수정 완료!");
   res.redirect(`/posts/${id}`);
 };

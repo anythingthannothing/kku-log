@@ -2,6 +2,15 @@ const mongoose = require("mongoose");
 const Comment = require("./comment");
 const Schema = mongoose.Schema;
 
+const thumbnailSchema = new Schema({
+  url: String,
+  filename: String,
+});
+
+thumbnailSchema.virtual("thumbnail").get(function () {
+  return this.url.replace("/upload", "/upload/w_240");
+});
+
 const postSchema = new Schema({
   category: {
     type: String,
@@ -24,10 +33,7 @@ const postSchema = new Schema({
   editedAt: {
     tpye: Date,
   },
-  thumbnail: {
-    url: String,
-    filename: String,
-  },
+  thumbnail: thumbnailSchema,
   comments: [
     {
       type: Schema.Types.ObjectId,
