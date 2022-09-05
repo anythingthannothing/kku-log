@@ -3,16 +3,19 @@ const router = express.Router();
 const Post = require("../models/post");
 const catchAsync = require("../utils/catchAsync");
 const { validatePost, isLoggedIn, isAdmin } = require("../middleware");
+const multer = require("multer");
+const { storage } = require("../cloudianry");
+const upload = multer({ storage });
 
-// [Post]
-// Get Index
-router.get(
-  "/",
-  catchAsync(async (req, res, next) => {
-    const posts = await Post.find({});
-    res.render(`index`, { posts });
-  })
-);
+router
+  .route("/")
+  .get(catchAsync(posts.index))
+  .post(
+    isLoggedIn,
+    upload.single("image"),
+    validatePost,
+    catchAsync(posts.create)
+  );
 
 // Create a new post
 router.get("/new", isLoggedIn, (req, res) => {

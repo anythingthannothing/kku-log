@@ -6,10 +6,12 @@ const categorySchema = new Schema({
     type: String,
     required: true,
   },
-  subCategory: {
-    type: [Schema.Types.ObjectId],
-    required: true,
-  },
+  subCategory: [
+    {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Category", categorySchema);

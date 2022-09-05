@@ -5,4 +5,5 @@ app.js
 ### Packages
 /node_modules
 
-
+### Env
+.env

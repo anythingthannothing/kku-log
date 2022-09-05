@@ -25,7 +25,8 @@ const postSchema = new Schema({
     tpye: Date,
   },
   thumbnail: {
-    type: String,
+    url: String,
+    filename: String,
   },
   comments: [
     {
