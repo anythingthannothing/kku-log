@@ -1,26 +1,68 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
-const users = require("../controllers/users");
+const User = require("../models/user");
 const catchAsync = require("../utils/catchAsync");
 const passport = require("passport");
 
-router
-  .route("/register")
-  .get(users.renderRegister)
-  .post(catchAsync(users.register));
+// [User]
+// Get Sign Up
+router.get("/register", (req, res, next) => {
+  res.render("users/register");
+});
 
-router
-  .route("/login")
-  .get(users.renderLogin)
-  .post(
-    passport.authenticate("local", {
-      failureFlash: true,
-      failureRedirect: "/users/login",
-      keepSessionInfo: true,
-    }),
-    users.login
-  );
+// Register User
+router.post(
+  "/register",
+  catchAsync(async (req, res, next) => {
+    try {
+      const { name, email, username, password } = req.body.user;
+      const user = new User({
+        name,
+        email,
+        username,
+      });
+      const registeredUser = await User.register(user, password);
+      req.login(registeredUser, (error) => {
+        if (error) return next(err);
+        req.flash("success", "회원가입이 성공적으로 완료되었습니다 :)");
+        res.redirect("/posts");
+      });
+    } catch (e) {
+      req.flash("error", e.message);
+      res.redirect("/users/register");
+    }
+  })
+);
 
-router.get("/logout", users.logout);
+router.get("/login", (req, res) => {
+  res.render("users/login");
+});
+
+// User Login
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/users/login",
+    keepSessionInfo: true,
+  }),
+  (req, res) => {
+    req.flash("success", "로그인이 정상적으로 완료되었습니다 :)");
+    const redirectUrl = req.session.returnTo || "/posts";
+    delete req.session.returnTo;
+    res.redirect(redirectUrl);
+  }
+);
+
+// User Logout
+router.get("/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    req.flash("success", "로그아웃이 완료되었습니다 :)");
+    return res.redirect("/posts");
+  });
+});
 
 module.exports = router;
