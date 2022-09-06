@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const User = require("../models/user");
+const subCategory = require("../models/subCategory");
 const catchAsync = require("../utils/catchAsync");
 const passport = require("passport");
 const { logout, isLoggedIn } = require("../middleware");
@@ -35,8 +36,9 @@ router.post(
   })
 );
 
-router.get("/login", (req, res) => {
-  res.render("users/login");
+router.get("/login", async (req, res) => {
+  const subcategories = await subCategory.find({});
+  res.render("users/login", { subcategories });
 });
 
 // User Login

@@ -32,7 +32,7 @@
   <div>
     <ul>
       <% for (let sub of subcategories) { %>
-      <li><%= sub.name %></li>
+      <li><%= `${sub.name}(${sub.count})` %></li>
       <% } %>
     </ul>
   </div>

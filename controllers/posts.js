@@ -5,12 +5,12 @@ const { cloudinary } = require("../cloudianry");
 module.exports.index = async (req, res, next) => {
   const posts = await Post.find({});
   const subcategories = await subCategory.find({});
-  res.render(`index`, { posts, subcategories });
+  res.render("index", { posts, subcategories });
 };
 
 module.exports.new = async (req, res) => {
   const subcategories = await subCategory.find({});
-  res.render("posts/new", subcategories);
+  res.render("posts/new", { subcategories });
 };
 
 module.exports.create = async (req, res, next) => {
