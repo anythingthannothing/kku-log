@@ -12,8 +12,9 @@ thumbnailSchema.virtual("thumbnail").get(function () {
 });
 
 const postSchema = new Schema({
-  category: {
-    type: String,
+  subcategory: {
+    type: Schema.Types.ObjectId,
+    ref: "SubCategory",
   },
   title: {
     type: String,

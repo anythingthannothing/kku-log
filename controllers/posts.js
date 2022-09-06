@@ -3,8 +3,8 @@ const subCategory = require("../models/subCategory");
 const { cloudinary } = require("../cloudianry");
 
 module.exports.index = async (req, res, next) => {
-  const posts = await Post.find({});
   const subcategories = await subCategory.find({});
+  const posts = await Post.find({});
   res.render("index", { posts, subcategories });
 };
 
@@ -13,17 +13,18 @@ module.exports.new = async (req, res) => {
   res.render("posts/new", { subcategories });
 };
 
-module.exports.create = async (req, res, next) => {
+module.exports.create = async (req, res) => {
   const post = new Post(req.body.post);
+  console.log(req.body);
   post.thumbnail = { url: req.file.path, filename: req.file.filename };
   await post.save();
-  console.log(post);
   req.flash("success", "포스트 등록 완료!");
-  res.redirect(`/posts/${post._id}`);
+  return res.redirect(`/posts/${post._id}`);
 };
 
-module.exports.show = async (req, res, next) => {
+module.exports.show = async (req, res) => {
   const { id } = req.params;
+  const subcategories = await subCategory.find({});
   const post = await Post.findById(id).populate({
     path: "comments",
     populate: {
@@ -34,7 +35,7 @@ module.exports.show = async (req, res, next) => {
     req.flash("error", "포스트를 찾을 수 없습니다 :(");
     return res.redirect("/posts");
   }
-  res.render("posts/show", { post });
+  res.render("posts/show", { post, subcategories });
 };
 
 module.exports.edit = async (req, res, next) => {
