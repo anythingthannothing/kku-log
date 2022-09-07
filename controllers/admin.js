@@ -1,4 +1,4 @@
-const Subcategory = require("../models/subCategory");
+const Subcategory = require("../models/subcategory");
 
 module.exports.getAdmin = async (req, res) => {
   const subcategories = await Subcategory.find({});

@@ -1,15 +1,15 @@
 const Post = require("../models/post");
-const subCategory = require("../models/subCategory");
+const subcategory = require("../models/subcategory");
 const { cloudinary } = require("../cloudianry");
 
 module.exports.index = async (req, res, next) => {
-  const subcategories = await subCategory.find({});
+  const subcategories = await subcategory.find({});
   const posts = await Post.find({});
   res.render("index", { posts, subcategories });
 };
 
 module.exports.new = async (req, res) => {
-  const subcategories = await subCategory.find({});
+  const subcategories = await subcategory.find({});
   res.render("posts/new", { subcategories });
 };
 
@@ -24,7 +24,7 @@ module.exports.create = async (req, res) => {
 
 module.exports.show = async (req, res) => {
   const { id } = req.params;
-  const subcategories = await subCategory.find({});
+  const subcategories = await subcategory.find({});
   const post = await Post.findById(id).populate({
     path: "comments",
     populate: {
