@@ -38,7 +38,7 @@ module.exports.postLogin = (req, res) => {
   res.redirect(redirectUrl);
 };
 
-module.exports.logout = (req, res) => {
+module.exports.getLogout = (req, res) => {
   req.logout(function (err) {
     if (err) {
       return next(err);
