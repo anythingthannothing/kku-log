@@ -23,7 +23,7 @@ const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // DB
 const dbUrl = process.env.DB_URL || process.env.LOCAL_URL;
