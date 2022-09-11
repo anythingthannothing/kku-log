@@ -4,6 +4,8 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
+const path = require("path");
+
 // Template
 const engine = require("ejs-mate");
 
@@ -26,7 +28,7 @@ const LocalStrategy = require("passport-local");
 const PORT = process.env.PORT || 3000;
 
 // DB
-const dbUrl = process.env.DB_URL || process.env.LOCAL_URL;
+const dbUrl = /** process.env.DB_URL */ process.env.LOCAL_URL;
 console.log();
 // IP 주소 확인할 것
 mongoose
@@ -45,7 +47,8 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 // express app 내장 미들웨어 세팅
-app.use(express.static("public"));
+
+app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
