@@ -45,7 +45,7 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 // express app 내장 미들웨어 세팅
-app.use(express.static(process.cwd() + "/public"));
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
