@@ -44,14 +44,8 @@ app.engine("ejs", engine);
 app.set("views", "views");
 app.set("view engine", "ejs");
 
-// Routes
-const adminRoutes = require("./routes/admin");
-const userRoutes = require("./routes/users");
-const postRoutes = require("./routes/posts");
-const commentRoutes = require("./routes/comments");
-
 // express app 내장 미들웨어 세팅
-app.use(express.static(process.cwd() + "/public"));
+app.use(express.static(process.cwd() + "public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -103,6 +97,12 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+
+// Routes
+const adminRoutes = require("./routes/admin");
+const userRoutes = require("./routes/users");
+const postRoutes = require("./routes/posts");
+const commentRoutes = require("./routes/comments");
 
 // Index
 app.get("/", (req, res) => {
