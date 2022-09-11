@@ -26,7 +26,7 @@ const LocalStrategy = require("passport-local");
 const PORT = process.env.PORT || 3000;
 
 // DB
-const dbUrl = process.env.LOCAL_URL;
+const dbUrl = process.env.DB_URL || process.env.LOCAL_URL;
 console.log();
 // IP 주소 확인할 것
 mongoose
