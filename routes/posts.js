@@ -10,14 +10,9 @@ const upload = multer({ storage });
 router
   .route("/")
   .get(catchAsync(posts.index))
-  .post(
-    isLoggedIn,
-    upload.single("image"),
-    validatePost,
-    catchAsync(posts.create)
-  );
+  .post(upload.single("image"), catchAsync(posts.create));
 
-router.get("/new", isLoggedIn, posts.new);
+router.get("/new", posts.new);
 
 router
   .route("/:id")

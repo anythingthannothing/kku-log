@@ -14,12 +14,12 @@ module.exports.new = async (req, res) => {
 };
 
 module.exports.create = async (req, res) => {
-  const post = new Post(req.body.post);
-  console.log(req.body);
+  console.log(req);
+  const post = new Post(req.body);
   post.thumbnail = { url: req.file.path, filename: req.file.filename };
   await post.save();
   req.flash("success", "포스트 등록 완료!");
-  return res.redirect(`/posts/${post._id}`);
+  return res.redirect(`/posts`);
 };
 
 module.exports.show = async (req, res) => {

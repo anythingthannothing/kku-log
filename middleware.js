@@ -3,7 +3,7 @@ const ExpressError = require("./utils/expressError");
 const Comment = require("./models/comment");
 
 module.exports.isLoggedIn = (req, res, next) => {
-  if (!req.isAuthenticated()) {
+  if (!req.session.currentUser) {
     req.session.returnTo = req.originalUrl;
     req.flash("error", "권한이 없습니다 :(");
     return res.redirect("/users/login");
