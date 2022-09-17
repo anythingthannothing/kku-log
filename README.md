@@ -1,2 +1,3 @@
 # kku-log
-My own blog project
+
+## 나만의 블로그 만들기 프로젝트

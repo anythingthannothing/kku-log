@@ -43,3 +43,7 @@ footer svg {
 aside {
   border-right: 1.5px rgba(0, 0, 0, 0.15) solid;
 }
+
+aside svg {
+  width: 1.6rem;
+}

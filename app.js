@@ -16,21 +16,18 @@ const Subcategory = require("./models/subcategory");
 const mongoSanitize = require("express-mongo-sanitize");
 
 const methodOverride = require("method-override");
-const helmet = require("helmet");
 const ExpressError = require("./utils/expressError");
 const morgan = require("morgan");
-const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
 const PORT = process.env.PORT || 3000;
 
 // DB
-const dbUrl = process.env.DB_URL || process.env.LOCAL_URL;
-console.log();
-// IP 주소 확인할 것
+if (process.env.npm_lifecycle_event === "dev") {
+  dbUrl = process.env.LOCAL_URL;
+} else dbUrl = process.env.DB_URL;
+
 mongoose
   .connect(dbUrl)
   .then(() => {
@@ -43,7 +40,7 @@ mongoose
 app.engine("ejs", engine);
 
 // express app 세팅
-app.set("views", "views");
+app.set("views", "src/views");
 app.set("view engine", "ejs");
 
 // express app 내장 미들웨어 세팅
@@ -60,7 +57,6 @@ app.use(
 );
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
-app.use(cookieParser());
 
 const secret = process.env.SECRET;
 
@@ -71,12 +67,12 @@ app.use(
       touchAfter: 24 * 3600,
       ttl: 3 * 24 * 60 * 60,
       secret,
-      dbName: "test",
+      dbName: "myOwnBlog",
     }),
     name: "session",
     secret,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       httpOnly: true,
       expires: Date.now() + 1000 * 60 * 60 * 24 * 2,
@@ -85,14 +81,6 @@ app.use(
   })
 );
 app.use(flash());
-// app.use(helmet({ contentSecurityPolicy: false }));
-
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;

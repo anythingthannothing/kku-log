@@ -1,15 +1,14 @@
 const mongoose = require("mongoose");
-const passportLocalMongoose = require("passport-local-mongoose");
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
   name: {
     type: String,
-    required: [true, "이름은 필수 입력값입니다."],
+    required: true,
   },
   email: {
     type: String,
-    required: [true, "이메일은 필수 입력값입니다."],
+    required: true,
     unique: true,
   },
   comments: [
@@ -19,7 +18,5 @@ const userSchema = new Schema({
     },
   ],
 });
-
-userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", userSchema);
