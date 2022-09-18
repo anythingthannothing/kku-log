@@ -8,10 +8,9 @@ const path = require("path");
 
 // Template
 const engine = require("ejs-mate");
-
+const { setLocals } = require("./middleware");
 // Model
 const mongoose = require("mongoose");
-const User = require("./models/user");
 const Subcategory = require("./models/subcategory");
 const mongoSanitize = require("express-mongo-sanitize");
 
@@ -82,10 +81,10 @@ app.use(
 );
 app.use(flash());
 
+app.use(setLocals);
+
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
+  console.log(req.session.user);
   next();
 });
 
