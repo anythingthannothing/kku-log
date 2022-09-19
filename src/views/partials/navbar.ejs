@@ -51,6 +51,16 @@
             >About</a
           >
         </li>
+
+        <% if (currentUser && currentUser.email ===
+        'anythingthannothing@gmail.com') { %>
+        <li class="nav-item">
+          <a href="/posts/new" class="nav-link active">글쓰기</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin" class="nav-link active">관리자</a>
+        </li>
+        <% } %>
       </ul>
     </div>
   </nav>

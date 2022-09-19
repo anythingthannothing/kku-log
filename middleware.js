@@ -28,10 +28,12 @@ module.exports.logout = (req, res, next) => {
 };
 
 module.exports.isAdmin = (req, res, next) => {
-  const { id } = req.params;
-  if (!req.user || req.user.username !== "anythingthannothing") {
+  if (
+    !req.session.user ||
+    req.session.user.email !== "anythingthannothing@gmail.com"
+  ) {
     req.flash("error", "권한이 없습니다 :(");
-    return res.redirect(`/posts/${id}`);
+    return res.redirect(`/posts`);
   }
   next();
 };

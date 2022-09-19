@@ -4,19 +4,19 @@
   <section class="container-fluid shadow mb-3 px-0">
       <div class="card">
         <div class="row g-0">
-          <div class="col-3">
+          <div class="col-3 d-flex align-items-center px-2">
             <img
               src="<%= post.thumbnail.thumbnail %>"
-              class="img-fluid rounded-start"
+              class="img-fluid rounded-start rounded-end"
             />
           </div>
           <div class="col-9">
             <div class="card-body">
               <h2 class="card-title"><%= post.title %></h2>
-              <p class="card-text"><%= post.content %></p>
+              <p class="card-text"><%- post.content.slice(0, 20) %></p>
               <div class="d-flex justify-content-between">
-                <span class="card-text"><small class=text-muted">최초 작성일: <%= post.datePosted %></small></span>
-                <span class="card-text"><small class=text-muted">최종 수정일: <%= post.EditedLast %></small></span>
+                <span class="card-text"><small class=text-muted">작성일: <%= String(post.postedAt).slice(0, 11) %></small></span>
+                <span class="card-text"><small class=text-muted">최종 수정일: <%= String(post.editedLast).slice(0, 11) %></small></span>
                 <span class="card-text"><small class=text-muted">조회수: 0</small></span>
               </div>
             </div>

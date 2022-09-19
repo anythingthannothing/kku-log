@@ -5,7 +5,7 @@ const users = require("../controllers/users");
 const { isLoggedIn } = require("../middleware");
 
 // [User]
-router.get("/login", users.getLogin);
+router.get("/login", isLoggedIn, users.getLogin);
 
 // User Login
 router.get("/login/finish", users.postLogin);

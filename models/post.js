@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Comment = require("./comment");
+const Subcategory = require("./subcategory");
 const Schema = mongoose.Schema;
 
 const thumbnailSchema = new Schema({
@@ -13,8 +14,7 @@ thumbnailSchema.virtual("thumbnail").get(function () {
 
 const postSchema = new Schema({
   subcategory: {
-    type: Schema.Types.ObjectId,
-    ref: "Subcategory",
+    type: String,
   },
   title: {
     type: String,
@@ -31,8 +31,9 @@ const postSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  editedAt: {
-    tpye: Date,
+  editedLast: {
+    type: Date,
+    default: Date.now,
   },
   thumbnail: thumbnailSchema,
   comments: [
@@ -43,14 +44,12 @@ const postSchema = new Schema({
   ],
 });
 
-postSchema.post("findOneAndDelete", async function (doc) {
-  if (doc) {
-    await Comment.deleteMany({
-      _id: {
-        $in: doc.comments,
-      },
-    });
-  }
+postSchema.post("findOneAndDelete", async function () {
+  await Comment.deleteMany({
+    _id: {
+      $in: this.comments,
+    },
+  });
 });
 
 module.exports = mongoose.model("Post", postSchema);

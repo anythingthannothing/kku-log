@@ -1,5 +1,5 @@
-<% layout('layouts/boilerplate') -%> <% if (currentUser && currentUser.username
-=== 'anythingthannothing') { %>
+<% layout('layouts/boilerplate') -%> <% if (currentUser && currentUser.email ===
+'anythingthannothing@gmail.com') { %>
 <div class="d-flex mb-3">
   <form method="POST" action="/posts/<%= post._id %>?_method=DELETE">
     <button type="submit" class="btn btn-warning me-3">삭제하기</button>
@@ -10,9 +10,7 @@
 </div>
 <% } %>
 <h1><%= post.title %></h1>
-<article class="mb-3">
-  <p><%= post.content %></p>
-</article>
+<article class="mb-3"><%- post.content %></article>
 <% if (currentUser) { %>
 <form
   action="/posts/<%= post._id %>/comments"

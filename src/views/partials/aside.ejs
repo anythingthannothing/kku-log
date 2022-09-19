@@ -20,14 +20,12 @@
         </button>
       </a>
       <% } %> <% if (currentUser) { %>
-      <form action="/users/logout" method="GET">
-        <button class="btn btn-warning">로그아웃</button>
-      </form>
-      <% } %> <% if (currentUser && currentUser.username ===
-      'anythingthannothing') { %>
-      <a href="/posts/new" class="">
-        <button class="btn btn-primary">글쓰기</button>
-      </a>
+      <div class="d-flex justify-content-evenly align-items-center w-100">
+        <span><%= currentUser.name %>님! 반가워요 😊</span>
+        <form action="/users/logout" method="GET">
+          <button class="btn btn-secondary">로그아웃</button>
+        </form>
+      </div>
       <% } %>
     </div>
   </div>
@@ -43,7 +41,11 @@
   <div>
     <ul>
       <% for (let sub of subcategories) { %>
-      <li><%= `${sub.name}(${sub.count})` %></li>
+      <li>
+        <a href="/posts?filter=<%= sub.name %>"
+          ><%= `${sub.name}(${sub.posts.length})` %></a
+        >
+      </li>
       <% } %>
     </ul>
   </div>

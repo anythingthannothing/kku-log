@@ -10,9 +10,9 @@ const upload = multer({ storage });
 router
   .route("/")
   .get(catchAsync(posts.index))
-  .post(upload.single("image"), catchAsync(posts.create));
+  .post(isAdmin, upload.single("thumbnail"), catchAsync(posts.create));
 
-router.get("/new", posts.new);
+router.get("/new", isAdmin, posts.new);
 
 router
   .route("/:id")
