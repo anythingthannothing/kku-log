@@ -1,15 +1,19 @@
-const Post = require("../models/post");
-const Subcategory = require("../models/subcategory");
+const Post = require("../models/Post");
+const Category = require("../models/Category");
+const Subcategory = require("../models/Subcategory");
 const { cloudinary } = require("../cloudianry");
 
 module.exports.index = async (req, res, next) => {
-  const subcategories = await Subcategory.find({});
+  const categories = await Category.find({}).populate({
+    path: "subcategories",
+  });
   if (req.query) {
     const { filter } = req;
     const posts = await Post.find({ subcategory: filter });
   }
   const posts = await Post.find({});
-  res.render("index", { posts, subcategories });
+  console.log(categories);
+  res.render("index", { posts, categories });
 };
 
 module.exports.new = async (req, res) => {
@@ -37,7 +41,7 @@ module.exports.create = async (req, res) => {
 
 module.exports.show = async (req, res) => {
   const { id } = req.params;
-  const subcategories = await Subcategory.find({});
+  const categories = await Category.find({}).populate("subcategories");
   const post = await Post.findById(id).populate({
     path: "comments",
     populate: {
@@ -48,7 +52,7 @@ module.exports.show = async (req, res) => {
     req.flash("error", "포스트를 찾을 수 없습니다 :(");
     return res.redirect("/posts");
   }
-  res.render("posts/show", { post, subcategories });
+  res.render("posts/show", { post, categories });
 };
 
 module.exports.edit = async (req, res, next) => {

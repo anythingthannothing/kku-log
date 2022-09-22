@@ -1,6 +1,6 @@
 const { postSchema, commentSchema } = require("./schemas");
 const ExpressError = require("./utils/expressError");
-const Comment = require("./models/comment");
+const Comment = require("./models/Comment");
 
 module.exports.setLocals = (req, res, next) => {
   res.locals.currentUser = req.session.user;
@@ -11,9 +11,8 @@ module.exports.setLocals = (req, res, next) => {
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.session.user) {
-    req.session.returnTo = req.originalUrl;
-    req.flash("error", "권한이 없습니다 :(");
-    return res.redirect("/users/login");
+    req.flash("error", "로그인을 해주세요 :)");
+    return res.redirect("/posts");
   }
   next();
 };

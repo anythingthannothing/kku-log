@@ -7,7 +7,7 @@ const admin = require("../controllers/admin");
 
 router
   .route("/")
-  .get(isLoggedIn, isAdmin, catchAsync(admin.getAdmin))
-  .post(isLoggedIn, isAdmin, catchAsync(admin.addSubcategory));
+  .get(isAdmin, catchAsync(admin.getAdmin))
+  .post(isAdmin, catchAsync(admin.addCategory));
 
 module.exports = router;

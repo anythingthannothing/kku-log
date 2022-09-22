@@ -39,8 +39,10 @@
   </div>
   <div class="container-fluid border mb-3">LeetCode streak</div>
   <div>
+    <% for (let category of categories) { %>
+    <h5 class="ms-1">- <%= category.name %> -</h5>
     <ul>
-      <% for (let sub of subcategories) { %>
+      <% for (let sub of category.subcategories) { %>
       <li>
         <a href="/posts?filter=<%= sub.name %>"
           ><%= `${sub.name}(${sub.posts.length})` %></a
@@ -48,5 +50,6 @@
       </li>
       <% } %>
     </ul>
+    <% } %>
   </div>
 </aside>

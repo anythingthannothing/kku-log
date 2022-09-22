@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/User");
 const fetch = require("node-fetch");
 
 module.exports.getLogin = async (req, res) => {
@@ -51,15 +51,18 @@ module.exports.postLogin = async (req, res) => {
   if (!emailObj) {
     return res.redirect("/");
   }
-  user = await User.findOne({ email: emailObj.email });
-  if (!user) {
+  const foundUser = await User.findOne({ email: emailObj.email });
+  if (!foundUser) {
     user = await User.create({
       name: user.name,
       email: emailObj.email,
     });
+    req.session.loggedIn = true;
+    req.session.user = user;
+  } else {
+    req.session.loggedIn = true;
+    req.session.user = foundUser;
   }
-  req.session.loggedIn = true;
-  req.session.user = user;
   res.redirect("/");
 };
 

@@ -17,14 +17,9 @@ router.get("/new", isAdmin, posts.new);
 router
   .route("/:id")
   .get(catchAsync(posts.show))
-  .put(
-    isLoggedIn,
-    isAdmin,
-    upload.single("image"),
-    validatePost,
-    catchAsync(posts.update)
-  )
-  .delete(isLoggedIn, catchAsync(posts.remove));
+  .all(isAdmin)
+  .put(upload.single("image"), validatePost, catchAsync(posts.update))
+  .delete(catchAsync(posts.remove));
 
 router.get("/:id/edit", isAdmin, catchAsync(posts.edit));
 

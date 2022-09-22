@@ -11,7 +11,7 @@ const engine = require("ejs-mate");
 const { setLocals } = require("./middleware");
 // Model
 const mongoose = require("mongoose");
-const Subcategory = require("./models/subcategory");
+const Subcategory = require("./models/Subcategory");
 const mongoSanitize = require("express-mongo-sanitize");
 
 const methodOverride = require("method-override");

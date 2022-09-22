@@ -8,8 +8,6 @@ const {
   isReviewAuthor,
 } = require("../middleware");
 
-// [COMMENT]
-// Leave a Comment
 router.post("/", isLoggedIn, validateComment, catchAsync(comments.create));
 
 router.delete(
