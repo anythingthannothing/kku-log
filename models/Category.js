@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Subcategory = require("./Subcategory");
 const Schema = mongoose.Schema;
 
 const categorySchema = new Schema({
@@ -12,6 +13,14 @@ const categorySchema = new Schema({
       ref: "Subcategory",
     },
   ],
+});
+
+categorySchema.post("findOneAndDelete", async function (document) {
+  await Subcategory.deleteMany({
+    _id: {
+      $in: document.subcategories,
+    },
+  });
 });
 
 module.exports = mongoose.model("Category", categorySchema);

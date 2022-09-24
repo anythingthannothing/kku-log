@@ -40,7 +40,7 @@ module.exports.isAdmin = (req, res, next) => {
 module.exports.isReviewAuthor = async (req, res, next) => {
   const { id, commentId } = req.params;
   const comment = await Comment.findById(commentId);
-  if (!comment.author.equals(req.user._id)) {
+  if (!comment.author.equals(req.session.user._id)) {
     req.flash("error", "권한이 없습니다 :(");
     return res.redirect(`/posts/${id}`);
   }

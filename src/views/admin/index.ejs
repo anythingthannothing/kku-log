@@ -10,13 +10,21 @@
     <div class="container">
       <%- include('../partials/flash') %>
       <div class="row">
-        <section class="col-6 p-3">
+        <section class="col-6 p-5">
           <div class="mb-5">
             <h2>Category</h2>
             <div class="mb-3">
               <ul>
                 <% for (let cat of categories) { %>
-                <li><%= cat.name %></li>
+                <div class="d-flex justify-content-between">
+                  <li><%= cat.name %></li>
+                  <form
+                    action="/admin/categories/<%= cat._id %>?_method=DELETE"
+                    method="POST"
+                  >
+                    <button type="submit" class="btn">❌</button>
+                  </form>
+                </div>
                 <% } %>
               </ul>
             </div>
@@ -43,12 +51,22 @@
               </div>
             </form>
           </div>
+        </section>
+        <section class="col-6 p-5">
           <div>
             <h2>SubCategory</h2>
             <div class="mb-3">
               <ul>
                 <% for (let sub of subcategories) { %>
-                <li><%= sub.name %></li>
+                <div class="d-flex justify-content-between">
+                  <li><%= sub.name %></li>
+                  <form
+                    action="/admin/subcategories/<%=sub._id %>?_method=DELETE"
+                    method="POST"
+                  >
+                    <input type="submit" class="btn" value="❌" />
+                  </form>
+                </div>
                 <% } %>
               </ul>
             </div>
@@ -66,6 +84,7 @@
                     class="form-select"
                     id="cat"
                     aria-label="Default select example"
+                    required
                   >
                     <option selected>카테고리를 선택하세요.</option>
                     <% for (let cat of categories) { %>

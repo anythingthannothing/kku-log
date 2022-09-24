@@ -43,10 +43,10 @@ const postSchema = new Schema({
   ],
 });
 
-postSchema.post("findOneAndDelete", async function () {
+postSchema.post("findOneAndDelete", async function (document) {
   await Comment.deleteMany({
     _id: {
-      $in: this.comments,
+      $in: document.comments,
     },
   });
 });

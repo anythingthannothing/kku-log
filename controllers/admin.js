@@ -21,3 +21,15 @@ module.exports.addCategory = async (req, res) => {
   }
   return res.redirect("/admin");
 };
+
+module.exports.deleteCategory = async (req, res) => {
+  const { id } = req.params;
+  await Category.findByIdAndDelete(id);
+  return res.redirect("/admin");
+};
+
+module.exports.deleteSubcategory = async (req, res) => {
+  const { id } = req.params;
+  await Subcategory.findByIdAndDelete(id);
+  return res.redirect("/admin");
+};

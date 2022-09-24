@@ -5,7 +5,7 @@ module.exports.create = async (req, res, next) => {
   const { id } = req.params;
   const post = await Post.findById(id);
   const comment = new Comment(req.body.comment);
-  comment.author = req.user._id;
+  comment.author = req.session.user._id;
   post.comments.push(comment);
   await comment.save();
   await post.save();
@@ -15,6 +15,7 @@ module.exports.create = async (req, res, next) => {
 
 module.exports.delete = async (req, res, next) => {
   const { id, commentId } = req.params;
+  console.log(id, commentId);
   await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } });
   await Comment.findByIdAndDelete(commentId);
   req.flash("success", "댓글이 정상적으로 삭제되었습니다 :)");

@@ -4,15 +4,13 @@ const Subcategory = require("../models/Subcategory");
 const { cloudinary } = require("../cloudianry");
 
 module.exports.index = async (req, res, next) => {
-  const categories = await Category.find({}).populate({
-    path: "subcategories",
-  });
-  if (req.query) {
-    const { filter } = req;
+  const categories = await Category.find({}).populate("subcategories");
+  if (req.query.filter) {
+    const { filter } = req.query;
     const posts = await Post.find({ subcategory: filter });
+    return res.render("index", { posts, categories });
   }
   const posts = await Post.find({});
-  console.log(categories);
   res.render("index", { posts, categories });
 };
 
