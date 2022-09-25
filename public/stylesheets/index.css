@@ -47,3 +47,7 @@ aside {
 aside svg {
   width: 1.6rem;
 }
+
+#thumbnail img {
+  max-height: 150px;
+}

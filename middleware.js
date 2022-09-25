@@ -22,7 +22,6 @@ module.exports.logout = (req, res, next) => {
     req.flash("error", "잘못된 접근입니다 :(");
     return res.redirect("/users/login");
   }
-  req.session.returnTo = req.originalUrl;
   next();
 };
 

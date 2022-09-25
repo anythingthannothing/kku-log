@@ -2,6 +2,20 @@
 <html lang="ko">
   <head>
     <%- include('../partials/head') %>
+    <script src="/javascripts/validatePost.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script>
+      $("#summernote").summernote();
+    </script>
     <title>kku.log - Edit</title>
   </head>
 
@@ -19,17 +33,20 @@
           enctype="multipart/form-data"
         >
           <div class="d-flex flex-column">
-            <div class="mb-3">
-              <label class="form-label" for="category">카테고리</label>
-              <input
-                class="form-control"
-                type="text"
-                id="category"
-                name="post[category]"
-                value="<%= post.category %>"
-                required
-              />
-              <div class="invalid-feedback">유효한 카테고리 입력 필요</div>
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="subcategory">카테고리</label>
+              <select
+                name="subcategory"
+                class="form-select"
+                id="subcategory"
+                aria-label="Default select example"
+              >
+                <option selected>카테고리를 선택하세요.</option>
+                <% for (let sub of subcategories) { %>
+                <option value="<%= sub.name %>"><%= sub.name %></option>
+                <% } %>
+              </select>
+              <div class="invalid-feedback">유효한 카테고리 선택 필요</div>
             </div>
             <div class="mb-3">
               <label class="form-label" for="title">제목</label>
@@ -37,25 +54,13 @@
                 class="form-control"
                 type="text"
                 id="title"
-                name="post[title]"
+                name="title"
                 value="<%= post.title %>"
                 required
               />
               <div class="invalid-feedback">유효한 제목 입력 필요</div>
             </div>
-            <div class="mb-3">
-              <label class="form-label" for="textarea">본문</label>
-              <textarea
-                class="form-control"
-                id="textarea"
-                name="post[content]"
-                rows="20"
-                required
-              >
-<%= post.content %></textarea
-              >
-              <div class="invalid-feedback">유효한 본문 입력 필요</div>
-            </div>
+            <textarea id="summernote" name="content"></textarea>
             <div class="mb-3">
               <label class="form-label" for="thumbnail">썸네일</label>
               <input
@@ -72,7 +77,7 @@
               <input
                 class="form-control"
                 type="text"
-                name="post[tags]"
+                name="tags"
                 id="tags"
                 value="<%= post.tags %>"
                 required
@@ -97,6 +102,11 @@
       </div>
       <div class="row"></div>
     </div>
+    <script>
+      $(document).ready(function () {
+        $("#summernote").summernote();
+      });
+    </script>
     <script src="/javascripts/validatePost.js"></script>
   </body>
 </html>

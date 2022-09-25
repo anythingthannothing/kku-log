@@ -81,7 +81,6 @@ app.use(
   })
 );
 app.use(flash());
-
 app.use(setLocals);
 
 // Routes
@@ -102,7 +101,7 @@ app.use("/posts/:id/comments", commentRoutes);
 
 // [BLOG]
 // Index blogs
-app.get("/blogs/", (req, res) => {
+app.get("/blogs", (req, res) => {
   res.render("blog");
 });
 

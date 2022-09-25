@@ -37,7 +37,7 @@ module.exports.create = async (req, res) => {
   return res.redirect(`/posts/${post._id}`);
 };
 
-module.exports.show = async (req, res) => {
+module.exports.show = async (req, res, next) => {
   const { id } = req.params;
   const categories = await Category.find({}).populate("subcategories");
   const post = await Post.findById(id).populate({
@@ -50,17 +50,18 @@ module.exports.show = async (req, res) => {
     req.flash("error", "포스트를 찾을 수 없습니다 :(");
     return res.redirect("/posts");
   }
-  res.render("posts/show", { post, categories });
+  res.render("posts/show", { categories, post });
 };
 
 module.exports.edit = async (req, res, next) => {
   const { id } = req.params;
+  const subcategories = await Subcategory.find({});
   const post = await Post.findById(id);
   if (!post) {
     req.flash("error", "포스트를 찾을 수 없습니다 :(");
     return res.redirect("/posts");
   }
-  res.render("posts/edit", { post });
+  res.render("posts/edit", { post, subcategories });
 };
 
 module.exports.update = async (req, res) => {

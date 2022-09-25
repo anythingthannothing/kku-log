@@ -12,4 +12,5 @@ router
 
 router.delete("/categories/:id", admin.deleteCategory);
 router.delete("/subcategories/:id", admin.deleteSubcategory);
+
 module.exports = router;

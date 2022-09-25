@@ -2,7 +2,7 @@ const Category = require("../models/Category");
 const Subcategory = require("../models/Subcategory");
 
 module.exports.getAdmin = async (req, res) => {
-  const categories = await Category.find({});
+  const categories = await Category.find({}).populate("subcategories");
   const subcategories = await Subcategory.find({});
   res.render("admin/index", { subcategories, categories });
 };
