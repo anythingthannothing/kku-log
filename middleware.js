@@ -26,6 +26,7 @@ module.exports.logout = (req, res, next) => {
 };
 
 module.exports.isAdmin = (req, res, next) => {
+  console.log(req.body);
   if (
     !req.session.user ||
     req.session.user.email !== "anythingthannothing@gmail.com"

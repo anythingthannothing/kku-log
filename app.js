@@ -46,7 +46,13 @@ app.set("view engine", "ejs");
 // express app 내장 미들웨어 세팅
 
 app.use(express.static(path.join(__dirname, "/public")));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+    limit: "50mb",
+    parameterLimit: 10000,
+  })
+);
 app.use(express.json());
 
 // express app 외장 미들웨어 세팅
@@ -82,6 +88,11 @@ app.use(
 );
 app.use(flash());
 app.use(setLocals);
+
+app.use("/", (req, res, next) => {
+  console.log(req.session.user);
+  next();
+});
 
 // Routes
 const adminRoutes = require("./routes/admin");

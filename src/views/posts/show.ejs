@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') -%> <% if (currentUser && currentUser.email ===
 'anythingthannothing@gmail.com') { %>
-<div class="d-flex mb-3">
+<div class="d-flex mb-5">
   <form method="POST" action="/posts/<%= post._id %>?_method=DELETE">
     <button type="submit" class="btn btn-warning me-3">삭제하기</button>
   </form>
@@ -9,42 +9,44 @@
   </a>
 </div>
 <% } %>
-<h1><%= post.title %></h1>
-<article class="mb-3"><%- post.content %></article>
-<% if (currentUser) { %>
-<form
-  action="/posts/<%= post._id %>/comments"
-  method="POST"
-  novalidate
-  class="needs-validation mb-3"
->
-  <div class="mb-2">
-    <label class="form-label" for="textarea">댓글 남기기</label>
-    <textarea
-      class="form-control needs-validation"
-      id="textarea"
-      name="comment[body]"
-      rows="3"
-      required
-    ></textarea>
+<div class="mb-3">
+  <h1><%= post.title %></h1>
+  <article class="mb-3"><%- post.content %></article>
+  <% if (currentUser) { %>
+  <form
+    action="/posts/<%= post._id %>/comments"
+    method="POST"
+    novalidate
+    class="needs-validation mb-3"
+  >
+    <div class="mb-2">
+      <label class="form-label" for="textarea">댓글 남기기</label>
+      <textarea
+        class="form-control needs-validation"
+        id="textarea"
+        name="comment[body]"
+        rows="3"
+        required
+      ></textarea>
+    </div>
+    <button class="btn btn-primary">등록</button>
+  </form>
+  <% } -%> <% if (!currentUser) { %>
+  <span>댓글은 로그인 이후에 작성할 수 있습니다 :)</span>
+  <% } %> <% for (let comment of post.comments) { %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">작성자: <%= comment.author.username %></h5>
+      <p class="card-text">댓글 : <%= comment.body %></p>
+      <% if (currentUser && comment.author.equals(currentUser._id)) { %>
+      <form
+        action="/posts/<%= post._id%>/comments/<%= comment._id %>?_method=DELETE"
+        method="POST"
+      >
+        <button class="btn btn-danger">댓글 지우기</button>
+      </form>
+      <% } %>
+    </div>
   </div>
-  <button class="btn btn-primary">등록</button>
-</form>
-<% } -%> <% if (!currentUser) { %>
-<span>댓글은 로그인 이후에 작성할 수 있습니다 :)</span>
-<% } %> <% for (let comment of post.comments) { %>
-<div class="card mb-3">
-  <div class="card-body">
-    <h5 class="card-title">작성자: <%= comment.author.username %></h5>
-    <p class="card-text">댓글 : <%= comment.body %></p>
-    <% if (currentUser && comment.author.equals(currentUser._id)) { %>
-    <form
-      action="/posts/<%= post._id%>/comments/<%= comment._id %>?_method=DELETE"
-      method="POST"
-    >
-      <button class="btn btn-danger">댓글 지우기</button>
-    </form>
-    <% } %>
-  </div>
+  <% } %>
 </div>
-<% } %>
