@@ -2,18 +2,19 @@ const Category = require("../models/Category");
 const Subcategory = require("../models/Subcategory");
 
 module.exports.getAdmin = async (req, res) => {
-  const categories = await Category.find({}).populate("subcategories");
-  const subcategories = await Subcategory.find({});
-  res.render("admin/index", { subcategories, categories });
+  const categories = await Category.find().populate("subcategories");
+  const subcategories = await Subcategory.find();
+  return res.render("admin/index", { categories, subcategories });
 };
 
 module.exports.addCategory = async (req, res) => {
-  if (req.body.cat) {
-    const cat = new Category(req.body.cat);
+  console.log(req.body);
+  if (req.body.catname) {
+    const cat = new Category({ name: req.body.catname });
     await cat.save();
   } else {
-    const { cat, name } = req.body.sub;
-    const sub = new Subcategory({ name });
+    const { cat, subname } = req.body;
+    const sub = new Subcategory({ name: subname });
     const category = await Category.findOne({ name: cat });
     category.subcategories.push(sub);
     await category.save();

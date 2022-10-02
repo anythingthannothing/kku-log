@@ -51,3 +51,7 @@ aside svg {
 #thumbnail img {
   max-height: 150px;
 }
+
+main img {
+  max-width: 100% !important;
+}

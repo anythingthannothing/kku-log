@@ -41,7 +41,7 @@
                     class="form-control"
                     type="text"
                     id="catname"
-                    name="cat[name]"
+                    name="catname"
                     required
                   />
                 </div>
@@ -56,10 +56,8 @@
           <div>
             <h2>SubCategory</h2>
             <div class="mb-3">
-              <% for (let cat of categories) { %>
-              <h3><%= cat.name %></h3>
               <ul>
-                <% for (let sub of cat.subcategories) { %>
+                <% for (let sub of subcategories) { %>
                 <div class="d-flex justify-content-between">
                   <li><%= sub.name %></li>
                   <form
@@ -71,7 +69,6 @@
                 </div>
                 <% } %>
               </ul>
-              <% } %>
             </div>
             <form
               action="/admin"
@@ -83,7 +80,7 @@
                 <div class="input-group mb-3">
                   <label class="input-group-text" for="cat">카테고리</label>
                   <select
-                    name="sub[cat]"
+                    name="cat"
                     class="form-select"
                     id="cat"
                     aria-label="Default select example"
@@ -101,7 +98,7 @@
                     class="form-control"
                     type="text"
                     id="subname"
-                    name="sub[name]"
+                    name="subname"
                     required
                   />
                 </div>
