@@ -12,7 +12,7 @@ const engine = require("ejs-mate");
 const { setLocals } = require("./middleware");
 // Model
 const mongoose = require("mongoose");
-const Subcategory = require("./models/Subcategory");
+const Category = require("./models/Category");
 const mongoSanitize = require("express-mongo-sanitize");
 
 const methodOverride = require("method-override");
@@ -46,13 +46,7 @@ app.set("view engine", "ejs");
 // express app 내장 미들웨어 세팅
 
 app.use(express.static(path.join(__dirname, "/public")));
-app.use(
-  bodyParser.urlencoded({
-    extended: false,
-    limit: "50mb",
-    parameterLimit: 10000,
-  })
-);
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 // express app 외장 미들웨어 세팅
@@ -121,9 +115,9 @@ app.all("*", (req, res, next) => {
 });
 
 app.use(async (err, req, res, next) => {
-  const subcategories = await Subcategory.find({});
+  const categories = await Category.find({}).populate("subcategories");
   const { status = 500, message = "알 수 없는 오류가 발생했어요 :(" } = err;
-  res.status(status).render("error", { message, subcategories });
+  res.status(status).render("error", { message, categories });
 });
 
 app.listen(PORT, () => {

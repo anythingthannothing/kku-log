@@ -60,7 +60,9 @@
               />
               <div class="invalid-feedback">유효한 제목 입력 필요</div>
             </div>
-            <textarea id="summernote" name="content"></textarea>
+            <textarea id="summernote" name="content">
+<%- post.content %></textarea
+            >
             <div class="mb-3">
               <label class="form-label" for="thumbnail">썸네일</label>
               <input

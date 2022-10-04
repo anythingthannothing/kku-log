@@ -66,7 +66,8 @@ module.exports.edit = async (req, res, next) => {
 
 module.exports.update = async (req, res) => {
   const { id } = req.params;
-  const post = await Post.findByIdAndUpdate(id, req.body.post, {
+  console.log(req.body);
+  const post = await Post.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
   });
