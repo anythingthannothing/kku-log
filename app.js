@@ -67,7 +67,7 @@ app.use(
       touchAfter: 24 * 3600,
       ttl: 3 * 24 * 60 * 60,
       secret,
-      dbName: "myOwnBlog",
+      dbName: "test",
     }),
     name: "session",
     secret,
