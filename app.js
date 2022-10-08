@@ -27,7 +27,6 @@ const PORT = process.env.PORT || 3000;
 if (process.env.NODE_ENV === "production") {
   dbUrl = process.env.DB_URL;
 } else dbUrl = process.env.LOCAL_URL;
-console.log(dbUrl);
 mongoose
   .connect(dbUrl)
   .then(() => {
