@@ -24,9 +24,9 @@ const flash = require("connect-flash");
 const PORT = process.env.PORT || 3000;
 
 // DB
-if (process.env.npm_lifecycle_event === "dev") {
-  dbUrl = process.env.LOCAL_URL;
-} else dbUrl = process.env.DB_URL;
+if (process.env.NODE_ENV === "production") {
+  dbUrl = process.env.DB_URL;
+} else dbUrl = process.env.LOCAL_URL;
 
 mongoose
   .connect(dbUrl)
