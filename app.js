@@ -8,7 +8,6 @@ const app = express();
 const path = require("path");
 
 // Template
-const engine = require("ejs-mate");
 const { setLocals } = require("./middleware");
 // Model
 const mongoose = require("mongoose");
@@ -36,11 +35,9 @@ mongoose
     console.log(err);
   });
 
-app.engine("ejs", engine);
-
 // express app 세팅
 app.set("views", "src/views");
-app.set("view engine", "ejs");
+app.set("view engine", "pug");
 
 // express app 내장 미들웨어 세팅
 
@@ -83,6 +80,10 @@ app.use(flash());
 app.use(setLocals);
 
 app.use("/", (req, res, next) => {
+  req.session.user = {
+    loggedIn: true,
+    email: "anythingthannothing@gmail.com",
+  };
   console.log(req.session.user);
   next();
 });
@@ -97,7 +98,6 @@ const commentRoutes = require("./routes/comments");
 app.get("/", (req, res) => {
   res.redirect("/posts");
 });
-
 app.use("/admin", adminRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);

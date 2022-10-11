@@ -1,0 +1,8 @@
+if success && success.length
+    div(role='alert').alert.alert-success.alert-dismissible.fade.show
+        em #{success}
+        button(type="button" data-bs-dismiss="alert" aria-label="Close").btn-close
+if error && error.length
+    div(role="alert").alert.alert-danger.alert-dismissible.fade.show
+        em #{error}
+        button(type="button" data-bs-dismiss="alert" aria-label="Close").btn-close
