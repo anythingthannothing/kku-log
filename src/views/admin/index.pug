@@ -18,7 +18,7 @@ doctype html
                                     div.d-flex.justify-content-between
                                         li #{category.name}
                                         form(
-                                            action="/admin/categories/<%= cat._id %>?_method=DELETE"
+                                            action=`/admin/categories/${category._id}?_method=DELETE`
                                             method="POST"
                                         )
                                             button(type="submit").btn ❌
@@ -37,14 +37,14 @@ doctype html
                         h2 SubCategory
                         div.mb-3
                             ul
-                                each sub in subcategories
+                                each subcategory in subcategories
                                     div.d-flex.justify-content-between
-                                    li #{sub.name}
-                                    form(
-                                        action="/admin/subcategories/<%=sub._id %>?_method=DELETE"
-                                        method="POST"
-                                    )
-                                        input(type="submit" value="❌").btn
+                                        li #{subcategory.name}
+                                        form(
+                                            action=`/admin/subcategories/${subcategory._id}?_method=DELETE`
+                                            method="POST"
+                                        )
+                                            input(type="submit" value="❌").btn
                         form(
                             action="/admin"
                             method="POST"
@@ -60,7 +60,7 @@ doctype html
                                     ).form-select.cat
                                         option(selected) 카테고리를 선택하세요.
                                         each category in categories
-                                            option(value=`${categories.name}`) #{cat.name}
+                                            option(value=`${category.name}`) #{category.name}
                                 div.mb-3
                                     label(for="subname").form-label 서브카테고리
                                     input(

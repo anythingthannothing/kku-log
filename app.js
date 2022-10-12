@@ -83,6 +83,7 @@ app.use("/", (req, res, next) => {
   req.session.user = {
     loggedIn: true,
     email: "anythingthannothing@gmail.com",
+    username: "kku",
   };
   console.log(req.session.user);
   next();
