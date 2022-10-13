@@ -20,7 +20,6 @@ module.exports.new = async (req, res) => {
 };
 
 module.exports.create = async (req, res) => {
-  console.log(req.body);
   const { title, content, tags } = req.body;
   const subcategory = await Subcategory.findOne({ name: req.body.subcategory });
   const post = new Post({
@@ -66,12 +65,10 @@ module.exports.edit = async (req, res, next) => {
 
 module.exports.update = async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   const post = await Post.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
   });
-  console.log(post);
   await cloudinary.uploader.destroy(post.thumbnail.filename);
   post.thumbnail = { url: req.file.path, filename: req.file.filename };
   await post.save();

@@ -18,7 +18,7 @@ router
   .route("/:id")
   .get(catchAsync(posts.show))
   .all(isAdmin)
-  .put(upload.single("image"), validatePost, catchAsync(posts.update))
+  .put(upload.single("thumbnail"), validatePost, catchAsync(posts.update))
   .delete(catchAsync(posts.remove));
 
 router.get("/:id/edit", isAdmin, catchAsync(posts.edit));

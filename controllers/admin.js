@@ -8,7 +8,6 @@ module.exports.getAdmin = async (req, res) => {
 };
 
 module.exports.addCategory = async (req, res) => {
-  console.log(req.body);
   if (req.body.catname) {
     const cat = new Category({ name: req.body.catname });
     await cat.save();

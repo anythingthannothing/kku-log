@@ -1,0 +1,73 @@
+doctype html
+<html lang="ko">
+    head
+        include ../partials/head
+        title Admin | kkulog
+    body.d-flex.flex-column.vh-100
+        include ../partials/navbar
+        div.container
+            div.row
+                include ../partials/flash
+            div.row
+                section.col-6.p-5
+                    div.mb-5
+                        h2 Category
+                        div.mb-3
+                            ul
+                                each category in categories
+                                    div.d-flex.justify-content-between
+                                        li #{category.name}
+                                        form(
+                                            action=`/admin/categories/${category._id}?_method=DELETE`
+                                            method="POST"
+                                        )
+                                            button(type="submit").btn ❌
+                        form(
+                            action="/admin"
+                            method="POST"
+                            novalidate
+                        ).needs-validation
+                            div.d-flex.flex-column
+                                div.mb-3
+                                    label(for="catname").form-label 카테고리
+                                    input(type="text" name="catname" required).form-control#catname
+                                button(type="submit").btn.btn-primary 대분류 등록
+                section.col-6.p-5
+                    div
+                        h2 SubCategory
+                        div.mb-3
+                            ul
+                                each subcategory in subcategories
+                                    div.d-flex.justify-content-between
+                                        li #{subcategory.name}
+                                        form(
+                                            action=`/admin/subcategories/${subcategory._id}?_method=DELETE`
+                                            method="POST"
+                                        )
+                                            input(type="submit" value="❌").btn
+                        form(
+                            action="/admin"
+                            method="POST"
+                            novalidate
+                        ).needs-validation
+                            div.d-flex.flex-column
+                                div.input-group.mb-3
+                                    label(for="cat").input-group-text 카테고리
+                                    select(
+                                        name="cat"
+                                        aria-label="Default select example"
+                                        required
+                                    ).form-select.cat
+                                        option(selected) 카테고리를 선택하세요.
+                                        each category in categories
+                                            option(value=`${category.name}`) #{category.name}
+                                div.mb-3
+                                    label(for="subname").form-label 서브카테고리
+                                    input(
+                                        type="text"
+                                        name="subname"
+                                        required
+                                    ).form-control#subname
+                                button(type="submit").btn.btn-primary 소분류 등록
+        include ../partials/footer
+        script(src="/javascripts/validatePost.js")

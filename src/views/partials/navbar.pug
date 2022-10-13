@@ -1,0 +1,20 @@
+header.container-fluid.sticky-top.px-0.py-2.mb-1.bg-white
+    nav.container.navbar.navbar-expand-lg.py-0.border-bottom.pb-2#mainNavbar
+        a(href='/').navbar-brand.py-0 kkulog 
+        button(type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation").navbar-toggler
+            span.navbar-toggler-icon
+        div.collapse.navbar-collapse#navbarNav
+            ul.navbar-nav.ms-auto
+                li.nav-item
+                    a(href='/' aria-current='page').nav-link.active Home
+                li.nav-item
+                    a(href="/" aria-current="page").nav-link.active Dev.log
+                //- li.nav-item
+                //-     a(href="/blogs" aria-current="page").nav-link.active Blog
+                //- li.nav-item
+                //-     a(href="#" aria-current="page" disabled).nav-link.active About
+                if currentUser && currentUser.email === 'anythingthannothing@gmail.com'
+                    li.nav-item
+                        a(href="/posts/new").nav-link.active 글쓰기
+                    li.nav-item
+                        a(href="/admin").nav-link.active 관리자
