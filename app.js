@@ -79,22 +79,11 @@ app.use(
 app.use(flash());
 app.use(setLocals);
 
-app.use("/", (req, res, next) => {
-  req.session.user = {
-    loggedIn: true,
-    email: "anythingthannothing@gmail.com",
-    username: "kku",
-  };
-  console.log(req.session.user);
-  next();
-});
-
 // Routes
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
 const commentRoutes = require("./routes/comments");
-
 // Index
 app.get("/", (req, res) => {
   res.redirect("/posts");
