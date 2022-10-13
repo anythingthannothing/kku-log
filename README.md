@@ -55,6 +55,6 @@
     - github chart API 활용
         - Next Step: LeetCode Steak Chart 기능 구현 및 github chart API 기능 자체 구현
     - SSR을 위한 Template 엔진 및 레이아웃을 위한 Bootstrap 활용
-        - Next Step: 생산성 및 가독성 향상을 위해 Pug 엔진으로 전환
+        - Next Step: ~~생산성 및 가독성 향상을 위해 Pug 엔진으로 전환~~(0.0.1 처리 完, issue #1)
     - MVC 패턴 적용
         - Next Step: 코드 리팩토링 및 프로젝트 관리 체계 수립
