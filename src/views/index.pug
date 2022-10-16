@@ -6,13 +6,11 @@ block content
                 div.card
                     div.row.g-0
                         div.col-3.d-flex.align-items-center.justify-content-center.px-2#thumbnail
-                            img(
-                                src=`${post.thumbnail.thumbnail}`
-                            ).rounded-start.rounded-end
+                            img(src=`${post.thumbnail.thumbnail}`).rounded-start.rounded-end
                         div.col-9
                             div.card-body
                                 h2.card-title #{post.title}
-                                p.card-text !{post.content.slice(0, 20)}
+                                p.card-text !{post.content.replace(/<[^>]+>/g, '').slice(0, 100)}...
                                 div.d-flex.justify-content-between
                                     span.card-text 
                                         small.text-muted 작성일: #{post.postedAt.toISOString().slice(0, 10)}
