@@ -1,6 +1,6 @@
 {
   "name": "kkulog",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "My Own Blog Project",
   "main": "app.js",
   "scripts": {
