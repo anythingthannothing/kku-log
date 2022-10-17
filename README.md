@@ -24,7 +24,7 @@
 - NodeJS + Express
 - mongoose
 #### Frontend
-- Templating Engines(EJS)
+- Templating Engines ~~(EJS)~~ ➡ Pug로 전환(ver 0.0.1)
 - CSS
 - JavaScript
 - Bootstrap5

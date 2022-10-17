@@ -52,7 +52,6 @@ app.use(
   })
 );
 app.use(methodOverride("_method"));
-app.use(morgan("dev"));
 
 const secret = process.env.SECRET;
 
@@ -78,6 +77,13 @@ app.use(
 );
 app.use(flash());
 app.use(setLocals);
+
+// Logger
+app.use(morgan("dev"));
+app.use((req, res, next) => {
+  console.log(req.session.user);
+  next();
+});
 
 // Routes
 const adminRoutes = require("./routes/admin");

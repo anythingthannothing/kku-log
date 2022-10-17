@@ -6,7 +6,7 @@ const { cloudinary } = require("../cloudianry");
 module.exports.index = async (req, res, next) => {
   const categories = await Category.find({}).populate("subcategories");
   if (req.query.filter) {
-    const { filter } = req.query;
+    const filter = req.query.filter.replace(/%20/g, " ");
     const posts = await Post.find({ subcategory: filter });
     return res.render("index", { posts, categories });
   }
