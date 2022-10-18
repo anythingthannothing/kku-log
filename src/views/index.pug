@@ -8,13 +8,13 @@ block content
                         div.col-3.d-flex.align-items-center.justify-content-center.px-2#thumbnail
                             img(src=`${post.thumbnail.thumbnail}`).rounded-start.rounded-end
                         div.col-9
-                            div.card-body
-                                h2.card-title #{post.title}
-                                p.card-text !{post.content.replace(/<[^>]+>/g, '').slice(0, 100)}...
+                            div.card-body.py-2.px-3
+                                h2.card-title.mb-1 #{post.title}
+                                p.card-text.mb-1 !{post.content.replace(/<[^>]+>/g, '').slice(0, 100)}...
                                 div.d-flex.justify-content-between
                                     span.card-text 
                                         small.text-muted 작성일: #{post.postedAt.toISOString().slice(0, 10)}
                                     span.card-text
-                                        small.text-muted 최종 수정일: #{post.editedLast.toISOString().slice(0, 10)}
+                                        small.text-muted 최종 수정일: #{post.editedAt.toISOString().slice(0, 10)}
                                     //- span.card-text
                                     //-     small.text-muted 조회수: 

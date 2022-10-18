@@ -30,7 +30,7 @@ const postSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  editedLast: {
+  editedAt: {
     type: Date,
     default: Date.now,
   },
@@ -41,6 +41,10 @@ const postSchema = new Schema({
       ref: "Comment",
     },
   ],
+  version: {
+    type: Number,
+    default: 0,
+  },
 });
 
 postSchema.post("findOneAndDelete", async function (document) {

@@ -81,7 +81,7 @@ app.use(setLocals);
 // Logger
 app.use(morgan("dev"));
 app.use((req, res, next) => {
-  console.log(req.session.user);
+  console.log(req.session.user?.name);
   next();
 });
 
