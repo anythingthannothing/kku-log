@@ -18,7 +18,7 @@ block content
                             name="subcategory"
                             aria-label="Default select example"
                         ).form-select#subcategory
-                            option(selected) 카테고리를 선택하세요.
+                            option(selected disabled) 미변경
                             each subcategory in subcategories
                                 option(value=`${subcategory.name}`) #{subcategory.name}
                         div.invalid-feedback 유효한 카테고리 선택 필요
@@ -37,7 +37,6 @@ block content
                         input(
                             type="file"
                             name="thumbnail"
-                            required
                         ).form-control#thumbnail
                         div.invalid-feedback 유효한 썸네일 선택 필요
                     div.mb-3

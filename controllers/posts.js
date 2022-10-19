@@ -65,12 +65,32 @@ module.exports.edit = async (req, res, next) => {
 
 module.exports.update = async (req, res) => {
   const { id } = req.params;
-  const post = await Post.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  await cloudinary.uploader.destroy(post.thumbnail.filename);
-  post.thumbnail = { url: req.file.path, filename: req.file.filename };
+  const post = await Post.findByIdAndUpdate(
+    id,
+    {
+      ...req.body,
+      editedAt: Date.now(),
+    },
+    {
+      runValidators: true,
+    }
+  );
+  if (req.body.subcategory) {
+    const newSub = await Subcategory.findOne({ name: req.body.subcategory });
+    newSub.posts.push(post._id);
+    await newSub.save();
+    const { subcategory } = post;
+    console.log(post);
+    await Subcategory.findOneAndUpdate(
+      { name: subcategory },
+      { $pull: { posts: post._id } }
+    );
+  }
+
+  if (req.file) {
+    await cloudinary.uploader.destroy(post.thumbnail.filename);
+    post.thumbnail = { url: req.file.path, filename: req.file.filename };
+  }
   await post.save();
   req.flash("success", "포스트 수정 완료!");
   res.redirect(`/posts/${id}`);

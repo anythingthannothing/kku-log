@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Comment = require("./Comment");
+const Subcategory = require("./Subcategory");
 const Schema = mongoose.Schema;
 
 const thumbnailSchema = new Schema({
@@ -30,7 +31,7 @@ const postSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  editedLast: {
+  editedAt: {
     type: Date,
     default: Date.now,
   },

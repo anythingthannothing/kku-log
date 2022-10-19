@@ -7,6 +7,13 @@ module.exports.postSchema = Joi.object({
   subcategory: Joi.string().required(),
 });
 
+module.exports.postEditSchema = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+  tags: Joi.string(),
+  subcategory: Joi.string(),
+});
+
 module.exports.commentSchema = Joi.object({
   comment: Joi.object({
     body: Joi.string().required(),

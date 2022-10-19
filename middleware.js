@@ -1,4 +1,4 @@
-const { postSchema, commentSchema } = require("./schemas");
+const { postSchema, postEditSchema, commentSchema } = require("./schemas");
 const ExpressError = require("./utils/expressError");
 const Comment = require("./models/Comment");
 
@@ -48,6 +48,15 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 
 module.exports.validatePost = (req, res, next) => {
   const { error } = postSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(msg, 400);
+  }
+  next();
+};
+
+module.exports.validatePostEdit = (req, res, next) => {
+  const { error } = postEditSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(msg, 400);
