@@ -76,11 +76,11 @@ module.exports.update = async (req, res) => {
     }
   );
   if (req.body.subcategory) {
-    const newSub = Subcategory.findById();
-    console.log(newSub);
+    const newSub = await Subcategory.findOne({ name: req.body.subcategory });
     newSub.posts.push(post._id);
     await newSub.save();
     const { subcategory } = post;
+    console.log(post);
     await Subcategory.findOneAndUpdate(
       { name: subcategory },
       { $pull: { posts: post._id } }
