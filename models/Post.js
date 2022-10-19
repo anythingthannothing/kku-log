@@ -42,10 +42,6 @@ const postSchema = new Schema({
       ref: "Comment",
     },
   ],
-  version: {
-    type: Number,
-    default: 0,
-  },
 });
 
 postSchema.post("findOneAndDelete", async function (document) {
