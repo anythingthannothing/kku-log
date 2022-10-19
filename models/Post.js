@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Comment = require("./Comment");
+const Subcategory = require("./Subcategory");
 const Schema = mongoose.Schema;
 
 const thumbnailSchema = new Schema({
@@ -13,7 +14,8 @@ thumbnailSchema.virtual("thumbnail").get(function () {
 
 const postSchema = new Schema({
   subcategory: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "Subcategory",
   },
   title: {
     type: String,
