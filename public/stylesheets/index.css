@@ -49,9 +49,21 @@ aside svg {
 }
 
 #thumbnail img {
-  max-height: 150px;
+  max-height: 140px;
 }
 
 main img {
   max-width: 100% !important;
+}
+
+.card {
+  max-height: 140px;
+}
+
+.card-title {
+  font-size: 1.8rem;
+}
+
+.card-text {
+  font-size: 1rem;
 }
