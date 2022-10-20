@@ -3,7 +3,6 @@ const Comment = require("../models/Comment");
 
 module.exports.create = async (req, res, next) => {
   const { id } = req.params;
-  console.log(req.body, id);
   const post = await Post.findById(id);
   const comment = new Comment(req.body);
   comment.author = req.session.user._id;
@@ -18,6 +17,5 @@ module.exports.delete = async (req, res, next) => {
   const { id, commentId } = req.params;
   await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } });
   await Comment.findByIdAndDelete(commentId);
-  req.flash("success", "댓글이 정상적으로 삭제되었습니다 :)");
-  res.sendStatus(201);
+  res.sendStatus(200);
 };

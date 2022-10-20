@@ -2,39 +2,34 @@ const postContainer = document.getElementById("postContainer");
 const form = document.getElementById("commentForm");
 const deleteBtn = document.querySelectorAll("#deleteBtn");
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
   event.preventDefault();
   const textarea = form.querySelector("textarea");
   const comment = textarea.value;
   const postId = postContainer.dataset.id;
   if (body === "") return;
-  axios
-    .post(`/posts/${postId}/comments`, {
+  try {
+    const res = await axios.post(`/posts/${postId}/comments`, {
       body: comment,
-    })
-    .then((response) => {
-      if (response.status === 201) {
-        location.reload();
-      }
-    })
-    .catch((error) => {
-      console.log(error);
     });
+    location.reload();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const handleDelete = async (event) => {
   const parent = event.target.parentElement.parentElement;
   const postId = postContainer.dataset.id;
   const commentId = parent.dataset.commentid;
-  axios
-    .delete(`/posts/${postId}/comments/${commentId}`, {
+  try {
+    const res = await axios.delete(`/posts/${postId}/comments/${commentId}`, {
       method: "DELETE",
-    })
-    .then((response) => {
-      if ((response.status = 201)) {
-        parent.remove();
-      }
     });
+    parent.remove();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 if (form) {
