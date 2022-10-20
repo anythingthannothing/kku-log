@@ -8,7 +8,8 @@ const {
   isReviewAuthor,
 } = require("../middleware");
 
-router.post("/", isLoggedIn, validateComment, catchAsync(comments.create));
+// router.post("/", isLoggedIn, validateComment, catchAsync(comments.create));
+router.post("/", isLoggedIn, catchAsync(comments.create));
 
 router.delete(
   "/:commentId",
