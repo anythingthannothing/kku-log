@@ -69,7 +69,6 @@ module.exports.update = async (req, res) => {
     id,
     {
       ...req.body,
-      editedAt: Date.now(),
     },
     {
       runValidators: true,

@@ -9,7 +9,7 @@ const handleSubmit = async (event) => {
   const postId = postContainer.dataset.id;
   if (body === "") return;
   try {
-    const res = await axios.post(`/posts/${postId}/comments`, {
+    await axios.post(`/posts/${postId}/comments`, {
       body: comment,
     });
     location.reload();
@@ -23,7 +23,7 @@ const handleDelete = async (event) => {
   const postId = postContainer.dataset.id;
   const commentId = parent.dataset.commentid;
   try {
-    const res = await axios.delete(`/posts/${postId}/comments/${commentId}`, {
+    await axios.delete(`/posts/${postId}/comments/${commentId}`, {
       method: "DELETE",
     });
     parent.remove();
