@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Comment = require("./Comment");
-const Subcategory = require("./Subcategory");
 const Schema = mongoose.Schema;
 
 const thumbnailSchema = new Schema({

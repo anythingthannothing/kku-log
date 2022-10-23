@@ -20,23 +20,23 @@ module.exports.new = async (req, res) => {
 };
 
 module.exports.create = async (req, res) => {
-  const { title, content, tags } = req.body;
-  const subcategory = await Subcategory.findOne({ name: req.body.subcategory });
+  const { title, content, tags, subcategory } = req.body;
+  const targetSubcategory = await Subcategory.findOne({ name: subcategory });
   const post = new Post({
-    subcategory: subcategory.name,
+    subcategory: targetSubcategory.name,
     title,
     content,
     tags,
   });
   post.thumbnail = { url: req.file.path, filename: req.file.filename };
-  subcategory.posts.push(post);
-  await subcategory.save();
+  targetSubcategory.posts.push(post);
+  await targetSubcategory.save();
   await post.save();
   req.flash("success", "포스트 등록 완료!");
-  return res.redirect(`/posts/${post._id}`);
+  return res.status(201).json(post._id);
 };
 
-module.exports.show = async (req, res, next) => {
+module.exports.show = async (req, res) => {
   const { id } = req.params;
   const categories = await Category.find({}).populate("subcategories");
   const post = await Post.findById(id).populate({
