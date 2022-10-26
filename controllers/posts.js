@@ -20,23 +20,23 @@ module.exports.new = async (req, res) => {
 };
 
 module.exports.create = async (req, res) => {
-  const { title, content, tags } = req.body;
-  const subcategory = await Subcategory.findOne({ name: req.body.subcategory });
+  const { title, content, tags, subcategory } = req.body;
+  const targetSubcategory = await Subcategory.findOne({ name: subcategory });
   const post = new Post({
-    subcategory: subcategory.name,
+    subcategory: targetSubcategory.name,
     title,
     content,
     tags,
   });
   post.thumbnail = { url: req.file.path, filename: req.file.filename };
-  subcategory.posts.push(post);
-  await subcategory.save();
+  targetSubcategory.posts.push(post);
+  await targetSubcategory.save();
   await post.save();
   req.flash("success", "포스트 등록 완료!");
-  return res.redirect(`/posts/${post._id}`);
+  return res.status(201).json(post._id);
 };
 
-module.exports.show = async (req, res, next) => {
+module.exports.show = async (req, res) => {
   const { id } = req.params;
   const categories = await Category.find({}).populate("subcategories");
   const post = await Post.findById(id).populate({
@@ -67,20 +67,14 @@ module.exports.update = async (req, res) => {
   const { id } = req.params;
   const post = await Post.findByIdAndUpdate(
     id,
-    {
-      ...req.body,
-      editedAt: Date.now(),
-    },
-    {
-      runValidators: true,
-    }
+    { ...req.body },
+    { runValidators: true }
   );
   if (req.body.subcategory) {
     const newSub = await Subcategory.findOne({ name: req.body.subcategory });
     newSub.posts.push(post._id);
     await newSub.save();
     const { subcategory } = post;
-    console.log(post);
     await Subcategory.findOneAndUpdate(
       { name: subcategory },
       { $pull: { posts: post._id } }
@@ -93,7 +87,7 @@ module.exports.update = async (req, res) => {
   }
   await post.save();
   req.flash("success", "포스트 수정 완료!");
-  res.redirect(`/posts/${id}`);
+  res.sendStatus(200);
 };
 
 module.exports.remove = async (req, res, next) => {
@@ -104,6 +98,6 @@ module.exports.remove = async (req, res, next) => {
     { $pull: { posts: post._id } }
   );
   await Post.findByIdAndDelete(id);
-  await req.flash("success", "포스트가 정상적으로 삭제되었습니다 :)");
-  res.redirect("/posts");
+  req.flash("success", "포스트 삭제 완료!");
+  res.sendStatus(200);
 };

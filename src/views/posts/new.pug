@@ -5,12 +5,7 @@ block content
         div.row
             h1 Post
         div.row
-            form(
-                action="/posts"
-                method="POST"
-                novalidate
-                enctype="multipart/form-data"
-            ).needs-validation
+            form(novalidate).needs-validation#postForm
                 div.d-flex.flex-column
                     div.input-group.mb-3
                         label(for="subcategory").input-group-text 카테고리
@@ -53,3 +48,4 @@ block content
                             button(type="button").btn.btn-danger.w-25 홈으로
     script $(document).ready(function () {$("#summernote").summernote();});
     script(src="/javascripts/validatePost.js")
+    script(src="/javascripts/createPost.js")

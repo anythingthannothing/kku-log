@@ -14,7 +14,6 @@ const mongoose = require("mongoose");
 const Category = require("./models/Category");
 const mongoSanitize = require("express-mongo-sanitize");
 
-const methodOverride = require("method-override");
 const ExpressError = require("./utils/expressError");
 const morgan = require("morgan");
 const session = require("express-session");
@@ -51,7 +50,6 @@ app.use(
     replaceWith: "_",
   })
 );
-app.use(methodOverride("_method"));
 
 const secret = process.env.SECRET;
 

@@ -3,40 +3,34 @@ extends ../layouts/layout
 block content
     if currentUser && currentUser.email === 'anythingthannothing@gmail.com'
         div.d-flex.mb-3
-            form(method="POST" action=`/posts/${post._id}?_method=DELETE`)
+            form(data-id=`${post._id}`)#deletePostBtn
                 button(type="submit").btn.btn-warning.me-3 삭제하기
             a(href=`/posts/${post._id}/edit`)
                 button(type="button").btn.btn-success.me-3 수정하기
-    div.mb-3
+    div(data-id=post._id).mb-3#postContainer
         h1.mb-3.text-center #{post.title}
         article.mb-3 !{post.content}
         
         hr
         if currentUser
-            form(
-                action=`/posts/${post._id}/comments`
-                method="POST"
-                novalidate
-            ).needs-validation.mb-3.mt-3
+            form(novalidate).needs-validation.mb-3.mt-3#commentForm
                 div.mb-2
-                    label(for="textarea").form-label 댓글 남기기
+                    label(for="body").form-label 댓글 남기기
                     textarea(
-                        name="comment[body]"
                         rows="3"
                         required
-                    ).form-control.needs-validation#textarea
+                    ).form-control.needs-validation#body
                 button.btn.btn-primary 등록
         else
             p.pt-3 댓글은 로그인 이후에 작성할 수 있습니다 :)
             
         each comment in post.comments
-            div.card.mb-3
+            div(data-commentid=`${comment._id}`).card.mb-3
                 div.card-body
-                    h5.card-title 작성자: #{comment.author.username}
+                    h5.card-title 작성자: #{comment.author.name}
                     p.card-text 댓글 : #{comment.body}
                     if currentUser && comment.author.equals(currentUser._id)
-                        form(
-                            action=`/posts/${post._id}/comments/${comment._id}?_method=DELETE`
-                            method="POST"
-                        )
-                            button.btn.btn-danger 댓글 지우기
+                        button.btn.btn-danger#deleteBtn 댓글 지우기
+block script 
+    script(src="/javascripts/showPost.js")
+    script(src="/javascripts/comment.js")

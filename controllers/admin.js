@@ -8,28 +8,28 @@ module.exports.getAdmin = async (req, res) => {
 };
 
 module.exports.addCategory = async (req, res) => {
-  if (req.body.catname) {
-    const cat = new Category({ name: req.body.catname });
-    await cat.save();
+  if (req.body.subcategory) {
+    const { category, subcategory } = req.body;
+    const newSubcategory = new Subcategory({ name: subcategory });
+    const superCategory = await Category.findOne({ name: category });
+    superCategory.subcategories.push(newSubcategory);
+    await superCategory.save();
+    await newSubcategory.save();
   } else {
-    const { cat, subname } = req.body;
-    const sub = new Subcategory({ name: subname });
-    const category = await Category.findOne({ name: cat });
-    category.subcategories.push(sub);
-    await category.save();
-    await sub.save();
+    const cat = new Category({ name: req.body.category });
+    await cat.save();
   }
-  return res.redirect("/admin");
+  return res.sendStatus(201);
 };
 
 module.exports.deleteCategory = async (req, res) => {
   const { id } = req.params;
   await Category.findByIdAndDelete(id);
-  return res.redirect("/admin");
+  return res.sendStatus(200);
 };
 
 module.exports.deleteSubcategory = async (req, res) => {
   const { id } = req.params;
   await Subcategory.findByIdAndDelete(id);
-  return res.redirect("/admin");
+  return res.sendStatus(200);
 };
