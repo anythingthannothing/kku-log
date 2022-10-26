@@ -15,7 +15,5 @@ module.exports.postEditSchema = Joi.object({
 });
 
 module.exports.commentSchema = Joi.object({
-  comment: Joi.object({
-    body: Joi.string().required(),
-  }).required(),
+  body: Joi.string().required(),
 });

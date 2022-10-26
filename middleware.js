@@ -65,7 +65,6 @@ module.exports.validatePostEdit = (req, res, next) => {
 };
 
 module.exports.validateComment = (req, res, next) => {
-  console.log(req.body);
   const { error } = commentSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((v) => v.message).join(",");

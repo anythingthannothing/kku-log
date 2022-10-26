@@ -27,7 +27,7 @@ block content
         each comment in post.comments
             div(data-commentid=`${comment._id}`).card.mb-3
                 div.card-body
-                    h5.card-title 작성자: #{comment.author.username}
+                    h5.card-title 작성자: #{comment.author.name}
                     p.card-text 댓글 : #{comment.body}
                     if currentUser && comment.author.equals(currentUser._id)
                         button.btn.btn-danger#deleteBtn 댓글 지우기

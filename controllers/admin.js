@@ -8,7 +8,6 @@ module.exports.getAdmin = async (req, res) => {
 };
 
 module.exports.addCategory = async (req, res) => {
-  console.log(req.body);
   if (req.body.subcategory) {
     const { category, subcategory } = req.body;
     const newSubcategory = new Subcategory({ name: subcategory });

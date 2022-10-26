@@ -17,17 +17,27 @@ async function handleFormSubmit(event) {
   event.preventDefault();
   const id = form.dataset.id;
   const title = titleInput.value;
-  const subcategory = subcategoryInput.value;
   const content = contentInput.value;
   const tags = tagsInput.value;
   const thumbnail = file;
-  const formData = {
-    title,
-    subcategory,
-    content,
-    tags,
-    thumbnail,
-  };
+  let formData;
+  if (subcategoryInput.value !== "") {
+    const subcategory = subcategoryInput.value;
+    formData = {
+      title,
+      subcategory,
+      content,
+      tags,
+      thumbnail,
+    };
+  } else {
+    formData = {
+      title,
+      content,
+      tags,
+      thumbnail,
+    };
+  }
   try {
     await axios.put(`/posts/${id}`, formData, {
       headers: {
