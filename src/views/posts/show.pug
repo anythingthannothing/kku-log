@@ -3,7 +3,7 @@ extends ../layouts/layout
 block content
     if currentUser && currentUser.email === 'anythingthannothing@gmail.com'
         div.d-flex.mb-3
-            form(method="POST" action=`/posts/${post._id}?_method=DELETE`)
+            form(data-id=`${post._id}`)#deletePostBtn
                 button(type="submit").btn.btn-warning.me-3 삭제하기
             a(href=`/posts/${post._id}/edit`)
                 button(type="button").btn.btn-success.me-3 수정하기
@@ -32,5 +32,5 @@ block content
                     if currentUser && comment.author.equals(currentUser._id)
                         button.btn.btn-danger#deleteBtn 댓글 지우기
 block script 
-    script(src="/javascripts/post.js")
+    script(src="/javascripts/showPost.js")
     script(src="/javascripts/comment.js")

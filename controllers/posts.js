@@ -64,22 +64,18 @@ module.exports.edit = async (req, res, next) => {
 };
 
 module.exports.update = async (req, res) => {
+  console.log(req.body, req.file);
   const { id } = req.params;
   const post = await Post.findByIdAndUpdate(
     id,
-    {
-      ...req.body,
-    },
-    {
-      runValidators: true,
-    }
+    { ...req.body },
+    { runValidators: true }
   );
   if (req.body.subcategory) {
     const newSub = await Subcategory.findOne({ name: req.body.subcategory });
     newSub.posts.push(post._id);
     await newSub.save();
     const { subcategory } = post;
-    console.log(post);
     await Subcategory.findOneAndUpdate(
       { name: subcategory },
       { $pull: { posts: post._id } }
@@ -92,7 +88,7 @@ module.exports.update = async (req, res) => {
   }
   await post.save();
   req.flash("success", "포스트 수정 완료!");
-  res.redirect(`/posts/${id}`);
+  res.sendStatus(200);
 };
 
 module.exports.remove = async (req, res, next) => {
@@ -103,6 +99,6 @@ module.exports.remove = async (req, res, next) => {
     { $pull: { posts: post._id } }
   );
   await Post.findByIdAndDelete(id);
-  await req.flash("success", "포스트가 정상적으로 삭제되었습니다 :)");
-  res.redirect("/posts");
+  req.flash("success", "포스트 삭제 완료!");
+  res.sendStatus(200);
 };

@@ -23,9 +23,7 @@ const handleDelete = async (event) => {
   const postId = postContainer.dataset.id;
   const commentId = parent.dataset.commentid;
   try {
-    await axios.delete(`/posts/${postId}/comments/${commentId}`, {
-      method: "DELETE",
-    });
+    await axios.delete(`/posts/${postId}/comments/${commentId}`);
     parent.remove();
   } catch (error) {
     console.log(error);

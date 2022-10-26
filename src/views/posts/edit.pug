@@ -5,12 +5,7 @@ block content
         div.row
             h1 Edit
         div.row
-            form(
-                action=`/posts/${post._id}?_method=PUT`
-                method="POST"
-                novalidate
-                enctype="multipart/form-data"
-            ).needs-validation
+            form(data-id=`${post._id}` novalidate).needs-validation#editForm
                 div.d-flex.flex-column
                     div.input-group.mb-3
                         label(for="subcategory").input-group-text 카테고리
@@ -18,7 +13,7 @@ block content
                             name="subcategory"
                             aria-label="Default select example"
                         ).form-select#subcategory
-                            option(selected disabled) 미변경
+                            option(selected disabled value='') 미변경
                             each subcategory in subcategories
                                 option(value=`${subcategory.name}`) #{subcategory.name}
                         div.invalid-feedback 유효한 카테고리 선택 필요
@@ -54,3 +49,4 @@ block content
                             button(type="button").btn.btn-danger.w-25 홈으로
     script $(document).ready(function () {$("#summernote").summernote();});
     script(src="/javascripts/validatePost.js")
+    script(src="/javascripts/editPost.js")

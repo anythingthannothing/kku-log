@@ -10,8 +10,8 @@ module.exports.postSchema = Joi.object({
 module.exports.postEditSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
-  tags: Joi.string(),
-  subcategory: Joi.string(),
+  subcategory: Joi.any(),
+  tags: Joi.string().required(),
 });
 
 module.exports.commentSchema = Joi.object({

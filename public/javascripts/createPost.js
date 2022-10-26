@@ -33,7 +33,7 @@ async function handleFormSubmit(event) {
         "Content-Type": "multipart/form-data",
       },
     });
-    location = `/posts/${res.data}`;
+    location.href = `/posts/${res.data}`;
   } catch (error) {
     console.log(error);
   }
