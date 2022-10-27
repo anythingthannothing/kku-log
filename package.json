@@ -1,12 +1,12 @@
 {
   "name": "kkulog",
-  "version": "0.1.3",
+  "version": "0.2.3",
   "description": "My Own Blog Project",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "repository": {
     "type": "git",
