@@ -14,7 +14,7 @@ const mongoose = require("mongoose");
 const Category = require("./models/Category");
 const mongoSanitize = require("express-mongo-sanitize");
 
-const ExpressError = require("./utils/expressError");
+const ExpressError = require("./src/utils/expressError");
 const morgan = require("morgan");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");

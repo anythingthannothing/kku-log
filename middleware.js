@@ -1,5 +1,5 @@
 const { postSchema, postEditSchema, commentSchema } = require("./schemas");
-const ExpressError = require("./utils/expressError");
+const ExpressError = require("./src/utils/expressError");
 const Comment = require("./models/Comment");
 
 module.exports.setLocals = (req, res, next) => {
