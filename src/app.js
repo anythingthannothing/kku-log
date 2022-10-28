@@ -1,50 +1,45 @@
 require("dotenv").config();
 
-// Server
-const bodyParser = require("body-parser");
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 
-const path = require("path");
-
-// Template
-const { setLocals } = require("../middleware");
-// Model
 const mongoose = require("mongoose");
-const Category = require("./models/Category");
 const mongoSanitize = require("express-mongo-sanitize");
-
-const ExpressError = require("./utils/expressError");
-const morgan = require("morgan");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+
+const { setLocals } = require("./middlewares");
+
+const Category = require("./db/schemas/category");
+
+const morgan = require("morgan");
+
 const flash = require("connect-flash");
 const PORT = process.env.PORT || 3000;
-
-// DB
-if (process.env.NODE_ENV === "production") {
-  dbUrl = process.env.DB_URL;
-} else dbUrl = process.env.LOCAL_URL;
-mongoose
-  .connect(dbUrl)
-  .then(() => {
-    console.log("DB Connected!");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
 // express app 세팅
 app.set("views", "src/views");
 app.set("view engine", "pug");
 
-// express app 내장 미들웨어 세팅
-
-app.use(express.static(path.join(__dirname, "/public")));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// express app 외장 미들웨어 세팅
+const dbUrl =
+  process.env.NODE_ENV === "production"
+    ? process.env.DB_URL
+    : process.env.LOCAL_URL;
+
+mongoose.connect(dbUrl);
+const db = mongoose.connection;
+
+db.on("connected", () =>
+  console.log("⭕ MongoDB 서버에 정상적으로 연결되었습니다.")
+);
+
+db.on("error", (error) => console.log("❌ MongoDB 서버 연결에 실패했습니다."));
+
 app.use(
   mongoSanitize({
     replaceWith: "_",
@@ -52,7 +47,6 @@ app.use(
 );
 
 const secret = process.env.SECRET;
-
 app.use(
   session({
     store: MongoStore.create({
@@ -73,6 +67,7 @@ app.use(
     },
   })
 );
+
 app.use(flash());
 app.use(setLocals);
 
@@ -83,19 +78,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
-const adminRoutes = require("./routes/admin");
-const userRoutes = require("./routes/users");
-const postRoutes = require("./routes/posts");
-const commentRoutes = require("./routes/comments");
-// Index
-app.get("/", (req, res) => {
-  res.redirect("/posts");
-});
-app.use("/admin", adminRoutes);
-app.use("/users", userRoutes);
-app.use("/posts", postRoutes);
-app.use("/posts/:id/comments", commentRoutes);
+const globalRouter = require("./routes");
+
+app.use("/", globalRouter);
 
 // [BLOG]
 // Index blogs

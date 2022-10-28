@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require("../db/schemas/user");
 const fetch = require("node-fetch");
 
 module.exports.getLogin = async (req, res) => {
@@ -78,5 +78,5 @@ module.exports.getLogout = (req, res) => {
   delete req.session.loggedIn;
   delete req.session.user;
   req.flash("success", "로그아웃이 완료되었습니다 :)");
-  return res.redirect("/");
+  return res.redirect("/posts");
 };

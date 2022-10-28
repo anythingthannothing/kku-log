@@ -1,6 +1,5 @@
-const mongoose = require("mongoose");
-const Comment = require("./Comment");
-const Schema = mongoose.Schema;
+const { model, Schema } = require("mongoose");
+const Comment = require("./comment");
 
 const thumbnailSchema = new Schema({
   url: String,
@@ -46,4 +45,4 @@ postSchema.post("findOneAndDelete", async function (document) {
   });
 });
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = model("Post", postSchema);

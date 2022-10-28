@@ -1,15 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const catchAsync = require("../src/utils/catchAsync");
-const {
-  validatePost,
-  validatePostEdit,
-  isLoggedIn,
-  isAdmin,
-} = require("../middleware");
+const catchAsync = require("../utils/catchAsync");
+const { validatePost, validatePostEdit, isAdmin } = require("../middlewares");
 const posts = require("../controllers/posts");
 const multer = require("multer");
-const { storage } = require("../cloudianry");
+const { storage } = require("../config/cloudinary");
 const upload = multer({ storage });
 
 router
@@ -29,7 +24,7 @@ router
   .get(catchAsync(posts.show))
   .all(isAdmin)
   .put(upload.single("thumbnail"), validatePostEdit, catchAsync(posts.update))
-  .delete(catchAsync(posts.remove));
+  .delete(posts.remove);
 
 router.get("/:id/edit", isAdmin, catchAsync(posts.edit));
 

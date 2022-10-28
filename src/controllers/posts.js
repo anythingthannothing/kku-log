@@ -1,9 +1,9 @@
-const Post = require("../models/Post");
-const Category = require("../models/Category");
-const Subcategory = require("../models/Subcategory");
-const { cloudinary } = require("../cloudianry");
+const Post = require("../db/schemas/post");
+const Category = require("../db/schemas/category");
+const Subcategory = require("../db/schemas/subcategory");
+const { cloudinary } = require("../config/cloudinary");
 
-module.exports.index = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   const categories = await Category.find({}).populate("subcategories");
   if (req.query.filter) {
     const filter = req.query.filter.replace(/%20/g, " ");
@@ -14,12 +14,12 @@ module.exports.index = async (req, res, next) => {
   res.render("index", { posts, categories });
 };
 
-module.exports.new = async (req, res) => {
+exports.new = async (req, res) => {
   const subcategories = await Subcategory.find({});
   res.render("posts/new", { subcategories });
 };
 
-module.exports.create = async (req, res) => {
+exports.create = async (req, res) => {
   const { title, content, tags, subcategory } = req.body;
   const targetSubcategory = await Subcategory.findOne({ name: subcategory });
   const post = new Post({
@@ -36,7 +36,7 @@ module.exports.create = async (req, res) => {
   return res.status(201).json(post._id);
 };
 
-module.exports.show = async (req, res) => {
+exports.show = async (req, res) => {
   const { id } = req.params;
   const categories = await Category.find({}).populate("subcategories");
   const post = await Post.findById(id).populate({
@@ -52,7 +52,7 @@ module.exports.show = async (req, res) => {
   res.render("posts/show", { categories, post });
 };
 
-module.exports.edit = async (req, res, next) => {
+exports.edit = async (req, res, next) => {
   const { id } = req.params;
   const subcategories = await Subcategory.find({});
   const post = await Post.findById(id);
@@ -63,7 +63,7 @@ module.exports.edit = async (req, res, next) => {
   res.render("posts/edit", { post, subcategories });
 };
 
-module.exports.update = async (req, res) => {
+exports.update = async (req, res) => {
   const { id } = req.params;
   const post = await Post.findByIdAndUpdate(
     id,
@@ -90,7 +90,7 @@ module.exports.update = async (req, res) => {
   res.sendStatus(200);
 };
 
-module.exports.remove = async (req, res, next) => {
+exports.remove = async (req, res, next) => {
   const { id } = req.params;
   const post = await Post.findById(id);
   await Subcategory.findOneAndUpdate(
@@ -99,5 +99,5 @@ module.exports.remove = async (req, res, next) => {
   );
   await Post.findByIdAndDelete(id);
   req.flash("success", "포스트 삭제 완료!");
-  res.sendStatus(200);
+  return res.sendStatus(200);
 };

@@ -1,6 +1,10 @@
-const { postSchema, postEditSchema, commentSchema } = require("./schemas");
-const ExpressError = require("./src/utils/expressError");
-const Comment = require("./models/Comment");
+const {
+  postSchema,
+  postEditSchema,
+  commentSchema,
+} = require("../utils/joiValidation");
+const AppError = require("../utils/appError");
+const Comment = require("../db/schemas/comment");
 
 module.exports.setLocals = (req, res, next) => {
   res.locals.currentUser = req.session.user;
@@ -50,7 +54,7 @@ module.exports.validatePost = (req, res, next) => {
   const { error } = postSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
+    throw new AppError(msg, 400);
   }
   next();
 };
@@ -59,7 +63,7 @@ module.exports.validatePostEdit = (req, res, next) => {
   const { error } = postEditSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(msg, 400);
+    throw new AppError(msg, 400);
   }
   next();
 };
@@ -68,7 +72,7 @@ module.exports.validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((v) => v.message).join(",");
-    throw new ExpressError(msg, 400);
+    throw new AppError(msg, 400);
   }
   next();
 };
