@@ -30,11 +30,14 @@ doctype html
                         h2 SubCategory
                         div.mb-3
                             ul
-                                each subcategory in subcategories
-                                    div.d-flex.justify-content-between
-                                        li #{subcategory.name}
-                                        form(data-id=`${subcategory._id}`)#subcategoryDeleteForm
-                                            input(type="submit" value="❌").btn
+                                if categories.length
+                                    each category in categories
+                                        h1 #{category.name}
+                                        each subcategory in category.subcategories
+                                            div.d-flex.justify-content-between
+                                                li #{subcategory.name}
+                                                form(data-id=`${subcategory._id}`)#subcategoryDeleteForm
+                                                    input(type="submit" value="❌").btn
                         form(novalidate).needs-validation#subcategoryForm
                             div.d-flex.flex-column
                                 div.input-group.mb-3

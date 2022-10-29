@@ -1,10 +1,10 @@
 const Post = require("../db/schemas/post");
 const Category = require("../db/schemas/category");
-const Subcategory = require("../db/schemas/subcategory");
 const { cloudinary } = require("../config/cloudinary");
 
 exports.index = async (req, res, next) => {
-  const categories = await Category.find({}).populate("subcategories");
+  const categories = await Category.find({});
+  console.log(categories);
   if (req.query.filter) {
     const filter = req.query.filter.replace(/%20/g, " ");
     const posts = await Post.find({ subcategory: filter });
@@ -15,8 +15,8 @@ exports.index = async (req, res, next) => {
 };
 
 exports.new = async (req, res) => {
-  const subcategories = await Subcategory.find({});
-  res.render("posts/new", { subcategories });
+  const categories = await Category.find({});
+  res.render("posts/new", { categories });
 };
 
 exports.create = async (req, res) => {

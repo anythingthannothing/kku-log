@@ -1,14 +1,10 @@
-const { model, Schema } = require("mongoose");
+const { Schema } = require("mongoose");
 const Post = require("./post");
 
 const SubcategorySchema = new Schema({
   name: {
     type: String,
     required: true,
-  },
-  count: {
-    type: Number,
-    default: 0,
   },
   posts: [
     {
@@ -26,4 +22,4 @@ SubcategorySchema.post("findOneAndDelete", async function (document) {
   });
 });
 
-module.exports = model("Subcategory", SubcategorySchema);
+module.exports = SubcategorySchema;

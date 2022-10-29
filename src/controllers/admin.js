@@ -2,18 +2,17 @@ const Category = require("../db/schemas/category");
 const Subcategory = require("../db/schemas/subcategory");
 
 module.exports.getAdmin = async (req, res) => {
-  const categories = await Category.find().populate("subcategories");
-  const subcategories = await Subcategory.find();
-  return res.render("admin/index", { categories, subcategories });
+  const categories = await Category.find({});
+  console.log(categories.subcategories);
+  return res.render("admin/index", { categories });
 };
 
 module.exports.addCategory = async (req, res) => {
   if (req.body.subcategory) {
     const { category, subcategory } = req.body;
-    const newSubcategory = await Subcategory.create({ name: subcategory });
     await Category.findOneAndUpdate(
       { name: category },
-      { $push: { subcategories: newSubcategory } }
+      { $push: { subcategories: { name: subcategory } } }
     );
   } else {
     await Category.create({ name: req.body.category });

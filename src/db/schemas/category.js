@@ -1,17 +1,12 @@
 const { model, Schema } = require("mongoose");
-const Subcategory = require("./subcategory");
+const SubcategorySchema = require("./subcategory");
 
 const CategorySchema = new Schema({
   name: {
     type: String,
     required: true,
   },
-  subcategories: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Subcategory",
-    },
-  ],
+  subcategories: [SubcategorySchema],
 });
 
 CategorySchema.post("findOneAndDelete", async function (document) {
