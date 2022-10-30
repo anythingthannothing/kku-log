@@ -3,7 +3,6 @@ const Subcategory = require("../db/schemas/subcategory");
 
 module.exports.getAdmin = async (req, res) => {
   const categories = await Category.find({});
-  console.log(categories.subcategories);
   return res.render("admin/index", { categories });
 };
 

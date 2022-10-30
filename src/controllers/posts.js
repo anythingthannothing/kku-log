@@ -4,7 +4,6 @@ const { cloudinary } = require("../config/cloudinary");
 
 exports.index = async (req, res, next) => {
   const categories = await Category.find({});
-  console.log(categories);
   if (req.query.filter) {
     const filter = req.query.filter.replace(/%20/g, " ");
     const posts = await Post.find({ subcategory: filter });
