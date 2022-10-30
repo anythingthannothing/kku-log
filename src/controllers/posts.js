@@ -20,7 +20,9 @@ exports.new = async (req, res) => {
 
 exports.create = async (req, res) => {
   const { title, content, tags, subcategory } = req.body;
-  const targetSubcategory = await Subcategory.findOne({ name: subcategory });
+  const targetSubcategory = await Category.subcategories.findOne({
+    name: subcategory,
+  });
   const post = new Post({
     subcategory: targetSubcategory.name,
     title,
@@ -37,7 +39,7 @@ exports.create = async (req, res) => {
 
 exports.show = async (req, res) => {
   const { id } = req.params;
-  const categories = await Category.find({}).populate("subcategories");
+  const categories = await Category.find({});
   const post = await Post.findById(id).populate({
     path: "comments",
     populate: {
