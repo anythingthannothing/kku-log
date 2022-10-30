@@ -64,6 +64,7 @@ module.exports.edit = async (req, res, next) => {
 };
 
 module.exports.update = async (req, res) => {
+  console.log(req.body, req.file);
   const { id } = req.params;
   const post = await Post.findByIdAndUpdate(
     id,
