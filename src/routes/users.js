@@ -11,6 +11,6 @@ router.get("/login", catchAsync(users.getLogin));
 router.get("/login/finish", catchAsync(users.postLogin));
 
 // User Logout
-router.get("/logout", users.getLogout);
+router.get("/logout", catchAsync(users.getLogout));
 
 module.exports = router;

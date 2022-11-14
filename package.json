@@ -35,5 +35,12 @@
     "multer-storage-cloudinary": "^4.0.0",
     "node-fetch": "^2.6.7",
     "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.2",
+    "@babel/node": "^7.20.2",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2"
   }
 }
