@@ -1,32 +1,34 @@
-const Category = require("../db/schemas/category");
-const Subcategory = require("../db/schemas/subcategory");
+import Category from '../db/schemas/category';
+import Subcategory from '../db/schemas/subcategory';
 
-module.exports.getAdmin = async (req, res) => {
-  const categories = await Category.find({});
-  return res.render("admin/index", { categories });
-};
-
-module.exports.addCategory = async (req, res) => {
-  if (req.body.subcategory) {
-    const { category, subcategory } = req.body;
-    await Category.findOneAndUpdate(
-      { name: category },
-      { $push: { subcategories: { name: subcategory } } }
-    );
-  } else {
-    await Category.create({ name: req.body.category });
+export class AdminController {
+  static async getAdmin(req, res, next) {
+    const categories = await Category.find({});
+    return res.render('admin/index', { categories });
   }
-  return res.sendStatus(201);
-};
 
-module.exports.deleteCategory = async (req, res) => {
-  const { id } = req.params;
-  await Category.findByIdAndDelete(id);
-  return res.sendStatus(200);
-};
+  static async addCategory(req, res, next) {
+    if (req.body.subcategory) {
+      const { category, subcategory } = req.body;
+      await Category.findOneAndUpdate(
+        { name: category },
+        { $push: { subcategories: { name: subcategory } } },
+      );
+    } else {
+      await Category.create({ name: req.body.category });
+    }
+    return res.sendStatus(201);
+  }
 
-module.exports.deleteSubcategory = async (req, res) => {
-  const { id } = req.params;
-  await Subcategory.findByIdAndDelete(id);
-  return res.sendStatus(200);
-};
+  static async deleteCategory(req, res, next) {
+    const { id } = req.params;
+    await Category.findByIdAndDelete(id);
+    return res.sendStatus(200);
+  }
+
+  static async deleteSubcategory(req, res, next) {
+    const { id } = req.params;
+    await Subcategory.findByIdAndDelete(id);
+    return res.sendStatus(200);
+  }
+}

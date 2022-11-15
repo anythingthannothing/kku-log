@@ -1,30 +1,35 @@
+export * from './not-found-error-handler';
+export * from './error-handler';
+export * from './app-error-handler';
+export * from './async-handler';
+
 const {
   postSchema,
   postEditSchema,
   commentSchema,
-} = require("../utils/joiValidation");
-const AppError = require("../utils/appError");
-const Comment = require("../db/schemas/comment");
+} = require('../utils/joiValidation');
+import { errorHanlder, appErrorHandler } from '../middlewares';
+const Comment = require('../db/schemas/comment');
 
 module.exports.setLocals = (req, res, next) => {
   res.locals.currentUser = req.session.user;
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
   next();
 };
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.session.user) {
-    req.flash("error", "로그인을 해주세요 :)");
-    return res.redirect("/posts");
+    req.flash('error', '로그인을 해주세요 :)');
+    return res.redirect('/posts');
   }
   next();
 };
 
 module.exports.logout = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    req.flash("error", "잘못된 접근입니다 :(");
-    return res.redirect("/users/login");
+    req.flash('error', '잘못된 접근입니다 :(');
+    return res.redirect('/users/login');
   }
   next();
 };
@@ -32,9 +37,9 @@ module.exports.logout = (req, res, next) => {
 module.exports.isAdmin = (req, res, next) => {
   if (
     !req.session.user ||
-    req.session.user.email !== "anythingthannothing@gmail.com"
+    req.session.user.email !== 'anythingthannothing@gmail.com'
   ) {
-    req.flash("error", "권한이 없습니다 :(");
+    req.flash('error', '권한이 없습니다 :(');
     return res.redirect(`/posts`);
   }
   next();
@@ -44,7 +49,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
   const { id, commentId } = req.params;
   const comment = await Comment.findById(commentId);
   if (!comment.author.equals(req.session.user._id)) {
-    req.flash("error", "권한이 없습니다 :(");
+    req.flash('error', '권한이 없습니다 :(');
     return res.redirect(`/posts/${id}`);
   }
   next();
@@ -53,7 +58,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 module.exports.validatePost = (req, res, next) => {
   const { error } = postSchema.validate(req.body);
   if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
+    const msg = error.details.map((el) => el.message).join(',');
     throw new AppError(msg, 400);
   }
   next();
@@ -62,7 +67,7 @@ module.exports.validatePost = (req, res, next) => {
 module.exports.validatePostEdit = (req, res, next) => {
   const { error } = postEditSchema.validate(req.body);
   if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
+    const msg = error.details.map((el) => el.message).join(',');
     throw new AppError(msg, 400);
   }
   next();
@@ -71,7 +76,7 @@ module.exports.validatePostEdit = (req, res, next) => {
 module.exports.validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
   if (error) {
-    const msg = error.details.map((v) => v.message).join(",");
+    const msg = error.details.map((v) => v.message).join(',');
     throw new AppError(msg, 400);
   }
   next();
