@@ -2,7 +2,10 @@
 /node_modules
 
 # Env
-*.env
+.env*
+
+# Config
+*.conf
 
 # Log
 *.log
@@ -10,7 +13,6 @@
 # Test
 /test
 /coverage
-
 
 # Backup
 backup.md

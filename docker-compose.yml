@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: dockerfiles/nginx.dockerfile
+    depends_on:
+      - application
+
+  application:
+    build:
+      context: .
+      dockerfile: dockerfiles/app.dockerfile
+    container_name: application
+    restart: always
+    env_file:
+      - .env.production
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/server
+    command: ['npm', 'start']
