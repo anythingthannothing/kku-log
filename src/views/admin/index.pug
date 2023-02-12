@@ -30,11 +30,14 @@ doctype html
                         h2 SubCategory
                         div.mb-3
                             ul
-                                each subcategory in subcategories
-                                    div.d-flex.justify-content-between
-                                        li #{subcategory.name}
-                                        form(data-id=`${subcategory._id}`)#subcategoryDeleteForm
-                                            input(type="submit" value="❌").btn
+                                if categories.length
+                                    each category in categories
+                                        h1 #{category.name}
+                                        each subcategory in category.subcategories
+                                            div.d-flex.justify-content-between
+                                                li #{subcategory.name}
+                                                form(data-id=`${subcategory._id}`)#subcategoryDeleteForm
+                                                    input(type="submit" value="❌").btn
                         form(novalidate).needs-validation#subcategoryForm
                             div.d-flex.flex-column
                                 div.input-group.mb-3
@@ -46,7 +49,7 @@ doctype html
                                     ).form-select.cat#categorySelect
                                         option(selected) 카테고리를 선택하세요.
                                         each category in categories
-                                            option(value=`${category.name}`) #{category.name}
+                                            option(value=`${category._id}`) #{category.name}
                                 div.mb-3
                                     label(for="subcategory").form-label 서브카테고리
                                     input(
@@ -56,5 +59,5 @@ doctype html
                                     ).form-control#subcategory
                                 button(type="submit").btn.btn-primary 소분류 등록
         include ../partials/footer
-        script(src="/javascripts/validatePost.js")
-        script(src="/javascripts/admin.js")
+        script(src="/js/validatePost.js")
+        script(src="/js/admin.js")

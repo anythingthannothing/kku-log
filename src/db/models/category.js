@@ -1,0 +1,30 @@
+import { Category } from '../schemas/category';
+
+class CategoryModel {
+  static async create(categoryInfo) {
+    const newCategory = await Category.create(categoryInfo);
+    return newCategory;
+  }
+
+  static async findAll() {
+    const categories = await Category.aggregate([
+      {
+        $lookup: {
+          from: 'subcategories',
+          localField: 'name',
+          foreignField: 'category',
+          as: 'subcategories',
+        },
+      },
+    ]);
+    console.log(categories);
+    return categories;
+  }
+
+  static async findByName(filter) {
+    const category = await Category.find(filter);
+    return category;
+  }
+}
+
+export { CategoryModel };

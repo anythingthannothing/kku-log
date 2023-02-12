@@ -1,5 +1,16 @@
-### Packages
+# Packages
 /node_modules
 
-### Env
-.env
+# Env
+*.env
+
+# Log
+*.log
+
+# Test
+/test
+/coverage
+
+
+# Backup
+backup.md

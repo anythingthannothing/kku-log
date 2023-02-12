@@ -15,27 +15,18 @@
 볼품은 없더라도 좋은 내용으로 가득 채우자는 생각으로 블로그 프로젝트를 시작하게 되었습니다.
 
 ### 1.3 개발환경   
-- Visual Studio Code
-- Github
-- Mongodb Atlas
-- Postman   
+- Visual Studio Code | Github | Mongodb Compass | Postman   
 ### 1.4 사용 기술 스택
 #### Backend
-- NodeJS + Express
-- mongoose
+- Node.js | Express | mongoose | Pug
 #### Frontend
-- Templating Engines ~~(EJS)~~ ➡ Pug로 전환(ver 0.0.1)
-- CSS
-- JavaScript
-- Bootstrap5
+- JavaScript | Bootstrap5 | CSS
 #### Database
 - MongoDB
 #### Cloud
-- heroku
-- Clouidinary(Storage)
+- heroku | Clouidinary(Storage)
 #### Library & Tools
-- Summernote
-- Github 
+- Summernote | Github 
 
 <!-- 2. 프로젝트 구조 -->
 
@@ -45,16 +36,15 @@
 
 ## 3. 버전 관리
 ### 0.0.0 버전: 최초 배포(`22.10.09)
-- 2022.10.09일 ➡ version 0.0.0으로 배포 후 게시글 등록 확인
-    - 블로깅을 위한 최소한의 CRUD 기능 구현(포스팅 & 댓글)
-        - Next Step: Image 삽입 문제(base64 인코딩) 및 Markdown 편집기로 전환
-    - 접근성 향상 및 타겟 유저에 맞춘 소셜(Github) 로그인 기능 구현
-        - Next Step: 회원 탈퇴 기능 추가 
-    - 블로그의 운영 편리성을 위한 어드민 페이지 구성(카테고리 관리)
-        - Next Step: UI 개선 및 Category - Subcategory Model 간 관계 개선
-    - github chart API 활용
-        - Next Step: LeetCode Steak Chart 기능 구현 및 github chart API 기능 자체 구현
-    - SSR을 위한 Template 엔진 및 레이아웃을 위한 Bootstrap 활용
-        - Next Step: ~~생산성 및 가독성 향상을 위해 Pug 엔진으로 전환~~(0.0.1 처리 完, issue #1)
-    - MVC 패턴 적용
-        - Next Step: 코드 리팩토링 및 프로젝트 관리 체계 수립
+- 블로깅을 위한 최소한의 CRUD 기능 구현(포스팅 & 댓글)
+    - Next Step: Image 삽입 문제(base64 인코딩) 및 Markdown 편집기로 전환
+- 접근성 향상 및 타겟 유저에 맞춘 소셜(Github) 로그인 기능 구현
+    - Next Step: 회원 탈퇴 기능 추가 
+- 블로그의 운영 편리성을 위한 어드민 페이지 구성(카테고리 관리)
+    - Next Step: UI 개선 및 Category - Subcategory Model 간 관계 개선
+- github chart API 활용
+    - Next Step: LeetCode Steak Chart 기능 구현 및 github chart API 기능 자체 구현
+- SSR을 위한 Template 엔진 및 레이아웃을 위한 Bootstrap 활용
+    - Next Step: ~~생산성 및 가독성 향상을 위해 Pug 엔진으로 전환~~(0.0.1 처리 完, issue #1)
+- MVC 패턴 적용
+    - Next Step: 코드 리팩토링 및 프로젝트 관리 체계 수립
