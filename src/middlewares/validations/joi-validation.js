@@ -1,19 +1,22 @@
-const Joi = require("joi");
+import Joi from 'joi';
 
-module.exports.postSchema = Joi.object({
+const postSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
   tags: Joi.string(),
   subcategory: Joi.string().required(),
+  thumbnailUrl: Joi.string().uri().required(),
 });
 
-module.exports.postEditSchema = Joi.object({
+const postEditSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
   subcategory: Joi.any(),
   tags: Joi.string().required(),
 });
 
-module.exports.commentSchema = Joi.object({
+const commentSchema = Joi.object({
   body: Joi.string().required(),
 });
+
+export { postSchema, postEditSchema, commentSchema };

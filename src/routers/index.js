@@ -1,17 +1,10 @@
 import { Router } from 'express';
-import adminRouter from './admin';
-import commentRouter from './comment';
-import postRouter from './post';
-import userRouter from './user';
+import apiRouter from './apis';
+import viewRouter from './view';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  res.redirect('/posts');
-});
-router.use('/admin', adminRouter);
-router.use('/users', userRouter);
-router.use('/posts', postRouter);
-router.use('/posts/:id/comments', commentRouter);
+router.use('/', viewRouter);
+router.use('/api', apiRouter);
 
 export default router;

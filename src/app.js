@@ -1,9 +1,10 @@
-import './config/db';
+import './configs/db';
+// import './utils/cache';
+
 import express from 'express';
-import morgan from 'morgan';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-
+import morgan from 'morgan';
 import flash from 'connect-flash';
 
 import {
@@ -29,6 +30,7 @@ const dbUrl =
     : process.env.LOCAL_URL;
 
 const secret = process.env.SECRET;
+
 app.use(
   session({
     store: MongoStore.create({
@@ -36,7 +38,7 @@ app.use(
       touchAfter: 24 * 3600,
       ttl: 3 * 24 * 60 * 60,
       secret,
-      dbName: process.env.NODE_ENV ? 'test' : 'myOwnBlog',
+      dbName: process.env.NODE_ENV === 'production' ? 'test' : 'myOwnBlog',
     }),
     name: 'session',
     secret,
@@ -49,7 +51,6 @@ app.use(
     },
   }),
 );
-
 app.use(flash());
 app.use(setLocals);
 

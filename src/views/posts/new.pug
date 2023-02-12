@@ -14,9 +14,8 @@ block content
                             aria-label="Default select example"
                         ).form-select#subcategory
                             option(selected) 카테고리를 선택하세요.
-                            each category in categories
-                                each subcategory in category.subcategories
-                                    option(value=`${subcategory.name}`) #{subcategory.name}
+                                each subcategory in subcategories
+                                    option(value=`${subcategory._id}`) #{subcategory.title}
                         div.invalid-feedback 유효한 카테고리 선택 필요
                     div.mb-3
                         label(for="title").form-label 제목
@@ -26,7 +25,7 @@ block content
                             required
                         ).form-control#title
                         div.invalid-feedback 유효한 제목 입력 필요
-                    textarea(name="content")#summernote
+                    div(id="editor")
                     div.mb-3
                         label(for="thumbnail").form-label 썸네일
                         input(
@@ -47,6 +46,7 @@ block content
                         button(type="submit").btn.btn-primary.w-25 등록하기
                         a(href="/")
                             button(type="button").btn.btn-danger.w-25 홈으로
-    script $(document).ready(function () {$("#summernote").summernote();});
+    script(src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js")
+    script(src='/js/tui-editor.js')
     script(src="/js/validatePost.js")
     script(src="/js/createPost.js")

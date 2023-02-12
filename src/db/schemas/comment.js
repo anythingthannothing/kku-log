@@ -1,17 +1,19 @@
-import { model, Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const CommentSchema = new Schema(
   {
     author: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'users',
     },
     body: {
       type: String,
       required: true,
     },
   },
-  { timestamps: true },
+  { collection: 'comments', timestamps: true },
 );
 
-module.exports = model('Comment', CommentSchema);
+const Comment = model('comments', CommentSchema);
+
+export { Comment };

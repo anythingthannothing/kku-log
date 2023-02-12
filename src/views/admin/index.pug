@@ -49,7 +49,7 @@ doctype html
                                     ).form-select.cat#categorySelect
                                         option(selected) 카테고리를 선택하세요.
                                         each category in categories
-                                            option(value=`${category.name}`) #{category.name}
+                                            option(value=`${category._id}`) #{category.name}
                                 div.mb-3
                                     label(for="subcategory").form-label 서브카테고리
                                     input(

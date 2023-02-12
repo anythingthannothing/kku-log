@@ -1,24 +1,21 @@
-export * from './not-found-error-handler';
-export * from './error-handler';
-export * from './app-error-handler';
-export * from './async-handler';
+export * from './error';
 
 const {
   postSchema,
   postEditSchema,
   commentSchema,
-} = require('../utils/joiValidation');
-import { errorHanlder, appErrorHandler } from '../middlewares';
+} = require('./validations/joi-validation');
+import { AppError } from '../middlewares';
 const Comment = require('../db/schemas/comment');
 
-module.exports.setLocals = (req, res, next) => {
+const setLocals = (req, res, next) => {
   res.locals.currentUser = req.session.user;
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();
 };
 
-module.exports.isLoggedIn = (req, res, next) => {
+const isLoggedIn = (req, res, next) => {
   if (!req.session.user) {
     req.flash('error', '로그인을 해주세요 :)');
     return res.redirect('/posts');
@@ -26,7 +23,7 @@ module.exports.isLoggedIn = (req, res, next) => {
   next();
 };
 
-module.exports.logout = (req, res, next) => {
+const logout = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.flash('error', '잘못된 접근입니다 :(');
     return res.redirect('/users/login');
@@ -34,7 +31,7 @@ module.exports.logout = (req, res, next) => {
   next();
 };
 
-module.exports.isAdmin = (req, res, next) => {
+const isAdmin = (req, res, next) => {
   if (
     !req.session.user ||
     req.session.user.email !== 'anythingthannothing@gmail.com'
@@ -45,7 +42,7 @@ module.exports.isAdmin = (req, res, next) => {
   next();
 };
 
-module.exports.isReviewAuthor = async (req, res, next) => {
+const isReviewAuthor = async (req, res, next) => {
   const { id, commentId } = req.params;
   const comment = await Comment.findById(commentId);
   if (!comment.author.equals(req.session.user._id)) {
@@ -55,7 +52,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
   next();
 };
 
-module.exports.validatePost = (req, res, next) => {
+const validatePost = (req, res, next) => {
   const { error } = postSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(',');
@@ -64,7 +61,7 @@ module.exports.validatePost = (req, res, next) => {
   next();
 };
 
-module.exports.validatePostEdit = (req, res, next) => {
+const validatePostEdit = (req, res, next) => {
   const { error } = postEditSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(',');
@@ -73,11 +70,22 @@ module.exports.validatePostEdit = (req, res, next) => {
   next();
 };
 
-module.exports.validateComment = (req, res, next) => {
+const validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((v) => v.message).join(',');
     throw new AppError(msg, 400);
   }
   next();
+};
+
+export {
+  setLocals,
+  isLoggedIn,
+  logout,
+  isAdmin,
+  isReviewAuthor,
+  validatePost,
+  validatePostEdit,
+  validateComment,
 };

@@ -1,34 +1,27 @@
-import Category from '../db/schemas/category';
-import Subcategory from '../db/schemas/subcategory';
+import { CategoryService, SubcategoryService } from '../services';
 
-export class AdminController {
-  static async getAdmin(req, res, next) {
-    const categories = await Category.find({});
-    return res.render('admin/index', { categories });
-  }
+const createCategory = async (req, res, next) => {
+  const { category } = req.body;
+  await CategoryService.createCategory({ name: category });
+  return res.sendStatus(201);
+};
 
-  static async addCategory(req, res, next) {
-    if (req.body.subcategory) {
-      const { category, subcategory } = req.body;
-      await Category.findOneAndUpdate(
-        { name: category },
-        { $push: { subcategories: { name: subcategory } } },
-      );
-    } else {
-      await Category.create({ name: req.body.category });
-    }
-    return res.sendStatus(201);
-  }
+const createSubcategory = async (req, res, next) => {
+  const { categoryId, subcategory } = req.body;
+  await SubcategoryService.createSubcategory(categoryId, subcategory);
+  return res.sendStatus(201);
+};
 
-  static async deleteCategory(req, res, next) {
-    const { id } = req.params;
-    await Category.findByIdAndDelete(id);
-    return res.sendStatus(200);
-  }
+const deleteCategory = async (req, res, next) => {
+  const { id } = req.params;
+  await CategoryService.findByIdAndDelete(id);
+  return res.sendStatus(200);
+};
 
-  static async deleteSubcategory(req, res, next) {
-    const { id } = req.params;
-    await Subcategory.findByIdAndDelete(id);
-    return res.sendStatus(200);
-  }
-}
+const deleteSubcategory = async (req, res, next) => {
+  const { name } = req.params;
+  await CategoryService.findByIdAndDelete(id);
+  return res.sendStatus(200);
+};
+
+export { createCategory, createSubcategory, deleteCategory, deleteSubcategory };

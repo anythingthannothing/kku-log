@@ -2,7 +2,7 @@ aside.col-3.ps-0.pe-2
     div.mb-2
         div.d-flex.justify-content-center
             if !currentUser
-                a(href="/users/login")
+                a(href="/api/login")
                     button.btn.btn-secondary
                         div.d-flex.flex-row.align-items-center
                             svg(
@@ -17,7 +17,7 @@ aside.col-3.ps-0.pe-2
             if currentUser
                 div.d-flex.justify-content-evenly.align-items-center.w-100
                     span #{currentUser.name}님! 반가워요 😊
-                    form(action="/users/logout" method="GET")
+                    form(action="/api/logout" method="GET")
                         button.btn.btn-secondary 로그아웃
     div.border.mb-3.px-0.github
         img(
@@ -29,6 +29,6 @@ aside.col-3.ps-0.pe-2
         each category in categories
             h5.ms-1 - #{category.name} -
             ul
-                each sub of category.subcategories
+                each subcategory of category.subcategories
                     li
-                        a(href=`/posts?filter=${sub.name.replace(/\s/g, "%20")}`) #{sub.name} (#{sub.posts.length})
+                        a(href=`/posts?filter=${subcategory.name.replace(/\s/g, "%20")}`) #{subcategory.name} (#{subcategory.count})

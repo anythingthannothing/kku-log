@@ -1,20 +1,15 @@
-const { model, Schema } = require("mongoose");
-const SubcategorySchema = require("./subcategory");
+import { Schema, model } from 'mongoose';
 
-const CategorySchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  subcategories: [SubcategorySchema],
-});
-
-CategorySchema.post("findOneAndDelete", async function (document) {
-  await Subcategory.deleteMany({
-    _id: {
-      $in: document.subcategories,
+const CategorySchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-  });
-});
+  },
+  { collection: 'categories' },
+);
 
-module.exports = model("Category", CategorySchema);
+const Category = model('categories', CategorySchema);
+
+export { Category };

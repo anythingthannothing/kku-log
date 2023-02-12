@@ -1,7 +1,7 @@
 import { AppError } from './app-error-handler';
 
 const errorHandler = (err, req, res, next) => {
-  if (err instanceof AppError) return next(err);
+  if (err instanceof Error || err instanceof AppError) return next(err);
   const now = new Date();
   const timestamp = `${now.toLocaleDateString(
     'ko-KR',

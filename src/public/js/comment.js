@@ -1,15 +1,15 @@
-const postContainer = document.getElementById("postContainer");
-const form = document.getElementById("commentForm");
-const deleteBtn = document.querySelectorAll("#deleteBtn");
+const postContainer = document.getElementById('postContainer');
+const form = document.getElementById('commentForm');
+const deleteBtn = document.querySelectorAll('#deleteBtn');
 
 const handleSubmit = async (event) => {
   event.preventDefault();
-  const textarea = form.querySelector("textarea");
+  const textarea = form.querySelector('textarea');
   const comment = textarea.value;
   const postId = postContainer.dataset.id;
-  if (body === "") return;
+  if (body === '') return;
   try {
-    await axios.post(`/posts/${postId}/comments`, {
+    await axios.post(`/api/posts/${postId}/comments`, {
       body: comment,
     });
     location.reload();
@@ -23,7 +23,7 @@ const handleDelete = async (event) => {
   const postId = postContainer.dataset.id;
   const commentId = parent.dataset.commentid;
   try {
-    await axios.delete(`/posts/${postId}/comments/${commentId}`);
+    await axios.delete(`/api/posts/${postId}/comments/${commentId}`);
     parent.remove();
   } catch (error) {
     console.log(error);
@@ -31,6 +31,6 @@ const handleDelete = async (event) => {
 };
 
 if (form) {
-  form.addEventListener("submit", handleSubmit);
+  form.addEventListener('submit', handleSubmit);
 }
-deleteBtn.forEach((el) => el.addEventListener("click", handleDelete));
+deleteBtn.forEach((el) => el.addEventListener('click', handleDelete));
