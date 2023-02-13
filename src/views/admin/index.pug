@@ -16,7 +16,7 @@ doctype html
                             ul
                                 each category in categories
                                     div.d-flex.justify-content-between
-                                        li #{category.name}
+                                        li #{category.title}
                                         form(data-id=`${category._id}`)#categoryDeleteForm
                                             button(type="submit").btn ❌
                         form(novalidate).needs-validation#categoryForm
@@ -32,10 +32,10 @@ doctype html
                             ul
                                 if categories.length
                                     each category in categories
-                                        h1 #{category.name}
+                                        h1 #{category.title}
                                         each subcategory in category.subcategories
                                             div.d-flex.justify-content-between
-                                                li #{subcategory.name}
+                                                li #{subcategory.title}
                                                 form(data-id=`${subcategory._id}`)#subcategoryDeleteForm
                                                     input(type="submit" value="❌").btn
                         form(novalidate).needs-validation#subcategoryForm
@@ -49,7 +49,7 @@ doctype html
                                     ).form-select.cat#categorySelect
                                         option(selected) 카테고리를 선택하세요.
                                         each category in categories
-                                            option(value=`${category._id}`) #{category.name}
+                                            option(value=`${category._id}`) #{category.title}
                                 div.mb-3
                                     label(for="subcategory").form-label 서브카테고리
                                     input(

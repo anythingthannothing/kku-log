@@ -14,18 +14,8 @@ const updatePost = async (req, res, next) => {
     { ...req.body },
     { runValidators: true },
   );
-  if (req.body.subcategory) {
-    const newSub = await CategoryService.findOne({
-      name: req.body.subcategory,
-    });
-    newSub.posts.push(post._id);
-    await newSub.save();
-    const { subcategory } = post;
-    await CategoryService.findOneAndUpdate(
-      { name: subcategory },
-      { $pull: { posts: post._id } },
-    );
-  }
+  await newSub.save();
+  const { subcategory } = post;
 
   await post.save();
   req.flash('success', '포스트 수정 완료!');

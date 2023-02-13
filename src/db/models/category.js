@@ -9,10 +9,17 @@ class CategoryModel {
   static async findAll() {
     const categories = await Category.aggregate([
       {
+        $set: {
+          id: {
+            $toString: '$_id',
+          },
+        },
+      },
+      {
         $lookup: {
           from: 'subcategories',
-          localField: 'name',
-          foreignField: 'category',
+          localField: 'id',
+          foreignField: 'parentCategoryId',
           as: 'subcategories',
         },
       },

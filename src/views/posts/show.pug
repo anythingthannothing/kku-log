@@ -24,13 +24,13 @@ block content
         else
             p.pt-3 댓글은 로그인 이후에 작성할 수 있습니다 :)
             
-        each comment in post.comments
-            div(data-commentid=`${comment._id}`).card.mb-3
-                div.card-body
-                    h5.card-title 작성자: #{comment.author.username}
-                    p.card-text 댓글 : #{comment.body}
-                    if currentUser && comment.author.equals(currentUser._id)
-                        button.btn.btn-danger#deleteBtn 댓글 지우기
+        //- each comment in post.comments
+        //-     div(data-commentid=`${comment._id}`).card.mb-3
+        //-         div.card-body
+        //-             h5.card-title 작성자: #{comment.author.username}
+        //-             p.card-text 댓글 : #{comment.body}
+        //-             if currentUser && comment.author.equals(currentUser._id)
+        //-                 button.btn.btn-danger#deleteBtn 댓글 지우기
 block script 
     script(src="/js/showPost.js")
     script(src="/js/comment.js")

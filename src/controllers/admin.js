@@ -1,8 +1,8 @@
 import { CategoryService, SubcategoryService } from '../services';
 
 const createCategory = async (req, res, next) => {
-  const { category } = req.body;
-  await CategoryService.createCategory({ name: category });
+  const { title } = req.body;
+  await CategoryService.createCategory({ title });
   return res.sendStatus(201);
 };
 

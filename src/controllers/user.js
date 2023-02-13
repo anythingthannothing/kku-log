@@ -3,11 +3,8 @@ import fetch from 'node-fetch';
 
 const getGithubLogin = async (req, res, next) => {
   const baseUrl = 'https://github.com/login/oauth/authorize';
-  const isDeployed = process.env.NODE_ENV === 'production';
   const config = {
-    client_id: isDeployed
-      ? process.env.GH_CLIENTID_PROD
-      : process.env.GH_CLIENTID_DEV,
+    client_id: process.env.GH_CLIENTID,
     scope: 'read:user user:email',
   };
   const params = new URLSearchParams(config).toString();
@@ -17,14 +14,9 @@ const getGithubLogin = async (req, res, next) => {
 const postLogin = async (req, res, next) => {
   const baseUrl = 'https://github.com/login/oauth/access_token';
   const { code } = req.query;
-  const isDeployed = process.env.NODE_ENV === 'production';
   const config = {
-    client_id: isDeployed
-      ? process.env.GH_CLIENTID_PROD
-      : process.env.GH_CLIENTID_DEV,
-    client_secret: isDeployed
-      ? process.env.GH_SECRET_PROD
-      : process.env.GH_SECRET_DEV,
+    client_id: process.env.GH_CLIENTID,
+    client_secret: process.env.GH_SECRET,
     code,
   };
   const params = new URLSearchParams(config).toString();
