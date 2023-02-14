@@ -1,11 +1,9 @@
 import mongoose from 'mongoose';
 
-const dbUrl =
-  process.env.NODE_ENV === 'production'
-    ? process.env.DB_URL
-    : process.env.LOCAL_URL;
+const dbUrl = process.env.MONGODB_URL;
 
 mongoose.connect(dbUrl);
+
 const db = mongoose.connection;
 
 db.on('connected', () =>

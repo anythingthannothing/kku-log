@@ -24,10 +24,7 @@ app.use(express.static('src/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const dbUrl =
-  process.env.NODE_ENV === 'production'
-    ? process.env.DB_URL
-    : process.env.LOCAL_URL;
+const dbUrl = process.env.MONGODB_URL;
 
 const secret = process.env.SECRET;
 

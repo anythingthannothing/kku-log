@@ -1,0 +1,23 @@
+# Docker
+Dockerfile
+
+# Compliled Output
+node_modules
+
+# Environment
+.env.development
+.env.test
+
+# Git
+.git
+
+# Test
+coverage
+test
+
+# IDE
+.vscode
+
+# Document
+docs
+

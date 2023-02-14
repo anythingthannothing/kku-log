@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: dockerfiles/nginx.dockerfile
+    depends_on:
+      - application
+
+  application:
+    image: anythingthannothing/kkulog
+    container_name: kkulog
+    restart: always
+    ports:
+      - 8000:8000
+    command: ['npm', 'start']

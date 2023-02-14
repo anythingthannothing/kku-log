@@ -10,6 +10,10 @@ const SubcategorySchema = new Schema(
       type: Number,
       default: 0,
     },
+    CategoryId: {
+      type: String,
+      required: true,
+    },
   },
   { collection: 'subcategories' },
 );

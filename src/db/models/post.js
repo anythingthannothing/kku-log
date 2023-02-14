@@ -1,8 +1,14 @@
 import { Post } from '../schemas/post';
+import { Subcategory } from '../schemas/subcategory';
 
 class PostModel {
   static async create(postInfo) {
     const newPost = await Post.create(postInfo);
+    console.log(postInfo);
+    const result = await Subcategory.updateOne(
+      { _id: postInfo.subcategoryId },
+      { $inc: { postCount: 1 } },
+    );
     return newPost;
   }
 
@@ -12,12 +18,7 @@ class PostModel {
   }
 
   static async findOne(id) {
-    const post = await Post.findById(id).populate({
-      path: 'comments',
-      populate: {
-        path: 'author',
-      },
-    });
+    const post = await Post.findById(id);
     // .cache({ key: id });
     return post;
   }

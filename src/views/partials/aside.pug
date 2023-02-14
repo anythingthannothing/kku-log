@@ -27,8 +27,8 @@ aside.col-3.ps-0.pe-2
     //- div.container-fluid.border.mb-3 LeetCode streak
     div
         each category in categories
-            h5.ms-1 - #{category.name} -
+            h5.ms-1 - #{category.title} -
             ul
                 each subcategory of category.subcategories
                     li
-                        a(href=`/posts?filter=${subcategory.name.replace(/\s/g, "%20")}`) #{subcategory.name} (#{subcategory.count})
+                        a(href=`/posts?filter=${subcategory.title.replace(/\s/g, "%20")}`) #{subcategory.title} (#{subcategory.postCount})

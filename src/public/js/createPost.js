@@ -26,12 +26,12 @@ async function handleFiles() {
 async function handleFormSubmit(event) {
   event.preventDefault();
   const title = titleInput.value;
-  const subcategory = subcategoryInput.value;
+  const subcategoryId = subcategoryInput.value;
   const content = editor.getMarkdown();
   const tags = tagsInput.value;
   const formData = {
     title,
-    subcategory,
+    subcategoryId,
     content,
     tags,
     thumbnailUrl,

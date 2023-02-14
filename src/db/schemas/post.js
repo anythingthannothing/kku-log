@@ -3,7 +3,7 @@ import { Comment } from './comment';
 
 const PostSchema = new Schema(
   {
-    subcategory: {
+    subcategoryId: {
       type: String,
       required: true,
     },
@@ -22,12 +22,6 @@ const PostSchema = new Schema(
       type: String,
       required: true,
     },
-    comments: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'comments',
-      },
-    ],
   },
   { collection: 'posts', timestamps: true },
 );

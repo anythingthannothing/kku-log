@@ -4,14 +4,14 @@ const postSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
   tags: Joi.string(),
-  subcategory: Joi.string().required(),
+  subcategoryId: Joi.string().required(),
   thumbnailUrl: Joi.string().uri().required(),
 });
 
 const postEditSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
-  subcategory: Joi.any(),
+  subcategoryId: Joi.any(),
   tags: Joi.string().required(),
 });
 

@@ -7,11 +7,11 @@ const subcategoryDeleteForm = document.querySelectorAll(
 
 const handleCategoryFormSubmit = async (event) => {
   event.preventDefault();
-  const category = document.querySelector('#category').value;
+  const title = document.querySelector('#category').value;
   if (category === '') return;
   try {
     await axios.post('/api/admin/categories', {
-      category,
+      title,
     });
     location.reload();
   } catch (error) {
