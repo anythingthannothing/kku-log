@@ -4,7 +4,7 @@ class SubcategoryModel {
   static async create(categoryId, subcategory) {
     const newSubcategory = await Subcategory.create({
       title: subcategory,
-      parentCategoryId: categoryId,
+      categoryId: categoryId,
     });
     return newSubcategory;
   }

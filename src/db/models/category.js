@@ -19,7 +19,7 @@ class CategoryModel {
         $lookup: {
           from: 'subcategories',
           localField: 'id',
-          foreignField: 'parentCategoryId',
+          foreignField: 'categoryId',
           as: 'subcategories',
         },
       },
