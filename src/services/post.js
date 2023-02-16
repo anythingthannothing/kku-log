@@ -12,7 +12,8 @@ export class PostService {
   }
 
   static async getPostById(id) {
-    const post = await PostModel.findOne(id);
+    console.log(id);
+    const post = await PostModel.findById(id);
     return post;
   }
 

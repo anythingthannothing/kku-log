@@ -14,6 +14,6 @@ const SequenceSchema = new Schema(
   { collection: 'sequences' },
 );
 
-const SequenceModel = model('sequences', SequenceSchema);
+const Sequence = model('sequences', SequenceSchema);
 
-export { SequenceModel };
+export { Sequence };

@@ -1,10 +1,24 @@
 import { Post } from '../schemas/post';
 import { Subcategory } from '../schemas/subcategory';
+import { Sequence } from '../schemas/sequence';
 
 class PostModel {
   static async create(postInfo) {
-    const newPost = await Post.create(postInfo);
-    console.log(postInfo);
+    const sequence = await Sequence.findOneAndUpdate(
+      {
+        collectionName: 'posts',
+      },
+      { $inc: { value: 1 } },
+      {
+        upsert: true,
+        returnDocument: 'after',
+      },
+    );
+
+    const newPost = new Post(postInfo);
+    console.log(sequence);
+    newPost.id = sequence.value;
+    await newPost.save();
     const result = await Subcategory.updateOne(
       { _id: postInfo.subcategoryId },
       { $inc: { postCount: 1 } },
@@ -13,19 +27,17 @@ class PostModel {
   }
 
   static async findAll() {
-    const posts = await Post.find().limit(5).sort({ createdAt: -1 });
-    return posts;
+    return Post.find().limit(5).sort({ createdAt: -1 });
   }
 
-  static async findOne(id) {
-    const post = await Post.findById(id);
+  static async findById(id) {
+    const post = await Post.findOne({ id: id });
     // .cache({ key: id });
     return post;
   }
 
   static async update(postId, updateInfo) {
-    const updatedPost = await Post.updateOne({ _id: postId }, updateInfo);
-    return updatedPost;
+    return Post.updateOne({ _id: postId }, updateInfo);
   }
 }
 

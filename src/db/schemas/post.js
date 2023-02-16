@@ -1,8 +1,12 @@
-import { Schema, model, connection } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { Comment } from './comment';
 
 const PostSchema = new Schema(
   {
+    id: {
+      type: Number,
+      required: true,
+    },
     subcategoryId: {
       type: String,
       required: true,
@@ -26,31 +30,13 @@ const PostSchema = new Schema(
   { collection: 'posts', timestamps: true },
 );
 
-PostSchema.pre('save', async function () {
-  const sequenceCollection = connection.collection('sequences');
-
-  const sequence = await sequenceCollection.findOneAndUpdate(
-    {
-      collectionName: 'posts',
-    },
-    { $inc: { value: 1 } },
-    {
-      upsert: true,
-      returnDocument: 'after',
-    },
-  );
-
-  const id = sequence.value.value;
-  this.set({ id });
-});
-
-PostSchema.post('findOneAndDelete', async function (document) {
-  await Comment.deleteMany({
-    _id: {
-      $in: document.comments,
-    },
-  });
-});
+// PostSchema.post('findOneAndDelete', async function (document) {
+//   await Comment.deleteMany({
+//     _id: {
+//       $in: document.comments,
+//     },
+//   });
+// });
 
 const Post = model('posts', PostSchema);
 
