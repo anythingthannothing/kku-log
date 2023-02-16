@@ -7,6 +7,12 @@ const createPost = async (req, res, next) => {
   return res.status(201).json(newPost._id);
 };
 
+const getPost = async (req, res, next) => {
+  const { postId } = req.params;
+  const post = await PostService.getPostById(postId);
+  return res.status(200).json(post);
+};
+
 const updatePost = async (req, res, next) => {
   const { id } = req.params;
   const post = await PostService.findByIdAndUpdate(
@@ -34,4 +40,4 @@ const deletePost = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-export { createPost, updatePost, deletePost };
+export { getPost, createPost, updatePost, deletePost };

@@ -42,7 +42,7 @@ const renderEditPost = async (req, res, next) => {
 };
 
 const renderAdmin = async (req, res, next) => {
-  const categories = await CategoryService.getCategories({});
+  const categories = await CategoryService.getCategories();
   return res.render('admin/index', { categories });
 };
 

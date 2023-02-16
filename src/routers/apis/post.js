@@ -6,10 +6,11 @@ import {
   asyncHandler,
 } from '../../middlewares';
 // import { clearCache } from '../../middlewares/cleanCache';
-import { createPost, updatePost, deletePost } from '../../controllers';
+import { createPost, updatePost, deletePost, getPost } from '../../controllers';
 
 const router = Router();
 
+router.get('/:postId', asyncHandler(getPost));
 router.use(isAdmin);
 router.post('/', validatePost, asyncHandler(createPost));
 
