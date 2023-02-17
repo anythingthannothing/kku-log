@@ -4,7 +4,7 @@ const createPost = async (req, res, next) => {
   const postInfo = { ...req.body };
   const newPost = await PostService.createPost(postInfo);
   req.flash('success', '포스트 등록 완료!');
-  return res.status(201).json(newPost._id);
+  return res.status(201).json(newPost.id);
 };
 
 const getPost = async (req, res, next) => {

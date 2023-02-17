@@ -6,8 +6,11 @@ const client = createClient();
 const renderPosts = async (req, res, next) => {
   const categories = await CategoryService.getCategories();
   if (req.query.filter) {
-    const filter = req.query.filter.replace(/%20/g, ' ');
-    const posts = await PostService.getPosts({ subcategory: filter });
+    const { filter } = req.query;
+    console.log(filter);
+    const posts = await PostService.getPostsBySubcategoryId({
+      subcategoryId: filter,
+    });
     return res.render('index', { categories, posts });
   }
   const posts = await PostService.getPosts();

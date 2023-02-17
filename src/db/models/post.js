@@ -36,6 +36,10 @@ class PostModel {
     return post;
   }
 
+  static async findByFilter(filter) {
+    return Post.find(filter);
+  }
+
   static async update(postId, updateInfo) {
     return Post.updateOne({ _id: postId }, updateInfo);
   }

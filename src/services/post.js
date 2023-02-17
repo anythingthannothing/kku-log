@@ -17,6 +17,10 @@ export class PostService {
     return post;
   }
 
+  static async getPostsBySubcategoryId(filter) {
+    return await PostModel.findByFilter(filter);
+  }
+
   static async updatePost(postId, updateInfo) {
     const post = await PostModel.findById(postId);
 
