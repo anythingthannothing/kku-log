@@ -1,38 +1,52 @@
 import { PostModel } from '../db';
+import { AppError } from '../middlewares';
 
 export class PostService {
   static async createPost(postInfo) {
-    const newPost = await PostModel.create(postInfo);
-    return newPost;
+    return await PostModel.create(postInfo);
   }
 
-  static async getPosts() {
-    const posts = await PostModel.findAll();
-    return posts;
+  static async getPosts(page) {
+    const postCount = await PostModel.countAll();
+    const totalPage = Math.ceil(postCount / 5);
+    if (page > totalPage) {
+      throw new AppError('Bad Request', 400);
+    }
+    const posts = await PostModel.findByPage(page);
+    const hasNextPage = totalPage > page;
+    const nextPage = page + 1;
+    return {
+      totalPage,
+      posts,
+      hasNextPage,
+      nextPage,
+    };
+  }
+
+  static async getPostsBySubcategoryId(subcategoryId, page) {
+    const postCount = await PostModel.countAll(subcategoryId);
+    const totalPage = Math.ceil(postCount / 5);
+    if (page > totalPage) {
+      throw new AppError('Bad Request', 400);
+    }
+    const posts = await PostModel.findByPage(page, subcategoryId);
+    const hasNextPage = totalPage > page;
+    const nextPage = page + 1;
+    return {
+      totalPage,
+      posts,
+      hasNextPage,
+      nextPage,
+    };
   }
 
   static async getPostById(id) {
-    console.log(id);
-    const post = await PostModel.findById(id);
-    return post;
-  }
-
-  static async getPostsBySubcategoryId(filter) {
-    return await PostModel.findByFilter(filter);
+    return await PostModel.findById(id);
   }
 
   static async updatePost(postId, updateInfo) {
     const post = await PostModel.findById(postId);
 
-    const updatedPost = await PostModel.update(postId, updateInfo);
-    return updatedCategory;
-  }
-
-  static async deletePost(postId) {
-    const post = await PostModel.findById(postId);
-    const productCount = await PostModel.countProducts(postId);
-    const result = await PostModel.delete(postId);
-
-    return result;
+    return await PostModel.update(postId, updateInfo);
   }
 }

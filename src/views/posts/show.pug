@@ -12,17 +12,17 @@ block content
         article.mb-3#content
 
         hr
-        if currentUser
-            form(novalidate).needs-validation.mb-3.mt-3#commentForm
-                div.mb-2
-                    label(for="body").form-label 댓글 남기기
-                    textarea(
-                        rows="3"
-                        required
-                    ).form-control.needs-validation#body
-                button.btn.btn-primary 등록
-        else
-            p.pt-3 댓글은 로그인 이후에 작성할 수 있습니다 :)
+        //if currentUser
+        //    form(novalidate).needs-validation.mb-3.mt-3#commentForm
+        //        div.mb-2
+        //            label(for="body").form-label 댓글 남기기
+        //            textarea(
+        //                rows="3"
+        //                required
+        //            ).form-control.needs-validation#body
+        //        button.btn.btn-primary 등록
+        //else
+        //    p.pt-3 댓글은 로그인 이후에 작성할 수 있습니다 :)
 
         //- each comment in post.comments
         //-     div(data-commentid=`${comment._id}`).card.mb-3

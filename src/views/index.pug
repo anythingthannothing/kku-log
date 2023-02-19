@@ -10,11 +10,14 @@ block content
                         div.col-9
                             div.card-body.py-2.px-3
                                 h2.card-title.mb-1 #{post.title}
-                                p.card-text.mb-1 !{post.content.replace(/<[^>]+>/g, '').slice(0, 110)}...
+                                p.card-text.mb-1 !{post.content.slice(0, 110)}...
                                 div.d-flex.justify-content-between
                                     span.card-text 
                                         small.text-muted 작성일: #{post.createdAt.toISOString().slice(0, 10)}
                                     span.card-text
                                         small.text-muted 최종 수정일: #{post.updatedAt.toISOString().slice(0, 10)}
                                     //- span.card-text
-                                    //-     small.text-muted 조회수: 
+                                    //-     small.text-muted 조회수:
+    if hasNextPage
+        div.d-flex.justify-content-center.py-2
+            h5 ⬇ 더 보기

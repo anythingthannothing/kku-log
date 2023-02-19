@@ -26,8 +26,25 @@ class PostModel {
     return newPost;
   }
 
-  static async findAll() {
-    return Post.find().limit(5).sort({ createdAt: -1 });
+  static async findByPage(page, subcategoryId) {
+    console.log(subcategoryId);
+    if (subcategoryId) {
+      return Post.find({ subcategoryId })
+        .skip((page - 1) * 5)
+        .limit(5)
+        .sort({ createdAt: -1 });
+    }
+    return Post.find()
+      .skip((page - 1) * 5)
+      .limit(5)
+      .sort({ createdAt: -1 });
+  }
+
+  static async countAll(subcategoryId) {
+    if (!subcategoryId) {
+      return Post.find().countDocuments();
+    }
+    return Post.find({ subcategoryId }).countDocuments();
   }
 
   static async findById(id) {
