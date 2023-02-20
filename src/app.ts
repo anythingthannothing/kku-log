@@ -24,9 +24,9 @@ app.use(express.static('src/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const dbUrl = process.env.MONGODB_URL;
+const dbUrl = process.env.MONGODB_URL as string;
 
-const secret = process.env.SECRET;
+const secret = process.env.SECRET as string;
 
 app.use(
   session({
@@ -34,7 +34,6 @@ app.use(
       mongoUrl: dbUrl,
       touchAfter: 24 * 3600,
       ttl: 3 * 24 * 60 * 60,
-      secret,
       dbName: process.env.NODE_ENV === 'production' ? 'test' : 'myOwnBlog',
     }),
     name: 'session',
@@ -43,13 +42,22 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      expires: Date.now() + 1000 * 60 * 60 * 24 * 2,
       maxAge: 1000 * 60 * 60 * 24 * 2,
     },
   }),
 );
 app.use(flash());
 app.use(setLocals);
+
+interface User {
+  name: string;
+}
+
+declare module 'express-session' {
+  interface SessionData {
+    user: User;
+  }
+}
 
 // Logger
 app.use(morgan('dev'));

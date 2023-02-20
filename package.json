@@ -4,9 +4,9 @@
   "description": "My Own Blog Project",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production nodemon index.js --exec babel-node",
-    "dev": "NODE_ENV=development nodemon index.js --exec babel-node",
-    "test": "jest"
+    "start": "NODE_ENV=production tsc-watch --onSuccess 'node ./dist/index.js'",
+    "dev": "NODE_ENV=development tsc-watch --onSuccess 'node ./dist/index.js'",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -14,10 +14,6 @@
   },
   "author": "KimKeonU",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/anythingthannothing/kku-log/issues"
-  },
-  "homepage": "https://github.com/anythingthannothing/kku-log#readme",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.223.0",
     "@aws-sdk/s3-request-presigner": "^3.223.0",
@@ -33,17 +29,19 @@
     "mongoose": "^6.5.4",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.7",
-    "nodemon": "^2.0.20",
     "prettier": "^2.8.4",
     "pug": "^3.0.2",
     "redis": "^4.5.1",
     "supertest": "^6.3.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.20.2",
-    "@babel/node": "^7.20.2",
-    "@babel/plugin-transform-runtime": "^7.19.6",
-    "@babel/preset-env": "^7.20.2"
+    "@types/connect-flash": "^0.0.37",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/express": "^4.17.17",
+    "@types/express-session": "^1.17.6",
+    "@types/morgan": "^1.9.4",
+    "@types/node": "^18.14.0",
+    "tsc-watch": "^6.0.0",
+    "typescript": "^4.9.5"
   }
 }

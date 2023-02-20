@@ -1,7 +1,7 @@
-import _ from './dotenv';
+require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 import { app } from './src/app';
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
   console.log(

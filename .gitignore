@@ -4,6 +4,9 @@
 # Env
 .env.*
 
+# Build
+dist/
+
 # Config
 *.conf
 
