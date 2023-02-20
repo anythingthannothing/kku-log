@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { asyncHandler, isAdmin } from '../../middlewares';
+import { asyncHandler, isAdmin } from '../middlewares';
 import {
   createCategory,
   createSubcategory,

@@ -4,7 +4,7 @@ import {
   isLoggedIn,
   isReviewAuthor,
   asyncHandler,
-} from '../../middlewares';
+} from '../middlewares';
 import { createComment, deleteComment } from '../../controllers';
 
 const router = Router({ mergeParams: true });

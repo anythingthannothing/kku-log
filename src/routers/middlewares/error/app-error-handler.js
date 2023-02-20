@@ -1,11 +1,3 @@
-class AppError extends Error {
-  constructor(name, httpCode, description) {
-    super(description);
-
-    this.name = name;
-    this.status = httpCode;
-  }
-}
 const appErrorHandler = (err, req, res, next) => {
   const now = new Date();
   const timestamp = `${now.toLocaleDateString(
@@ -28,4 +20,4 @@ const appErrorHandler = (err, req, res, next) => {
   return res.status(status).json({ status, message });
 };
 
-export { AppError, appErrorHandler };
+export { appErrorHandler };

@@ -1,6 +1,6 @@
 import { CategoryModel } from '../db';
-import { AppError } from '../middlewares';
-import { errorNames } from '../utils/error-names';
+import { AppError } from '../routers/middlewares';
+import { errorNames } from '../error-names';
 
 export class CategoryService {
   static async createCategory(categoryInfo) {

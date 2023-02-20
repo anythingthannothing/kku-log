@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { asyncHandler } from '../../middlewares';
+import { asyncHandler } from '../middlewares';
 import { getImgUploadURL } from '../../controllers';
 
 const router = Router();

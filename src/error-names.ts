@@ -3,7 +3,7 @@ export const errorNames = {
   authorizationError: `권한 에러`,
   inputError: `Input 에러`,
   argumentError: `인수값 에러`,
-  businessError: `비즈니스로직 에러`,
+  businessError: `비즈니스 로직 에러`,
   configError: `설정 에러`,
   databaseError: `DB 에러`,
   fatalError: `Fatal Error`,

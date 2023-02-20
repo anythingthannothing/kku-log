@@ -5,8 +5,8 @@ const {
   postEditSchema,
   commentSchema,
 } = require('./validations/joi-validation');
-import { AppError } from '../middlewares';
-const Comment = require('../db/schemas/comment');
+import { AppError } from './index';
+const Comment = require('../../db/schemas/comment');
 
 const setLocals = (req, res, next) => {
   res.locals.currentUser = req.session.user;

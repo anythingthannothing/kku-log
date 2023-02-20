@@ -4,7 +4,7 @@ import {
   validatePostEdit,
   isAdmin,
   asyncHandler,
-} from '../../middlewares';
+} from '../middlewares';
 // import { clearCache } from '../../middlewares/cleanCache';
 import { createPost, updatePost, deletePost, getPost } from '../../controllers';
 

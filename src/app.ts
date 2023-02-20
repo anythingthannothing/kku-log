@@ -1,4 +1,4 @@
-import './configs/db';
+import './db';
 // import './utils/cache';
 
 import express from 'express';
@@ -11,9 +11,9 @@ import {
   notFoundErrorHandler,
   errorHandler,
   appErrorHandler,
-} from './middlewares';
+} from './routers/middlewares';
 import globalRouter from './routers';
-import { setLocals } from './middlewares';
+import { setLocals } from './routers/middlewares';
 
 const app = express();
 
@@ -48,16 +48,6 @@ app.use(
 );
 app.use(flash());
 app.use(setLocals);
-
-interface User {
-  name: string;
-}
-
-declare module 'express-session' {
-  interface SessionData {
-    user: User;
-  }
-}
 
 // Logger
 app.use(morgan('dev'));

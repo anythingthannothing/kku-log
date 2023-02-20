@@ -1,4 +1,4 @@
-import { generateUploadURL } from '../utils/s3-upload';
+import { generateUploadURL } from './utils/s3-upload';
 
 const getImgUploadURL = async (req, res, next) => {
   const uploadURL = await generateUploadURL();

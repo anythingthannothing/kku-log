@@ -1,4 +1,4 @@
-import s3 from '../configs/aws-s3';
+import s3 from '../../aws-s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 

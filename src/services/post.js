@@ -1,5 +1,5 @@
 import { PostModel } from '../db';
-import { AppError } from '../middlewares';
+import { AppError } from '../routers/middlewares';
 
 export class PostService {
   static async createPost(postInfo) {
