@@ -31,4 +31,4 @@ aside.col-3.ps-0.pe-2
             ul
                 each subcategory of category.subcategories
                     li
-                        a(href=`/posts?filter=${subcategory.title.replace(/\s/g, "%20")}`) #{subcategory.title} (#{subcategory.postCount})
+                        a(href=`/posts?filter=${subcategory._id}`) #{subcategory.title} (#{subcategory.postCount})

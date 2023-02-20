@@ -4,8 +4,7 @@ import { errorNames } from '../utils/error-names';
 
 export class SubcategoryService {
   static async createSubcategory(categoryId, subcategory) {
-    const result = await SubcategoryModel.create(categoryId, subcategory);
-    return result;
+    return await SubcategoryModel.create(categoryId, subcategory);
   }
 
   static async getAllSubcategories() {

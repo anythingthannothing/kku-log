@@ -2,7 +2,7 @@
 /node_modules
 
 # Env
-.env*
+.env.*
 
 # Config
 *.conf
@@ -16,3 +16,6 @@
 
 # Backup
 backup.md
+
+# Webstorm
+.idea

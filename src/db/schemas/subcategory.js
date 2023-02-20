@@ -10,7 +10,7 @@ const SubcategorySchema = new Schema(
       type: Number,
       default: 0,
     },
-    CategoryId: {
+    categoryId: {
       type: String,
       required: true,
     },
