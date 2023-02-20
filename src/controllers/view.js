@@ -5,17 +5,24 @@ const client = createClient();
 
 const renderPosts = async (req, res, next) => {
   const categories = await CategoryService.getCategories();
-  const { filter, page = 1 } = req.query;
+  const { filter } = req.query;
+  const page = +req.query.page || 1;
   if (req.query.filter) {
     const postsInfo = await PostService.getPostsBySubcategoryId(filter, page);
     return res.render('index', {
       categories,
+      nextPageUrl: `page=${postsInfo.nextPage}&filter=${filter}`,
+      previousPageUrl: `page=${postsInfo.previousPage}&filter=${filter}`,
       ...postsInfo,
     });
   }
   const postsInfo = await PostService.getPosts(page);
-  console.log(postsInfo);
-  return res.render('index', { categories, ...postsInfo });
+  return res.render('index', {
+    categories,
+    nextPageUrl: `page=${postsInfo.nextPage}`,
+    previousPageUrl: `page=${postsInfo.previousPage}`,
+    ...postsInfo,
+  });
 };
 
 const renderNewPost = async (req, res, next) => {

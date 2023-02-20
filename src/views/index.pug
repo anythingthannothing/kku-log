@@ -18,6 +18,9 @@ block content
                                         small.text-muted 최종 수정일: #{post.updatedAt.toISOString().slice(0, 10)}
                                     //- span.card-text
                                     //-     small.text-muted 조회수:
-    if hasNextPage
-        div.d-flex.justify-content-center.py-2
-            h5 ⬇ 더 보기
+    div.d-flex.justify-content-center
+        if hasPreviousPage
+            a(href=`/posts?${previousPageUrl}`) ⬅ 이전 페이지
+        span.px-3
+        if hasNextPage
+            a(href=`/posts?${nextPageUrl}`) 다음 페이지 ➡

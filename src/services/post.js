@@ -15,11 +15,15 @@ export class PostService {
     const posts = await PostModel.findByPage(page);
     const hasNextPage = totalPage > page;
     const nextPage = page + 1;
+    const hasPreviousPage = page > 1;
+    const previousPage = page - 1;
     return {
       totalPage,
       posts,
       hasNextPage,
       nextPage,
+      hasPreviousPage,
+      previousPage,
     };
   }
 
@@ -32,11 +36,15 @@ export class PostService {
     const posts = await PostModel.findByPage(page, subcategoryId);
     const hasNextPage = totalPage > page;
     const nextPage = page + 1;
+    const hasPreviousPage = page > 1;
+    const previousPage = page - 1;
     return {
       totalPage,
       posts,
       hasNextPage,
       nextPage,
+      hasPreviousPage,
+      previousPage,
     };
   }
 
