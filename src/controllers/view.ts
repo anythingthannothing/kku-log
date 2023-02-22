@@ -41,20 +41,20 @@ const renderPost = async (req, res, next) => {
   return res.render('posts/show', { categories, post });
 };
 
-const renderEditPost = async (req, res, next) => {
-  const { id } = req.params;
-  const subcategories = await Subcategory.find({});
-  const post = await PostService.findById(id);
-  if (!post) {
-    req.flash('error', '포스트를 찾을 수 없습니다 :(');
-    return res.redirect('/posts');
-  }
-  res.render('posts/edit', { post, subcategories });
-};
+// const renderEditPost = async (req, res, next) => {
+//   const { id } = req.params;
+//   const subcategories = await Subcategory.find({});
+//   const post = await PostService.findById(id);
+//   if (!post) {
+//     req.flash('error', '포스트를 찾을 수 없습니다 :(');
+//     return res.redirect('/posts');
+//   }
+//   res.render('posts/edit', { post, subcategories });
+// };
 
 const renderAdmin = async (req, res, next) => {
   const categories = await CategoryService.getCategories();
   return res.render('admin/index', { categories });
 };
 
-export { renderPosts, renderNewPost, renderPost, renderEditPost, renderAdmin };
+export { renderPosts, renderNewPost, renderPost, renderAdmin };

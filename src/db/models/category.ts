@@ -1,6 +1,6 @@
 import { Category } from '../schemas/category';
 
-class CategoryModel {
+export class CategoryModel {
   static async create(categoryInfo) {
     const newCategory = await Category.create(categoryInfo);
     return newCategory;
@@ -24,7 +24,6 @@ class CategoryModel {
         },
       },
     ]);
-    console.log(categories);
     return categories;
   }
 
@@ -33,5 +32,3 @@ class CategoryModel {
     return category;
   }
 }
-
-export { CategoryModel };

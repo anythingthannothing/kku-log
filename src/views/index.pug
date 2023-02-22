@@ -10,7 +10,7 @@ block content
                         div.col-9
                             div.card-body.py-2.px-3
                                 h2.card-title.mb-1 #{post.title}
-                                p.card-text.mb-1 !{post.content.slice(0, 110)}...
+                                p.card-text.mb-1 !{post.content.replace(/#/gi,'').replace(/-/gi,'').replace(/\n/gi,' ').slice(0, 120)}...
                                 div.d-flex.justify-content-between
                                     span.card-text 
                                         small.text-muted 작성일: #{post.createdAt.toISOString().slice(0, 10)}

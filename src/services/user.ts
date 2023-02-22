@@ -1,4 +1,4 @@
-import { UserModel } from '../db';
+import { UserModel } from '../db/models/user';
 
 class UserService {
   static async createUser(userInfo) {

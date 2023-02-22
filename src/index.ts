@@ -1,5 +1,5 @@
-require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
-import { app } from './src/app';
+require('dotenv').config({ path: `../.env.${process.env.NODE_ENV}` });
+import { app } from './app';
 
 const PORT = process.env.PORT || 8000;
 

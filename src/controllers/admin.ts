@@ -12,16 +12,16 @@ const createSubcategory = async (req, res, next) => {
   return res.sendStatus(201);
 };
 
-const deleteCategory = async (req, res, next) => {
-  const { id } = req.params;
-  await CategoryService.findByIdAndDelete(id);
-  return res.sendStatus(200);
-};
+// const deleteCategory = async (req, res, next) => {
+//   const { id } = req.params;
+//   await CategoryService.findByIdAndDelete(id);
+//   return res.sendStatus(200);
+// };
+//
+// const deleteSubcategory = async (req, res, next) => {
+//   const { name } = req.params;
+//   await CategoryService.findByIdAndDelete(id);
+//   return res.sendStatus(200);
+// };
 
-const deleteSubcategory = async (req, res, next) => {
-  const { name } = req.params;
-  await CategoryService.findByIdAndDelete(id);
-  return res.sendStatus(200);
-};
-
-export { createCategory, createSubcategory, deleteCategory, deleteSubcategory };
+export { createCategory, createSubcategory };

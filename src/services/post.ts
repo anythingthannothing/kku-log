@@ -1,5 +1,5 @@
-import { PostModel } from '../db';
-import { AppError } from '../routers/middlewares';
+import { PostModel } from '../db/models/post';
+import { AppError } from '../app-error';
 
 export class PostService {
   static async createPost(postInfo) {
@@ -10,7 +10,7 @@ export class PostService {
     const postCount = await PostModel.countAll();
     const totalPage = Math.ceil(postCount / 5);
     if (page > totalPage) {
-      throw new AppError('Bad Request', 400);
+      throw new AppError('Bad Request', 400, 'Bad Request');
     }
     const posts = await PostModel.findByPage(page);
     const hasNextPage = totalPage > page;
@@ -31,7 +31,7 @@ export class PostService {
     const postCount = await PostModel.countAll(subcategoryId);
     const totalPage = Math.ceil(postCount / 5);
     if (page > totalPage) {
-      throw new AppError('Bad Request', 400);
+      throw new AppError('Bad Request', 400, 'Bad Request');
     }
     const posts = await PostModel.findByPage(page, subcategoryId);
     const hasNextPage = totalPage > page;

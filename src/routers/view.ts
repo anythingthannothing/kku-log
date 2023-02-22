@@ -4,7 +4,7 @@ import {
   renderPosts,
   renderNewPost,
   renderPost,
-  renderEditPost,
+  // renderEditPost,
   renderAdmin,
 } from '../controllers';
 
@@ -17,7 +17,7 @@ router.get('/', (req, res, next) => {
 router.get('/posts', asyncHandler(renderPosts));
 router.get('/posts/new', asyncHandler(renderNewPost));
 router.get('/posts/:id', asyncHandler(renderPost));
-router.get('/posts/:id/edit', asyncHandler(renderEditPost));
+// router.get('/posts/:id/edit', asyncHandler(renderEditPost));
 
 router.get('/admin', renderAdmin);
 

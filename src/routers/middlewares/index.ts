@@ -1,3 +1,4 @@
+import { AppError } from '../../app-error';
 export * from './error';
 
 const {
@@ -5,7 +6,6 @@ const {
   postEditSchema,
   commentSchema,
 } = require('./validations/joi-validation');
-import { AppError } from './index';
 const Comment = require('../../db/schemas/comment');
 
 const setLocals = (req, res, next) => {
@@ -56,7 +56,7 @@ const validatePost = (req, res, next) => {
   const { error } = postSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(',');
-    throw new AppError(msg, 400);
+    throw new AppError(msg, 400, 'Bad Reqeust');
   }
   next();
 };
@@ -65,7 +65,7 @@ const validatePostEdit = (req, res, next) => {
   const { error } = postEditSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(',');
-    throw new AppError(msg, 400);
+    throw new AppError(msg, 400, 'Bad Request');
   }
   next();
 };
@@ -74,7 +74,7 @@ const validateComment = (req, res, next) => {
   const { error } = commentSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((v) => v.message).join(',');
-    throw new AppError(msg, 400);
+    throw new AppError(msg, 400, 'Bad Reqeust');
   }
   next();
 };

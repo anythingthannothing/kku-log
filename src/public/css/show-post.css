@@ -1,0 +1,31 @@
+#postContainer img {
+    width: 100%;
+}
+
+#postContainer a {
+    color: #0c63e4;
+}
+
+#postContainer a:hover {
+    text-decoration: underline 1px #0c63e4;
+}
+
+#postContainer p {
+    line-height: 2.5rem;
+}
+
+#postContainer li {
+    margin: 12px 0;
+}
+
+#postContainer h3 {
+    margin: 18px 0;
+}
+
+#postContainer h2 {
+    margin: 15px 0;
+}
+
+#postContainer h3 {
+    margin: 12px 0;
+}

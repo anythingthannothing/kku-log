@@ -26,7 +26,7 @@ class PostModel {
     return newPost;
   }
 
-  static async findByPage(page, subcategoryId) {
+  static async findByPage(page, subcategoryId?: string) {
     console.log(subcategoryId);
     if (subcategoryId) {
       return Post.find({ subcategoryId })
@@ -40,7 +40,7 @@ class PostModel {
       .sort({ createdAt: -1 });
   }
 
-  static async countAll(subcategoryId) {
+  static async countAll(subcategoryId?: string) {
     if (!subcategoryId) {
       return Post.find().countDocuments();
     }

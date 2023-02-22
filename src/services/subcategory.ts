@@ -1,6 +1,6 @@
-import { SubcategoryModel } from '../db';
-import { AppError } from '../routers/middlewares';
+import { SubcategoryModel } from '../db/models/subcategory';
 import { errorNames } from '../error-names';
+import { AppError } from '../app-error';
 
 export class SubcategoryService {
   static async createSubcategory(categoryId, subcategory) {
