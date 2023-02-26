@@ -58,7 +58,7 @@ class PostModel {
   }
 
   static async update(postId, updateInfo) {
-    return Post.updateOne({ _id: postId }, updateInfo);
+    return Post.updateOne({ id: postId }, updateInfo);
   }
 }
 

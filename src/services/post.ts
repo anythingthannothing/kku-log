@@ -53,8 +53,6 @@ export class PostService {
   }
 
   static async updatePost(postId, updateInfo) {
-    const post = await PostModel.findById(postId);
-
     return await PostModel.update(postId, updateInfo);
   }
 }

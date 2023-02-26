@@ -9,7 +9,7 @@ services:
       - application
 
   application:
-    image: anythingthannothing/kkulog
+    image: anythingthannothing/kkulog:0.3
     container_name: kkulog
     restart: always
     ports:

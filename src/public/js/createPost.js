@@ -11,6 +11,7 @@ thumbnailInput.addEventListener('change', handleFiles);
 async function handleFiles() {
   const { data: presignedUrl } = await axios.get('/api/upload');
   file = this.files[0];
+  console.log(file);
   try {
     await axios.put(presignedUrl, file, {
       headers: {

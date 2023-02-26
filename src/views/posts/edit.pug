@@ -5,7 +5,7 @@ block content
         div.row
             h1 Edit
         div.row
-            form(data-id=`${post._id}` novalidate).needs-validation#editForm
+            form(data-id=`${post.id}` novalidate).needs-validation#editForm
                 div.d-flex.flex-column
                     div.input-group.mb-3
                         label(for="subcategory").input-group-text 카테고리
@@ -13,9 +13,9 @@ block content
                             name="subcategory"
                             aria-label="Default select example"
                         ).form-select#subcategory
-                            option(selected disabled value='') 미변경
+                            option(selected disabled value=`${post.subcategoryId}`) 미변경
                             each subcategory in subcategories
-                                option(value=`${subcategory.name}`) #{subcategory.name}
+                                option(value=`${subcategory._id}`) #{subcategory.title}
                         div.invalid-feedback 유효한 카테고리 선택 필요
                     div.mb-3
                         label(for="title").form-label 제목
@@ -26,7 +26,7 @@ block content
                             required
                         ).form-control#title
                         div.invalid-feedback 유효한 제목 입력 필요
-                    textarea(name="content")#summernote #{post.content}
+                    div(id="editor")
                     div.mb-3
                         label(for="thumbnail").form-label 썸네일
                         input(
@@ -47,6 +47,7 @@ block content
                         button(type="submit").btn.btn-primary.w-25 수정하기
                         a(href="/")
                             button(type="button").btn.btn-danger.w-25 홈으로
-    script $(document).ready(function () {$("#summernote").summernote();});
+    script(src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js")
+    script(src='/js/tui-editor.js')
     script(src="/js/validatePost.js")
     script(src="/js/editPost.js")

@@ -13,20 +13,12 @@ const getPost = async (req, res, next) => {
   return res.status(200).json(post);
 };
 
-// const updatePost = async (req, res, next) => {
-//   const { id } = req.params;
-//   const post = await PostService.findByIdAndUpdate(
-//     id,
-//     { ...req.body },
-//     { runValidators: true },
-//   );
-//   await newSub.save();
-//   const { subcategory } = post;
-//
-//   await post.save();
-//   req.flash('success', '포스트 수정 완료!');
-//   res.sendStatus(200);
-// };
+const updatePost = async (req, res, next) => {
+  const { id } = req.params;
+  const post = await PostService.updatePost(id, { ...req.body });
+  req.flash('success', '포스트 수정 완료!');
+  res.sendStatus(200);
+};
 //
 // const deletePost = async (req, res, next) => {
 //   const { id } = req.params;
@@ -40,4 +32,4 @@ const getPost = async (req, res, next) => {
 //   return res.sendStatus(200);
 // };
 
-export { getPost, createPost };
+export { getPost, createPost, updatePost };
