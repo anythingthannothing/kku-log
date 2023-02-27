@@ -9,7 +9,7 @@ block content
                 button(type="button").btn.btn-success.me-3 수정하기
     div(data-id=post._id).mb-3#postContainer
         h1.mb-3.text-center #{post.title}
-        article.mb-3#content
+        div#viwer
 
         hr
         //if currentUser
@@ -32,5 +32,7 @@ block content
         //-             if currentUser && comment.author.equals(currentUser._id)
         //-                 button.btn.btn-danger#deleteBtn 댓글 지우기
 block script
+    script(src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.js")
+    script(src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js")
     script(src="/js/showPost.js")
-    script(src="/js/comment.ts")
+    script(src="/js/comment.js")
