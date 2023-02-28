@@ -1,4 +1,4 @@
-import './db';
+import './mongoDb';
 // import './utils/cache';
 
 import express from 'express';

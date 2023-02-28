@@ -1,31 +1,41 @@
 import { Post } from '../schemas/post';
 import { Subcategory } from '../schemas/subcategory';
 import { Sequence } from '../schemas/sequence';
+import { AppError } from '../../app-error';
+import mongoDb from '../../mongoDb';
 
 export class PostModel {
-  constructor(private post) {}
+  constructor(private post, private sequence) {}
 
   create = async (postInfo) => {
-    const sequence = await Sequence.findOneAndUpdate(
-      {
-        collectionName: 'posts',
-      },
-      { $inc: { value: 1 } },
-      {
-        upsert: true,
-        returnDocument: 'after',
-      },
-    );
-
-    const newPost = new Post(postInfo);
-    console.log(sequence);
-    newPost.id = sequence.value;
-    await newPost.save();
-    const result = await Subcategory.updateOne(
-      { _id: postInfo.subcategoryId },
-      { $inc: { postCount: 1 } },
-    );
-    return newPost;
+    const session = await mongoDb.getSession();
+    try {
+      const sequence = await this.sequence
+        .findOneAndUpdate(
+          { collectionName: 'posts' },
+          { $inc: { value: 1 } },
+          { upsert: true, returnDocument: 'after' },
+        )
+        .session(session);
+      console.log(sequence);
+      const newPost = new Post({
+        ...postInfo,
+        id: sequence.value,
+      });
+      await newPost.save({ session });
+      await Subcategory.updateOne(
+        { _id: postInfo.subcategoryId },
+        { $inc: { postCount: 1 } },
+      ).session(session);
+      await session.commitTransaction();
+      return newPost;
+    } catch (e) {
+      console.log(e);
+      await session.abortTransaction();
+      throw new AppError('', 500, '');
+    } finally {
+      await session.endSession();
+    }
   };
 
   findByPage = async (page, subcategoryId?: string) => {
@@ -55,15 +65,11 @@ export class PostModel {
     return post;
   };
 
-  findByFilter = async (filter) => {
-    return Post.find(filter);
-  };
-
   update = async (postId, updateInfo) => {
     return Post.updateOne({ id: postId }, updateInfo);
   };
 }
 
-const postModel = new PostModel(Post);
+const postModel = new PostModel(Post, Sequence);
 
 export { postModel };

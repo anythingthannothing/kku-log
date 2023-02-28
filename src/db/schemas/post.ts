@@ -3,6 +3,9 @@ import { Comment } from './comment';
 
 const PostSchema = new Schema(
   {
+    _id: {
+      type: Number,
+    },
     id: {
       type: Number,
       required: true,
