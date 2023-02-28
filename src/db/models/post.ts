@@ -2,8 +2,10 @@ import { Post } from '../schemas/post';
 import { Subcategory } from '../schemas/subcategory';
 import { Sequence } from '../schemas/sequence';
 
-class PostModel {
-  static async create(postInfo) {
+export class PostModel {
+  constructor(private post) {}
+
+  create = async (postInfo) => {
     const sequence = await Sequence.findOneAndUpdate(
       {
         collectionName: 'posts',
@@ -24,9 +26,9 @@ class PostModel {
       { $inc: { postCount: 1 } },
     );
     return newPost;
-  }
+  };
 
-  static async findByPage(page, subcategoryId?: string) {
+  findByPage = async (page, subcategoryId?: string) => {
     console.log(subcategoryId);
     if (subcategoryId) {
       return Post.find({ subcategoryId })
@@ -38,28 +40,30 @@ class PostModel {
       .skip((page - 1) * 5)
       .limit(5)
       .sort({ createdAt: -1 });
-  }
+  };
 
-  static async countAll(subcategoryId?: string) {
+  countAll = async (subcategoryId?: string) => {
     if (!subcategoryId) {
       return Post.find().countDocuments();
     }
     return Post.find({ subcategoryId }).countDocuments();
-  }
+  };
 
-  static async findById(id) {
+  findById = async (id) => {
     const post = await Post.findOne({ id: id });
     // .cache({ key: id });
     return post;
-  }
+  };
 
-  static async findByFilter(filter) {
+  findByFilter = async (filter) => {
     return Post.find(filter);
-  }
+  };
 
-  static async update(postId, updateInfo) {
+  update = async (postId, updateInfo) => {
     return Post.updateOne({ id: postId }, updateInfo);
-  }
+  };
 }
 
-export { PostModel };
+const postModel = new PostModel(Post);
+
+export { postModel };

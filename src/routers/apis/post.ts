@@ -6,14 +6,14 @@ import {
   asyncHandler,
 } from '../middlewares';
 // import { clearCache } from '../../middlewares/cleanCache';
-import { createPost, getPost, updatePost } from '../../controllers';
+import { postController } from '../../controllers';
 
 const router = Router();
 
-router.get('/:postId', asyncHandler(getPost));
+router.get('/:postId', asyncHandler(postController.getPost));
 router.use(isAdmin);
-router.post('/', validatePost, asyncHandler(createPost));
-router.put('/:id', validatePostEdit, asyncHandler(updatePost));
+router.post('/', validatePost, asyncHandler(postController.createPost));
+router.put('/:id', validatePostEdit, asyncHandler(postController.updatePost));
 //
 // router.delete('/:id', asyncHandler(deletePost));
 

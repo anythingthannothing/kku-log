@@ -1,20 +1,15 @@
-import { CategoryModel } from '../db/models/category';
+import { CategoryModel, categoryModel } from '../db/models/category';
 
 export class CategoryService {
-  static async createCategory(categoryInfo) {
-    const newCategory = await CategoryModel.create(categoryInfo);
-    return newCategory;
-  }
+  constructor(private categoryModel: CategoryModel) {}
 
-  static async getCategories() {
-    const categories = await CategoryModel.findAll();
-    return categories;
-  }
+  createCategory = async (categoryInfo) => {
+    return await this.categoryModel.create(categoryInfo);
+  };
 
-  // static async deleteCategory(categoryId) {
-  //   const category = await CategoryModel.findById(categoryId);
-  //   const result = await CategoryModel.delete(categoryId);
-  //
-  //   return result;
-  // }
+  getCategories = async () => {
+    return await this.categoryModel.findAll();
+  };
 }
+
+export const categoryService = new CategoryService(categoryModel);

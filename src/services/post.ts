@@ -1,18 +1,20 @@
-import { PostModel } from '../db/models/post';
+import { PostModel, postModel } from '../db/models/post';
 import { AppError } from '../app-error';
 
 export class PostService {
-  static async createPost(postInfo) {
-    return await PostModel.create(postInfo);
-  }
+  constructor(private postModel: PostModel) {}
 
-  static async getPosts(page) {
-    const postCount = await PostModel.countAll();
+  createPost = async (postInfo) => {
+    return await this.postModel.create(postInfo);
+  };
+
+  getPosts = async (page) => {
+    const postCount = await this.postModel.countAll();
     const totalPage = Math.ceil(postCount / 5);
     if (page > totalPage) {
       throw new AppError('Bad Request', 400, 'Bad Request');
     }
-    const posts = await PostModel.findByPage(page);
+    const posts = await this.postModel.findByPage(page);
     const hasNextPage = totalPage > page;
     const nextPage = page + 1;
     const hasPreviousPage = page > 1;
@@ -25,15 +27,15 @@ export class PostService {
       hasPreviousPage,
       previousPage,
     };
-  }
+  };
 
-  static async getPostsBySubcategoryId(subcategoryId, page) {
-    const postCount = await PostModel.countAll(subcategoryId);
+  getPostsBySubcategoryId = async (subcategoryId, page) => {
+    const postCount = await this.postModel.countAll(subcategoryId);
     const totalPage = Math.ceil(postCount / 5);
     if (page > totalPage) {
       throw new AppError('Bad Request', 400, 'Bad Request');
     }
-    const posts = await PostModel.findByPage(page, subcategoryId);
+    const posts = await this.postModel.findByPage(page, subcategoryId);
     const hasNextPage = totalPage > page;
     const nextPage = page + 1;
     const hasPreviousPage = page > 1;
@@ -46,13 +48,17 @@ export class PostService {
       hasPreviousPage,
       previousPage,
     };
-  }
+  };
 
-  static async getPostById(id) {
-    return await PostModel.findById(id);
-  }
+  getPostById = async (id) => {
+    return await this.postModel.findById(id);
+  };
 
-  static async updatePost(postId, updateInfo) {
-    return await PostModel.update(postId, updateInfo);
-  }
+  updatePost = async (postId, updateInfo) => {
+    return await this.postModel.update(postId, updateInfo);
+  };
 }
+
+const postService = new PostService(postModel);
+
+export { postService };

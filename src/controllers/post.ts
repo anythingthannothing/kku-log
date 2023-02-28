@@ -1,35 +1,29 @@
-import { PostService, CategoryService } from '../services';
+import { PostService, postService } from '../services';
 
-const createPost = async (req, res, next) => {
-  const postInfo = { ...req.body };
-  const newPost = await PostService.createPost(postInfo);
-  req.flash('success', '포스트 등록 완료!');
-  return res.status(201).json(newPost.id);
-};
+class PostController {
+  constructor(private postService: PostService) {}
 
-const getPost = async (req, res, next) => {
-  const { postId } = req.params;
-  const post = await PostService.getPostById(postId);
-  return res.status(200).json(post);
-};
+  createPost = async (req, res, next) => {
+    const postInfo = { ...req.body };
+    const newPost = await this.postService.createPost(postInfo);
+    req.flash('success', '포스트 등록 완료!');
+    return res.status(201).json(newPost.id);
+  };
 
-const updatePost = async (req, res, next) => {
-  const { id } = req.params;
-  const post = await PostService.updatePost(id, { ...req.body });
-  req.flash('success', '포스트 수정 완료!');
-  res.sendStatus(200);
-};
-//
-// const deletePost = async (req, res, next) => {
-//   const { id } = req.params;
-//   const post = await PostService.findById(id);
-//   await CategoryService.findOneAndUpdate(
-//     { name: post.subcategory },
-//     { $pull: { posts: post._id } },
-//   );
-//   await PostService.findByIdAndDelete(id);
-//   req.flash('success', '포스트 삭제 완료!');
-//   return res.sendStatus(200);
-// };
+  getPost = async (req, res, next) => {
+    const { postId } = req.params;
+    const post = await this.postService.getPostById(postId);
+    return res.status(200).json(post);
+  };
 
-export { getPost, createPost, updatePost };
+  updatePost = async (req, res, next) => {
+    const { id } = req.params;
+    const post = await this.postService.updatePost(id, { ...req.body });
+    req.flash('success', '포스트 수정 완료!');
+    res.sendStatus(200);
+  };
+}
+
+const postController = new PostController(postService);
+
+export { postController };
