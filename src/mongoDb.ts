@@ -24,7 +24,7 @@ class MongoDb {
   };
 
   public getSession = async () => {
-    const session = await mongoose.createConnection(dbUrl).startSession();
+    const session = await this.db.startSession();
     session.startTransaction();
     return session;
   };

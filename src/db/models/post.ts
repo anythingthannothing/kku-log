@@ -14,7 +14,7 @@ export class PostModel {
         .findOneAndUpdate(
           { collectionName: 'posts' },
           { $inc: { value: 1 } },
-          { upsert: true, returnDocument: 'after' },
+          { upsert: true, returnOriginal: false },
         )
         .session(session);
       console.log(sequence);
@@ -30,7 +30,6 @@ export class PostModel {
       await session.commitTransaction();
       return newPost;
     } catch (e) {
-      console.log(e);
       await session.abortTransaction();
       throw new AppError('', 500, '');
     } finally {

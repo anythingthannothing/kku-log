@@ -1,6 +1,3 @@
-import './mongoDb';
-// import './utils/cache';
-
 import express from 'express';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
