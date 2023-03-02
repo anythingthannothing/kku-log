@@ -6,7 +6,13 @@ const errorHandler = (err, req, res, next) => {
   const timestamp = `${now.toLocaleDateString(
     'ko-KR',
   )} ${now.toLocaleTimeString('ko-KR')}`;
-  console.error('\x1b[41m%s\x1b[0m', err.name, timestamp, req.url, err.stack);
+  console.error(
+    '\x1b[41m%s\x1b[0m',
+    err.name,
+    timestamp,
+    req.url,
+    err.stack.split('\n').slice(0, 3).join('\n'),
+  );
   const { status = 500, message = '알 수 없는 오류가 발생했어요 :(' } = err;
   return res.status(status).render('error', { status, message });
 };

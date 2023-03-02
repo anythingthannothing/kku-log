@@ -1,32 +1,44 @@
 import { Post } from '../schemas/post';
 import { Subcategory } from '../schemas/subcategory';
 import { Sequence } from '../schemas/sequence';
+import { AppError } from '../../app-error';
+import mongoDb from '../../mongoDb';
+import { errorNames } from '../../error-names';
 
-class PostModel {
-  static async create(postInfo) {
-    const sequence = await Sequence.findOneAndUpdate(
-      {
-        collectionName: 'posts',
-      },
-      { $inc: { value: 1 } },
-      {
-        upsert: true,
-        returnDocument: 'after',
-      },
-    );
+export class PostModel {
+  constructor(private post, private sequence) {}
 
-    const newPost = new Post(postInfo);
-    console.log(sequence);
-    newPost.id = sequence.value;
-    await newPost.save();
-    const result = await Subcategory.updateOne(
-      { _id: postInfo.subcategoryId },
-      { $inc: { postCount: 1 } },
-    );
-    return newPost;
-  }
+  create = async (postInfo) => {
+    const session = await mongoDb.getSession();
+    try {
+      const sequence = await this.sequence
+        .findOneAndUpdate(
+          { collectionName: 'posts' },
+          { $inc: { value: 1 } },
+          { upsert: true, returnOriginal: false },
+        )
+        .session(session);
+      console.log(sequence);
+      const newPost = new Post({
+        ...postInfo,
+        id: sequence.value,
+      });
+      await newPost.save({ session });
+      await Subcategory.updateOne(
+        { _id: postInfo.subcategoryId },
+        { $inc: { postCount: 1 } },
+      ).session(session);
+      await session.commitTransaction();
+      return newPost;
+    } catch (err) {
+      await session.abortTransaction();
+      throw new AppError(errorNames.databaseError, 500, '트랜잭션 에러');
+    } finally {
+      await session.endSession();
+    }
+  };
 
-  static async findByPage(page, subcategoryId?: string) {
+  findByPage = async (page, subcategoryId?: string) => {
     console.log(subcategoryId);
     if (subcategoryId) {
       return Post.find({ subcategoryId })
@@ -38,28 +50,26 @@ class PostModel {
       .skip((page - 1) * 5)
       .limit(5)
       .sort({ createdAt: -1 });
-  }
+  };
 
-  static async countAll(subcategoryId?: string) {
+  countAll = async (subcategoryId?: string) => {
     if (!subcategoryId) {
       return Post.find().countDocuments();
     }
     return Post.find({ subcategoryId }).countDocuments();
-  }
+  };
 
-  static async findById(id) {
+  findById = async (id) => {
     const post = await Post.findOne({ id: id });
     // .cache({ key: id });
     return post;
-  }
+  };
 
-  static async findByFilter(filter) {
-    return Post.find(filter);
-  }
-
-  static async update(postId, updateInfo) {
-    return Post.updateOne({ _id: postId }, updateInfo);
-  }
+  update = async (postId, updateInfo) => {
+    return Post.updateOne({ id: postId }, updateInfo);
+  };
 }
 
-export { PostModel };
+const postModel = new PostModel(Post, Sequence);
+
+export { postModel };

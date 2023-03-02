@@ -1,13 +1,17 @@
-import { SubcategoryModel } from '../db/models/subcategory';
-import { errorNames } from '../error-names';
-import { AppError } from '../app-error';
+import { subcategoryModel } from '../db/models/subcategory';
 
 export class SubcategoryService {
-  static async createSubcategory(categoryId, subcategory) {
-    return await SubcategoryModel.create(categoryId, subcategory);
-  }
+  constructor(private subcategoryModel) {}
 
-  static async getAllSubcategories() {
-    return SubcategoryModel.findAll();
-  }
+  createSubcategory = async (categoryId, subcategory) => {
+    return await this.subcategoryModel.create(categoryId, subcategory);
+  };
+
+  getAllSubcategories = async () => {
+    return this.subcategoryModel.findAll();
+  };
 }
+
+const subcategoryService = new SubcategoryService(subcategoryModel);
+
+export { subcategoryService };

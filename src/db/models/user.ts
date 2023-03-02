@@ -1,15 +1,15 @@
 import { User } from '../schemas/user';
 
 class UserModel {
-  static async create(userInfo) {
-    const newUser = await User.create(userInfo);
-    return newUser;
-  }
+  constructor(private user) {}
 
-  static async findOne(email) {
-    const user = await User.findOne({ email });
-    return user;
-  }
+  create = async (userInfo) => {
+    return await this.user.create(userInfo);
+  };
+
+  findOne = async (email) => {
+    return await this.user.findOne({ email });
+  };
 }
 
-export { UserModel };
+export const userModel = new UserModel(User);

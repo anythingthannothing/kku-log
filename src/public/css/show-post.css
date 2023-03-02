@@ -11,21 +11,22 @@
 }
 
 #postContainer p {
+    font-size: 1.1rem;
     line-height: 2.5rem;
 }
 
 #postContainer li {
-    margin: 12px 0;
+    margin: 6px 0;
 }
 
 #postContainer h3 {
-    margin: 18px 0;
-}
-
-#postContainer h2 {
     margin: 15px 0;
 }
 
-#postContainer h3 {
-    margin: 12px 0;
+#postContainer h2 {
+    margin: 18px 0;
+}
+
+#postContainer code {
+    font-size: 1rem;
 }

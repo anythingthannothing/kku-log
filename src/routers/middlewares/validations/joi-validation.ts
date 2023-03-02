@@ -13,6 +13,7 @@ const postEditSchema = Joi.object({
   content: Joi.string().required(),
   subcategoryId: Joi.any(),
   tags: Joi.string().required(),
+  thumbnailUrl: Joi.string().uri(),
 });
 
 const commentSchema = Joi.object({

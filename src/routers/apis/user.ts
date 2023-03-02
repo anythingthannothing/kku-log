@@ -1,15 +1,11 @@
 import { Router } from 'express';
 import { asyncHandler } from '../middlewares';
-import { getGithubLogin, postLogin, getLogout } from '../../controllers';
+import { userController } from '../../controllers';
 
 const router = Router();
-// [User]
-router.get('/login', asyncHandler(getGithubLogin));
 
-// User Login
-router.get('/login/finish', asyncHandler(postLogin));
-
-// User Logout
-router.get('/logout', asyncHandler(getLogout));
+router.get('/login', asyncHandler(userController.getGithubLogin));
+router.get('/login/finish', asyncHandler(userController.postLogin));
+router.get('/logout', asyncHandler(userController.getLogout));
 
 export default router;

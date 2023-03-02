@@ -1,13 +1,15 @@
 import { Category } from '../schemas/category';
+import { ICategory } from '../types/category.interface';
 
-export class CategoryModel {
-  static async create(categoryInfo) {
-    const newCategory = await Category.create(categoryInfo);
-    return newCategory;
-  }
+export class CategoryModel implements ICategory {
+  constructor(private category) {}
 
-  static async findAll() {
-    const categories = await Category.aggregate([
+  create = async (categoryInfo) => {
+    return await Category.create(categoryInfo);
+  };
+
+  findAll = async () => {
+    return Category.aggregate([
       {
         $set: {
           id: {
@@ -24,11 +26,9 @@ export class CategoryModel {
         },
       },
     ]);
-    return categories;
-  }
-
-  static async findByName(filter) {
-    const category = await Category.find(filter);
-    return category;
-  }
+  };
 }
+
+const categoryModel = new CategoryModel(Category);
+
+export { categoryModel };

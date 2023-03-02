@@ -1,24 +1,25 @@
 import { Subcategory } from '../schemas/subcategory';
 
 class SubcategoryModel {
-  static async create(categoryId, subcategory) {
-    const newSubcategory = await Subcategory.create({
+  constructor(private subcategory) {}
+
+  create = async (categoryId, subcategory) => {
+    return await this.subcategory.create({
       title: subcategory,
       categoryId: categoryId,
     });
-    return newSubcategory;
-  }
+  };
 
-  static async findAll() {
+  findAll = async () => {
     // const categories = await Subcategory.find().cache({ key: 'allCategories' });
-    const categories = await Subcategory.find();
-    return categories;
-  }
+    return await this.subcategory.find();
+  };
 
-  static async findByName(filter) {
-    const subcategory = await Subcategory.find(filter);
-    return subcategory;
-  }
+  findByName = async (filter) => {
+    return await this.subcategory.find(filter);
+  };
 }
 
-export { SubcategoryModel };
+const subcategoryModel = new SubcategoryModel(Subcategory);
+
+export { subcategoryModel };

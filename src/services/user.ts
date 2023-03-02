@@ -1,15 +1,15 @@
-import { UserModel } from '../db/models/user';
+import { userModel } from '../db/models/user';
 
 class UserService {
-  static async createUser(userInfo) {
-    const newUser = await UserModel.create(userInfo);
-    return newUser;
-  }
+  constructor(private userModel) {}
 
-  static async findUserByEmail({ email }) {
-    const user = await UserModel.findOne(email);
-    return user;
-  }
+  createUser = async (userInfo) => {
+    return this.userModel.create(userInfo);
+  };
+
+  findUserByEmail = async ({ email }) => {
+    return this.userModel.findOne(email);
+  };
 }
 
-export { UserService };
+export const userService = new UserService(userModel);

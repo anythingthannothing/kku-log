@@ -10,7 +10,7 @@ const appErrorHandler = (err, req, res, next) => {
     timestamp,
     req.url,
     req.method,
-    err.stack,
+    err.stack.split('\n').slice(0, 3).join('\n'),
   );
   const {
     status = 500,

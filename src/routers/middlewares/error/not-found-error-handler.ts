@@ -1,4 +1,4 @@
-import { AppError } from './app-error-handler';
+import { AppError } from '../../../app-error';
 
 export const notFoundErrorHandler = (req, res, next) => {
   next(

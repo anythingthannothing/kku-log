@@ -1,14 +1,17 @@
 const deletePostForm = document.querySelector('#deletePostBtn');
 const contentEle = document.querySelector('#content');
+const Viwer = toastui.Editor;
+const { codeSyntaxHighlight } = Viwer.plugin;
 
 window.addEventListener('load', async () => {
   const postId = document.documentURI.split('/').at(-1);
   const post = (await axios.get(`/api/posts/${postId}`)).data;
-  let converter = new showdown.Converter();
-  converter.setFlavor('github');
-  const content = post.content;
-  const html = converter.makeHtml(content);
-  contentEle.innerHTML = html;
+  const viwer = new Viwer({
+    el: document.querySelector('#viwer'),
+    height: 'auto',
+    initialValue: post.content,
+    // plugins: [codeSyntaxHighlight],
+  });
 });
 
 async function handleDeletePost(event) {
