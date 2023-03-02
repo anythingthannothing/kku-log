@@ -3,6 +3,7 @@ import { Subcategory } from '../schemas/subcategory';
 import { Sequence } from '../schemas/sequence';
 import { AppError } from '../../app-error';
 import mongoDb from '../../mongoDb';
+import { errorNames } from '../../error-names';
 
 export class PostModel {
   constructor(private post, private sequence) {}
@@ -29,9 +30,9 @@ export class PostModel {
       ).session(session);
       await session.commitTransaction();
       return newPost;
-    } catch (e) {
+    } catch (err) {
       await session.abortTransaction();
-      throw new AppError('', 500, '');
+      throw new AppError(errorNames.databaseError, 500, '트랜잭션 에러');
     } finally {
       await session.endSession();
     }

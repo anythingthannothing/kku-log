@@ -9,9 +9,11 @@ services:
       - application
 
   application:
-    image: anythingthannothing/kkulog:0.3
+    image: anythingthannothing/kkulog:latest
     container_name: kkulog
     restart: always
+    pull_policy: always
+
     ports:
-      - 8000:8000
+      - "8000:8000"
     command: ['npm', 'start']

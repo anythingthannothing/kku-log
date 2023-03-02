@@ -22,3 +22,6 @@ backup.md
 
 # Webstorm
 .idea
+
+# pem
+*.pem
