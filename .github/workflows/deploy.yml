@@ -2,14 +2,41 @@ name: Delivery
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
-  build-image:
+  build-push-image:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - run: docker build -t anythingthannothing/kkulog:latest -f dockerfiles/app.dockerfile .
-      - run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password-stdin
-      - run: docker push anythingthannothing/kkulog
+      - name: Get code from repository
+        uses: actions/checkout@v3
+
+      - name: Create .env file
+        run: echo "${{ secrets.ENV_PRODUCTION }}" >> .env.production
+
+      - name: Build docker image
+        run: docker build -t anythingthannothing/kkulog:latest -f dockerfiles/app.dockerfile .
+
+      - name: Login to dockerhub
+        run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password-stdin
+
+      - name: Push image to dockerhub
+        run: docker push anythingthannothing/kkulog:latest
+
+  deploy:
+    needs: build-push-image
+    runs-on: self-hosted
+
+    steps:
+      - name: Login to dockerhub
+        run: echo "${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}" | docker login -u ${{ secrets.DOCKER_HUB_USERNAME}} --password-stdin
+
+      - name: Stop container
+        run: docker stop kkulog
+
+      - name: Remove image
+        run: docker image rm anythingthannothing/kkulog:latest
+
+      - name: Run container
+        run: docker run --rm --dp 8000:8000 --name kkulog anythingthannothing/kkulog:latest
