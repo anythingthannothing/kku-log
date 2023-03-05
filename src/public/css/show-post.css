@@ -1,32 +1,29 @@
-#postContainer img {
-    width: 100%;
-}
-
 #postContainer a {
-    color: #0c63e4;
+  color: #0c63e4;
 }
 
 #postContainer a:hover {
-    text-decoration: underline 1px #0c63e4;
+  text-decoration: underline 1px #0c63e4;
 }
 
 #postContainer p {
-    font-size: 1.1rem;
-    line-height: 2.5rem;
+  font-size: 1.2rem;
 }
 
 #postContainer li {
-    margin: 6px 0;
+  margin: 6px 0;
 }
 
 #postContainer h3 {
-    margin: 15px 0;
+  font-size: 1.75rem;
+  padding: 15px 0;
 }
 
 #postContainer h2 {
-    margin: 18px 0;
+  font-size: 2rem;
+  padding: 18px 0;
 }
 
 #postContainer code {
-    font-size: 1rem;
+  font-size: 1rem;
 }
