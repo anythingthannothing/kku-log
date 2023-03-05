@@ -1,5 +1,7 @@
 # Docker
 Dockerfile
+dockerfiles
+docker-compose.yml
 
 # Compliled Output
 node_modules
@@ -17,7 +19,10 @@ test
 
 # IDE
 .vscode
+.idea
 
 # Document
 docs
 
+# Serverless
+serverless
