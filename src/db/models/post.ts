@@ -1,40 +1,23 @@
 import { Post } from '../schemas/post';
-import { Subcategory } from '../schemas/subcategory';
-import { Sequence } from '../schemas/sequence';
 import { AppError } from '../../app-error';
-import mongoDb from '../../mongoDb';
 import { errorNames } from '../../error-names';
+import { getNamespace } from 'cls-hooked';
 
 export class PostModel {
-  constructor(private post, private sequence) {}
+  constructor(private post) {}
 
   create = async (postInfo) => {
-    const session = await mongoDb.getSession();
+    const session = getNamespace('session').get('transactionKey');
     try {
-      const sequence = await this.sequence
-        .findOneAndUpdate(
-          { collectionName: 'posts' },
-          { $inc: { value: 1 } },
-          { upsert: true, returnOriginal: false },
-        )
-        .session(session);
-      console.log(sequence);
       const newPost = new Post({
         ...postInfo,
-        id: sequence.value,
       });
       await newPost.save({ session });
-      await Subcategory.updateOne(
-        { _id: postInfo.subcategoryId },
-        { $inc: { postCount: 1 } },
-      ).session(session);
-      await session.commitTransaction();
       return newPost;
     } catch (err) {
       await session.abortTransaction();
+      session.endSession();
       throw new AppError(errorNames.databaseError, 500, '트랜잭션 에러');
-    } finally {
-      await session.endSession();
     }
   };
 
@@ -60,9 +43,7 @@ export class PostModel {
   };
 
   findById = async (id) => {
-    const post = await Post.findOne({ id: id });
-    // .cache({ key: id });
-    return post;
+    return Post.findOne({ id: id });
   };
 
   update = async (postId, updateInfo) => {
@@ -70,6 +51,6 @@ export class PostModel {
   };
 }
 
-const postModel = new PostModel(Post, Sequence);
+const postModel = new PostModel(Post);
 
 export { postModel };

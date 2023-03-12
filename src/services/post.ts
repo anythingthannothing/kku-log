@@ -1,11 +1,25 @@
 import { PostModel, postModel } from '../db/models/post';
 import { AppError } from '../app-error';
+import { sequenceModel, SequenceModel } from '../db/models/sequence';
+import { subcategoryModel, SubcategoryModel } from '../db/models/subcategory';
 
 export class PostService {
-  constructor(private postModel: PostModel) {}
+  constructor(
+    private postModel: PostModel,
+    private sequenceModel: SequenceModel,
+    private subcategoryModel: SubcategoryModel,
+  ) {}
 
   createPost = async (postInfo) => {
-    return await this.postModel.create(postInfo);
+    const { subcategoryId, ...createPostDto } = postInfo;
+    const id = await this.sequenceModel.increaseCollectionValue('posts');
+    const post = await this.postModel.create({
+      ...createPostDto,
+      id,
+      subcategoryId,
+    });
+    await this.subcategoryModel.increasePostCount(subcategoryId);
+    return post;
   };
 
   getPosts = async (page) => {
@@ -59,6 +73,6 @@ export class PostService {
   };
 }
 
-const postService = new PostService(postModel);
+const postService = new PostService(postModel, sequenceModel, subcategoryModel);
 
 export { postService };
